@@ -1,4 +1,4 @@
-package pencelizer.steelzack.com.pencelizer;
+package com.steelzack.pencelizer;
 
 import org.junit.Test;
 

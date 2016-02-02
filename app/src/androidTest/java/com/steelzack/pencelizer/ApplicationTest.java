@@ -1,4 +1,4 @@
-package pencelizer.steelzack.com.pencelizer;
+package com.steelzack.pencelizer;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
