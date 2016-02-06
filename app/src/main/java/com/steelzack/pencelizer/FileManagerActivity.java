@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.steelzack.pencelizer.fileManager.FileManagerAdapter;
 import com.steelzack.pencelizer.fileManager.FileManagerItem;
 import com.steelzack.pencelizer.fileManager.FileType;
 
@@ -31,12 +32,13 @@ import static java.util.Collections.*;
  */
 public class FileManagerActivity extends ListActivity{
     private File currentDirectory;
-    private ArrayAdapter fileManagerAdapter;
+    private FileManagerAdapter fileManagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         currentDirectory = new File(".");
+        createListOfFiles(currentDirectory);
     }
 
     private void createListOfFiles(File directory){
@@ -63,9 +65,12 @@ public class FileManagerActivity extends ListActivity{
 
         sort(directories);
         sort(files);
-        final List<FileManagerItem> parentFolder = Arrays.asList(new FileManagerItem[]{ new FileManagerItem(directory.getName(), getDateString(directory), Folder, directory)});
-        parentFolder.addAll(files);
-        parentFolder.addAll(directories);
+        final List<FileManagerItem> completeFolderList = Arrays.asList(new FileManagerItem[]{new FileManagerItem(directory.getName(), getDateString(directory), Folder, directory)});
+        completeFolderList.addAll(files);
+        completeFolderList.addAll(directories);
+
+        fileManagerAdapter = new FileManagerAdapter(FileManagerActivity.this, R.layout.file_navigator, completeFolderList);
+        this.setListAdapter(fileManagerAdapter);
     }
 
     @NonNull
@@ -79,6 +84,16 @@ public class FileManagerActivity extends ListActivity{
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+
+        final FileManagerItem fileItem = fileManagerAdapter.getItem(position);
+
+        if(fileItem.getFileType() == Folder)
+        {
+
+        }   else if(fileItem.getFileType() == File)
+        {
+
+        }
     }
 }
 

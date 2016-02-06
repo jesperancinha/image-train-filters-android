@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -33,6 +34,8 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem>{
             LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(id, null);
         }
+
+        FileManagerItem fileItem = fileList.get(position);
 
         return super.getView(position, convertView, parent);
     }

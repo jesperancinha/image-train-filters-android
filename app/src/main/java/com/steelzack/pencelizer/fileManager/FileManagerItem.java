@@ -30,4 +30,9 @@ public class FileManagerItem implements Comparable<FileManagerItem> {
     public String getFilename() {
         return filename;
     }
+
+
+    public FileType getFileType() {
+        return fileType;
+    }
 }
