@@ -35,4 +35,12 @@ public class FileManagerItem implements Comparable<FileManagerItem> {
     public FileType getFileType() {
         return fileType;
     }
+
+    public String getDate() {
+        return date;
+    }
+
+    public File getFile() {
+        return file;
+    }
 }
