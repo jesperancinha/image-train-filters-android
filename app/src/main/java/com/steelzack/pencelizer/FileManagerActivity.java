@@ -37,7 +37,10 @@ public class FileManagerActivity extends ListActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        currentDirectory = new File(".");
+        currentDirectory = new File("/sdcard");
+        if (!currentDirectory.exists()) {
+            currentDirectory = new File("/");
+        }
         createListOfFiles(currentDirectory);
     }
 
@@ -46,28 +49,32 @@ public class FileManagerActivity extends ListActivity{
         final List<FileManagerItem> files = new ArrayList<>();
         final List<FileManagerItem> directories = new ArrayList<>();
 
-        for(File file : innerFiles)
-        {
-            final FileType type = file.isDirectory() ? Folder : File;
-            final String mimetype= new MimetypesFileTypeMap().getContentType(file);
-            final String fileFormattedDate = getDateString(file);
-            switch (type){
-                case Folder:
-                    directories.add(new FileManagerItem(file.getName(),fileFormattedDate,Folder, file));
-                    break;
-                case File:
-                    if(mimetype.contains(getString(R.string.image_mime_type))) {
-                        files.add(new FileManagerItem(file.getName(), fileFormattedDate, File, file));
-                    }
-                    break;
+        if(innerFiles != null) {
+            for (File file : innerFiles) {
+                final FileType type = file.isDirectory() ? Folder : File;
+                final String mimetype = new MimetypesFileTypeMap().getContentType(file);
+                final String fileFormattedDate = getDateString(file);
+                switch (type) {
+                    case Folder:
+                        directories.add(new FileManagerItem(file.getName(), fileFormattedDate, Folder, file));
+                        break;
+                    case File:
+                        if (mimetype.contains(getString(R.string.image_mime_type))) {
+                            files.add(new FileManagerItem(file.getName(), fileFormattedDate, File, file));
+                        }
+                        break;
+                }
             }
         }
 
         sort(directories);
         sort(files);
-        final List<FileManagerItem> completeFolderList = Arrays.asList(new FileManagerItem[]{new FileManagerItem(directory.getName(), getDateString(directory), Folder, directory)});
+        List<FileManagerItem> completeFolderList =  new ArrayList<>();
+        if(directory.getParentFile() != null) {
+            completeFolderList.add(new FileManagerItem("..", getDateString(directory), Folder, directory.getParentFile()));
+        }
+        files.addAll(directories);
         completeFolderList.addAll(files);
-        completeFolderList.addAll(directories);
 
         fileManagerAdapter = new FileManagerAdapter(FileManagerActivity.this, R.layout.file_navigator, completeFolderList);
         this.setListAdapter(fileManagerAdapter);
@@ -89,6 +96,7 @@ public class FileManagerActivity extends ListActivity{
 
         if(fileItem.getFileType() == Folder)
         {
+            createListOfFiles(fileItem.getFile());
 
         }   else if(fileItem.getFileType() == File)
         {

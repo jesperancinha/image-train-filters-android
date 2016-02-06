@@ -1,11 +1,18 @@
 package com.steelzack.pencelizer.fileManager;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.steelzack.pencelizer.R;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -22,7 +29,7 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem>{
     public FileManagerAdapter(Context context, int resource, List<FileManagerItem> objects) {
         super(context, resource, objects);
 
-        this.context =context;
+        this.context = context;
         this.id = resource;
         this.fileList = objects;
     }
@@ -35,8 +42,20 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem>{
             v = vi.inflate(id, null);
         }
 
-        FileManagerItem fileItem = fileList.get(position);
+        final FileManagerItem fileItem = fileList.get(position);
+        final TextView fileName = (TextView)v.findViewById(R.id.fileName);
+        final TextView fileDate = (TextView)v.findViewById(R.id.fileDate);
 
-        return super.getView(position, convertView, parent);
+        switch (fileItem.getFileType()){
+            case Folder:
+                final ImageView imageView = (ImageView)v.findViewById(R.id.typeFolderFile);
+                Drawable image = ResourcesCompat.getDrawable(context.getResources(), R.drawable.folder, null);
+                imageView.setImageDrawable(image);break;
+            case File:break;
+        }
+
+        fileName.setText(fileItem.getFilename());
+        fileDate.setText(fileItem.getDate());
+        return v;
     }
 }
