@@ -13,42 +13,53 @@
     tools:showIn="@layout/activity_main"
     tools:context="com.steelzack.pencelizer.MainActivity">
 
+    tabl
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Selected File"
-                android:id="@+id/lblSelectedFile"
-                android:gravity="center_vertical"
-                android:height="50dp"
-                />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Selected File"
+        android:id="@+id/lblSelectedFile"
+        android:gravity="center_vertical"
+        android:height="50dp"
+        />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="none"
-                android:id="@+id/lblESelectedFile"
-                android:paddingLeft="10dp"
-                android:paddingRight="20dp"
-                android:layout_toRightOf="@id/lblSelectedFile"
-                android:gravity="center_vertical"
-                android:height="50dp"
-                />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="none"
+        android:id="@+id/lblESelectedFile"
+        android:paddingLeft="10dp"
+        android:paddingRight="20dp"
+        android:layout_toRightOf="@id/lblSelectedFile"
+        android:gravity="center_vertical"
+        android:height="50dp"
+        />
 
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="File"
-                android:id="@+id/btnFindFile"
-                android:layout_gravity="right"
-                android:onClick="pFindFile"
-                android:singleLine="false"
-                android:layout_toRightOf="@id/lblESelectedFile"
-                android:layout_alignParentRight="true"
-                android:height="50dp"
-                />
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="File"
+        android:id="@+id/btnFindFile"
+        android:layout_gravity="right"
+        android:onClick="pFindFile"
+        android:singleLine="false"
+        android:layout_toRightOf="@id/lblESelectedFile"
+        android:layout_alignParentRight="true"
+        android:height="50dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@id/lblSelectedFile"
+        android:text="Select coding language"
+        android:gravity="center_vertical"
+        android:id="@+id/lblLanguageCoding"
+        android:height="50dp"/>
 
 </RelativeLayout>
