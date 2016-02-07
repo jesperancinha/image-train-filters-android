@@ -100,8 +100,14 @@ public class FileManagerActivity extends ListActivity{
 
         }   else if(fileItem.getFileType() == File)
         {
-
+            pBackToMain(fileItem);
         }
+    }
+
+    public void pBackToMain(FileManagerItem fileManagerItem) {
+        final Intent intent = new Intent(FileManagerActivity.this, MainActivity.class);
+        intent.putExtra("fileItem", fileManagerItem);
+        startActivity(intent);
     }
 }
 
