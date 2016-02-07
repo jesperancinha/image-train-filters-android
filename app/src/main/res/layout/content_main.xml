@@ -62,4 +62,12 @@
         android:id="@+id/lblLanguageCoding"
         android:height="50dp"/>
 
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spiLanguageCode"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/lblLanguageCoding"
+        android:layout_below="@id/lblSelectedFile"
+        android:minHeight="50dp"/>
 </RelativeLayout>

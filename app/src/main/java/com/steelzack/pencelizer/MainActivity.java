@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.steelzack.pencelizer.fileManager.FileManagerItem;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
                 currentSelectedFile = fileManagerItem;
             }
         }
+
+        final Spinner spiLanguageCode = (Spinner) findViewById(R.id.spiLanguageCode);
     }
 
     @Override
