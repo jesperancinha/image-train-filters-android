@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final Spinner spiLanguageCode = (Spinner) findViewById(R.id.spiLanguageCode);
+        
+
     }
 
     @Override
