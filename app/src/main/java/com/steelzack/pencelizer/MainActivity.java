@@ -9,17 +9,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.steelzack.pencelizer.fileManager.FileManagerItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FileManagerItem currentSelectedFile =null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -27,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            final FileManagerItem fileManagerItem = (FileManagerItem) getIntent().getExtras().get("fileItem");
+            if (fileManagerItem != null) {
+                TextView currentFile = (TextView) findViewById(R.id.lblESelectedFile);
+                currentFile.setText(fileManagerItem.getFilename());
+                currentSelectedFile = fileManagerItem;
+            }
+        }
     }
 
     @Override

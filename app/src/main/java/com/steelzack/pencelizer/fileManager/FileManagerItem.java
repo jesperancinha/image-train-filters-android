@@ -1,11 +1,15 @@
 package com.steelzack.pencelizer.fileManager;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.File;
+import java.io.Serializable;
 
 /**
  * Created by joao on 6-2-16.
  */
-public class FileManagerItem implements Comparable<FileManagerItem> {
+public class FileManagerItem implements Comparable<FileManagerItem>, Serializable  {
 
     private final String filename;
 
@@ -30,7 +34,6 @@ public class FileManagerItem implements Comparable<FileManagerItem> {
     public String getFilename() {
         return filename;
     }
-
 
     public FileType getFileType() {
         return fileType;
