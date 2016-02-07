@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.steelzack.pencelizer.file.manager.FileManagerItem;
+import com.steelzack.pencelizer.language.manager.LanguageManagerAdapter;
 
 import java.util.List;
 
@@ -49,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final Spinner spiLanguageCode = (Spinner) findViewById(R.id.spiLanguageCode);
-        for(Character.UnicodeBlock codeBlock : listtOfAllLanguageCode)
-        {
-        }
-
+        final LanguageManagerAdapter adapter = new LanguageManagerAdapter( //
+                MainActivity.this, //
+                R.layout.code_language_roller, //
+                PencelizerUtils.getAllUniCodeBlocksJava8() //
+        );
+        spiLanguageCode.setAdapter(adapter);
     }
 
     @Override
