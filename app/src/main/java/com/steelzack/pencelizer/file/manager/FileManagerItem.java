@@ -1,7 +1,4 @@
-package com.steelzack.pencelizer.fileManager;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package com.steelzack.pencelizer.file.manager;
 
 import java.io.File;
 import java.io.Serializable;

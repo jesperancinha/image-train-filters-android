@@ -1,30 +1,26 @@
 package com.steelzack.pencelizer;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.steelzack.pencelizer.fileManager.FileManagerAdapter;
-import com.steelzack.pencelizer.fileManager.FileManagerItem;
-import com.steelzack.pencelizer.fileManager.FileType;
+import com.steelzack.pencelizer.file.manager.FileManagerAdapter;
+import com.steelzack.pencelizer.file.manager.FileManagerItem;
+import com.steelzack.pencelizer.file.manager.FileType;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import javax.activation.MimetypesFileTypeMap;
 
-import static com.steelzack.pencelizer.fileManager.FileType.File;
-import static com.steelzack.pencelizer.fileManager.FileType.Folder;
+import static com.steelzack.pencelizer.file.manager.FileType.File;
+import static com.steelzack.pencelizer.file.manager.FileType.Folder;
 import static java.util.Collections.*;
 
 /**
