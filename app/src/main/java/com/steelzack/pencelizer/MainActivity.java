@@ -12,12 +12,16 @@ import android.view.MenuItem;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.steelzack.pencelizer.fileManager.FileManagerItem;
+import com.steelzack.pencelizer.file.manager.FileManagerItem;
+import com.steelzack.pencelizer.language.manager.LanguageManagerAdapter;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FileManagerItem currentSelectedFile =null;
+    private FileManagerItem currentSelectedFile = null;
 
+    final List<String> listtOfAllLanguageCode = PencelizerUtils.getAllUniCodeBlockStringsJava7();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final Spinner spiLanguageCode = (Spinner) findViewById(R.id.spiLanguageCode);
+        LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter(this,
+                android.R.layout.simple_spinner_item, listtOfAllLanguageCode);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spiLanguageCode.setAdapter(dataAdapter);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.steelzack.pencelizer.fileManager;
+package com.steelzack.pencelizer.file.manager;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.steelzack.pencelizer.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
