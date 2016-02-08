@@ -89,7 +89,34 @@
         android:id="@+id/spiDistribution"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/lblDistribution"
-        android:layout_below="@id/spiLanguageCode"
+        android:layout_below="@id/lblLanguageCoding"
         android:minHeight="50dp"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@id/lblDistribution"
+        android:gravity="center_vertical"
+        android:id="@+id/lblBackgroundColor"
+        android:height="50dp"
+        android:text="Select back color:"
+        />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_below="@id/lblDistribution"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick Color"
+        android:id="@+id/btnBackgroundColor"
+        android:layout_gravity="right"
+        android:onClick="pGetBackGroundColor"
+        android:singleLine="false"
+        android:layout_toRightOf="@id/lblBackgroundColor"
+        android:layout_alignParentRight="true"
+        android:height="50dp"
+        />
+
 </RelativeLayout>
