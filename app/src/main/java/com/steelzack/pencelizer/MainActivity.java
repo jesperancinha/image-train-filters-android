@@ -1,6 +1,8 @@
 package com.steelzack.pencelizer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +14,10 @@ import android.view.MenuItem;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.flask.colorpicker.ColorPickerView;
+import com.flask.colorpicker.OnColorSelectedListener;
+import com.flask.colorpicker.builder.ColorPickerClickListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.steelzack.pencelizer.distribution.manager.DistributionManager;
 import com.steelzack.pencelizer.file.manager.FileManagerItem;
 import com.steelzack.pencelizer.language.manager.LanguageManagerAdapter;
@@ -93,5 +99,33 @@ public class MainActivity extends AppCompatActivity {
     public void pFindFile(View view) {
         final Intent intent = new Intent(MainActivity.this, FileManagerActivity.class);
         startActivity(intent);
+    }
+
+    public void pGetBackGroundColor(View view) {
+        ColorPickerDialogBuilder
+                .with(view.getContext())
+                .setTitle("Choose color")
+                .initialColor(Color.WHITE)
+                .wheelType(ColorPickerView.WHEEL_TYPE.CIRCLE)
+                .density(12)
+                .setOnColorSelectedListener(new OnColorSelectedListener() {
+                    @Override
+                    public void onColorSelected(int selectedColor) {
+                        // toast("onColorSelected: 0x" + Integer.toHexString(selectedColor));
+                    }
+                })
+                .setPositiveButton("ok", new ColorPickerClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
+                        //changeBackgroundColor(selectedColor);
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .build()
+                .show();
     }
 }
