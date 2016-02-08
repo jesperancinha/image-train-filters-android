@@ -107,11 +107,12 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle("Choose color")
                 .initialColor(Color.WHITE)
                 .wheelType(ColorPickerView.WHEEL_TYPE.CIRCLE)
-                .density(12)
+                .density(5)
                 .setOnColorSelectedListener(new OnColorSelectedListener() {
                     @Override
                     public void onColorSelected(int selectedColor) {
                         // toast("onColorSelected: 0x" + Integer.toHexString(selectedColor));
+
                     }
                 })
                 .setPositiveButton("ok", new ColorPickerClickListener() {
