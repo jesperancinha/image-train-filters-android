@@ -70,4 +70,26 @@
         android:layout_toRightOf="@id/lblLanguageCoding"
         android:layout_below="@id/lblSelectedFile"
         android:minHeight="50dp"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@id/lblLanguageCoding"
+        android:gravity="center_vertical"
+        android:id="@+id/lblDistribution"
+        android:height="50dp"
+        android:text="Select distribution"
+        />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spiDistribution"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/lblDistribution"
+        android:layout_below="@id/spiLanguageCode"
+        android:minHeight="50dp"
+        />
 </RelativeLayout>
