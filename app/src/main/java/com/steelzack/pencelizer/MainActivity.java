@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FileManagerItem currentSelectedFile = null;
 
-    final List<Character.UnicodeBlock> listtOfAllLanguageCode = PencelizerUtils.getAllUniCodeBlocksJava8();
+    final List<String> listtOfAllLanguageCode = PencelizerUtils.getAllUniCodeBlockStringsJava7();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +50,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final Spinner spiLanguageCode = (Spinner) findViewById(R.id.spiLanguageCode);
-        final LanguageManagerAdapter adapter = new LanguageManagerAdapter( //
-                MainActivity.this, //
-                R.layout.code_language_roller, //
-                PencelizerUtils.getAllUniCodeBlocksJava8() //
-        );
-        spiLanguageCode.setAdapter(adapter);
+        LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter(this,
+                android.R.layout.simple_spinner_item, listtOfAllLanguageCode);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spiLanguageCode.setAdapter(dataAdapter);
     }
 
     @Override
