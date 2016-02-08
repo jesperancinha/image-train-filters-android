@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.steelzack.pencelizer.distribution.manager.DistributionManager;
 import com.steelzack.pencelizer.file.manager.FileManagerItem;
 import com.steelzack.pencelizer.language.manager.LanguageManagerAdapter;
 
@@ -21,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     private FileManagerItem currentSelectedFile = null;
 
-    final List<String> listtOfAllLanguageCode = PencelizerUtils.getAllUniCodeBlockStringsJava7();
+    final List<String> listOfAllLanguageCode = PencelizerUtils.getAllUniCodeBlockStringsJava7();
+    final List<String> listOfAllDistributions = PencelizerUtils.getAllDistributionTypes();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +52,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final Spinner spiLanguageCode = (Spinner) findViewById(R.id.spiLanguageCode);
-        LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter(this,
-                android.R.layout.simple_spinner_item, listtOfAllLanguageCode);
+        final LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter( //
+                this, //
+                android.R.layout.simple_spinner_item, listOfAllLanguageCode //
+        );
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spiLanguageCode.setAdapter(dataAdapter);
+
+        final Spinner spiDistribution = (Spinner) findViewById(R.id.spiDistribution);
+        final DistributionManager distributionDataAdapter = new DistributionManager( //
+                this, //
+                android.R.layout.simple_spinner_item, listOfAllDistributions //
+        );
+        distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spiDistribution.setAdapter(distributionDataAdapter);
     }
 
     @Override
