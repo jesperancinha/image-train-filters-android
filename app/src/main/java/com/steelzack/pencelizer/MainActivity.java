@@ -23,6 +23,7 @@ import com.steelzack.pencelizer.distribution.manager.DistributionManager;
 import com.steelzack.pencelizer.file.manager.FileManagerItem;
 import com.steelzack.pencelizer.language.manager.LanguageManagerAdapter;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     final List<String> listOfAllLanguageCode = PencelizerUtils.getAllUniCodeBlockStringsJava7();
     final List<String> listOfAllDistributions = PencelizerUtils.getAllDistributionTypes();
+    final String[] allFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
     private SurfaceView svSelectedColor;
 
     @Override
