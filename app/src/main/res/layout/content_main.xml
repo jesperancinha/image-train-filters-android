@@ -13,13 +13,11 @@
     tools:showIn="@layout/activity_main"
     tools:context="com.steelzack.pencelizer.MainActivity">
 
-    tabl
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Selected File"
+        android:text="Image file"
         android:id="@+id/lblSelectedFile"
         android:gravity="center_vertical"
         android:height="50dp"
@@ -57,7 +55,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_below="@id/lblSelectedFile"
-        android:text="Select coding language"
+        android:text="Char coding"
         android:gravity="center_vertical"
         android:id="@+id/lblLanguageCoding"
         android:height="50dp"/>
@@ -80,7 +78,7 @@
         android:gravity="center_vertical"
         android:id="@+id/lblDistribution"
         android:height="50dp"
-        android:text="Select distribution"
+        android:text="Distribution"
         />
 
     <Spinner
@@ -101,8 +99,21 @@
         android:gravity="center_vertical"
         android:id="@+id/lblBackgroundColor"
         android:height="50dp"
-        android:text="Select back color:"
+        android:text="Background color:"
         />
+
+    <SurfaceView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/svSelectedColor"
+        android:layout_below="@+id/lblDistribution"
+        android:layout_toRightOf="@id/lblBackgroundColor"
+        android:minHeight="50dp"
+        android:foregroundGravity="center_vertical"
+        android:minWidth="50dp"
+        android:focusable="false"
+        android:layout_marginTop="20dp"
+        android:background="#ffffff" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -114,7 +125,7 @@
         android:layout_gravity="right"
         android:onClick="pGetBackGroundColor"
         android:singleLine="false"
-        android:layout_toRightOf="@id/lblBackgroundColor"
+        android:layout_toRightOf="@id/svSelectedColor"
         android:layout_alignParentRight="true"
         android:height="50dp"
         />
