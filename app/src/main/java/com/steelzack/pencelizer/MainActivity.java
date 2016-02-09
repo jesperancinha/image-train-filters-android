@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     final List<String> listOfAllLanguageCode = PencelizerUtils.getAllUniCodeBlockStringsJava7();
     final List<String> listOfAllDistributions = PencelizerUtils.getAllDistributionTypes();
+    private SurfaceView svSelectedColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
         );
         distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spiDistribution.setAdapter(distributionDataAdapter);
+
+        svSelectedColor = (SurfaceView) findViewById(R.id.svSelectedColor);
+
+
     }
 
     @Override
@@ -118,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("ok", new ColorPickerClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
+                        svSelectedColor.setBackgroundColor(selectedColor);
                         //changeBackgroundColor(selectedColor);
                     }
                 })
