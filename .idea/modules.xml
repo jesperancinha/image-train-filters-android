@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/characterizer-text-writer-android/characterizer-text-writer-android.iml" filepath="$PROJECT_DIR$/characterizer-text-writer-android/characterizer-text-writer-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/pencelizer-app-android.iml" filepath="$PROJECT_DIR$/pencelizer-app-android.iml" />
     </modules>
   </component>
