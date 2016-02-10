@@ -199,5 +199,5 @@
         android:layout_below="@id/lblFontSize"
         android:minHeight="50dp"
         />
-    
+
 </RelativeLayout>
