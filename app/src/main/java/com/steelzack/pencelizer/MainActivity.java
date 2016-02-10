@@ -3,15 +3,16 @@ package com.steelzack.pencelizer;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.SurfaceView;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SurfaceView;
+import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,8 +22,10 @@ import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.steelzack.pencelizer.distribution.manager.DistributionManager;
 import com.steelzack.pencelizer.file.manager.FileManagerItem;
+import com.steelzack.pencelizer.font.manager.FontManagerAdapter;
 import com.steelzack.pencelizer.language.manager.LanguageManagerAdapter;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
     final List<String> listOfAllLanguageCode = PencelizerUtils.getAllUniCodeBlockStringsJava7();
     final List<String> listOfAllDistributions = PencelizerUtils.getAllDistributionTypes();
+    final List<String> listOfAllFonts = Arrays.asList(new String[]{ //
+            Typeface.SERIF.field, //
+            Typeface.SANS_SERIF.toString(), //
+            Typeface.MONOSPACE.toString() //
+    });
+
     private SurfaceView svSelectedColor;
 
     @Override
@@ -75,9 +84,14 @@ public class MainActivity extends AppCompatActivity {
         distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spiDistribution.setAdapter(distributionDataAdapter);
 
-        svSelectedColor = (SurfaceView) findViewById(R.id.svSelectedColor);
 
-
+        final Spinner spiFontType = (Spinner) findViewById(R.id.spiFontType);
+        final FontManagerAdapter fontManagerAdapter = new FontManagerAdapter( //
+                this, //
+                android.R.layout.simple_spinner_item, listOfAllFonts //
+        );
+        distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spiFontType.setAdapter(fontManagerAdapter);
     }
 
     @Override

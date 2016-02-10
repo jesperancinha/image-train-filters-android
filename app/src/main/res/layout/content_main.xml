@@ -178,4 +178,26 @@
         android:text="10"
         android:textAlignment="textEnd"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/lblFontSize"
+        android:gravity="center_vertical"
+        android:height="50dp"
+        android:text="Font type:"
+        android:id="@+id/lblFontType"
+        />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spiFontType"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/lblFontType"
+        android:layout_below="@id/lblFontSize"
+        android:minHeight="50dp"
+        />
+
 </RelativeLayout>
