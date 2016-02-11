@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     final List<String> listOfAllLanguageCode = PencelizerUtils.getAllUniCodeBlockStringsJava7();
     final List<String> listOfAllDistributions = PencelizerUtils.getAllDistributionTypes();
     final List<String> listOfAllFonts = Arrays.asList(new String[]{ //
-            Typeface.SERIF.field, //
+            Typeface.SERIF.toString(), //
             Typeface.SANS_SERIF.toString(), //
             Typeface.MONOSPACE.toString() //
     });
