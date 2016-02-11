@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     final List<String> listOfAllLanguageCode = PencelizerUtils.getAllUniCodeBlockStringsJava7();
     final List<String> listOfAllDistributions = PencelizerUtils.getAllDistributionTypes();
     final List<String> listOfAllFonts = Arrays.asList(new String[]{ //
-            Typeface.SERIF.field, //
+            Typeface.SERIF.toString(), //
             Typeface.SANS_SERIF.toString(), //
             Typeface.MONOSPACE.toString() //
     });
@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         );
         distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spiFontType.setAdapter(fontManagerAdapter);
+
+        svSelectedColor = (SurfaceView) findViewById(R.id.svSelectedColor);
     }
 
     @Override
@@ -139,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
                         svSelectedColor.setBackgroundColor(selectedColor);
-                        //changeBackgroundColor(selectedColor);
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
