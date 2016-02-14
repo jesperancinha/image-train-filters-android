@@ -177,6 +177,8 @@
         android:layout_alignParentRight="true"
         android:text="10"
         android:textAlignment="textEnd"
+        android:enabled="false"
+        android:textColor="#000000"
         />
 
     <TextView
@@ -198,6 +200,47 @@
         android:layout_toRightOf="@id/lblFontType"
         android:layout_below="@id/lblFontSize"
         android:minHeight="50dp"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Output folder"
+        android:id="@+id/lblSelectOutputFolder"
+        android:gravity="center_vertical"
+        android:height="50dp"
+        android:layout_below="@id/lblFontType"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="none"
+        android:id="@+id/lblOutputFolder"
+        android:paddingLeft="10dp"
+        android:paddingRight="20dp"
+        android:layout_toRightOf="@id/lblSelectOutputFolder"
+        android:gravity="center_vertical"
+        android:height="50dp"
+        android:layout_below="@id/lblFontType"
+        />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="File"
+        android:id="@+id/btnFindOutputFolder"
+        android:layout_gravity="right"
+        android:onClick="pFindOutputFolder"
+        android:singleLine="false"
+        android:layout_toRightOf="@id/lblOutputFolder"
+        android:layout_alignParentRight="true"
+        android:height="50dp"
+        android:layout_below="@id/lblFontType"
         />
 
 </RelativeLayout>
