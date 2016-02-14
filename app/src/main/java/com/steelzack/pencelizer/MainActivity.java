@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.steelzack.chartizate.ChartizateEncodingManager;
 import com.steelzack.chartizate.ChartizateEncodingManagerImpl;
 import com.steelzack.chartizate.ChartizateFontManager;
+import com.steelzack.chartizate.ChartizateFontManagerImpl;
 import com.steelzack.chartizate.distributions.ChartizateDistribution;
 import com.steelzack.chartizate.distributions.ChartizateDistributionType;
 import com.steelzack.pencelizer.distribution.manager.DistributionManager;
@@ -39,19 +41,14 @@ public class MainActivity extends AppCompatActivity {
 
     List<String> listOfAllLanguageCode = ChartizateFontManager.getAllUniCodeBlockStringsJava7();
     List<String> listOfAllDistributions = ChartizateFontManager.getAllDistributionTypes();
-    
-    final List<String> listOfAllFonts = Arrays.asList(new String[]{ //
-            Typeface.SERIF.toString(), //
-            Typeface.SANS_SERIF.toString(), //
-            Typeface.MONOSPACE.toString() //
-    });
+
+    final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
 
     private SurfaceView svSelectedColor;
+    private EditText editFontSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -101,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
         spiFontType.setAdapter(fontManagerAdapter);
 
         svSelectedColor = (SurfaceView) findViewById(R.id.svSelectedColor);
+
+        spiDistribution.setEnabled(false);
+
+        editFontSize = (EditText)findViewById(R.id.editFontSize);
     }
 
     @Override
@@ -157,5 +158,19 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build()
                 .show();
+    }
+
+    public void pFindOutputFolder(View view) {
+
+    }
+
+    public void pAddOne(View view) {
+        int currentFontSize = Integer.parseInt(editFontSize.getText().toString());
+        editFontSize.setText(String.valueOf(currentFontSize + 1));
+    }
+
+    public void pMinusOne(View view) {
+        int currentFontSize = Integer.parseInt(editFontSize.getText().toString());
+        editFontSize.setText(String.valueOf(currentFontSize - 1));
     }
 }
