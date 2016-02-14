@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
         spiFontType.setAdapter(fontManagerAdapter);
 
         svSelectedColor = (SurfaceView) findViewById(R.id.svSelectedColor);
+
+        spiDistribution.setEnabled(false);
     }
 
     @Override
