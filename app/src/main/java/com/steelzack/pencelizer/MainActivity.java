@@ -20,6 +20,11 @@ import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
+import com.steelzack.chartizate.ChartizateEncodingManager;
+import com.steelzack.chartizate.ChartizateEncodingManagerImpl;
+import com.steelzack.chartizate.ChartizateFontManager;
+import com.steelzack.chartizate.distributions.ChartizateDistribution;
+import com.steelzack.chartizate.distributions.ChartizateDistributionType;
 import com.steelzack.pencelizer.distribution.manager.DistributionManager;
 import com.steelzack.pencelizer.file.manager.FileManagerItem;
 import com.steelzack.pencelizer.font.manager.FontManagerAdapter;
@@ -32,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
     private FileManagerItem currentSelectedFile = null;
 
-    final List<String> listOfAllLanguageCode = PencelizerUtils.getAllUniCodeBlockStringsJava7();
-    final List<String> listOfAllDistributions = PencelizerUtils.getAllDistributionTypes();
+    List<String> listOfAllLanguageCode = ChartizateFontManager.getAllUniCodeBlockStringsJava7();
+    List<String> listOfAllDistributions = ChartizateFontManager.getAllDistributionTypes();
+    
     final List<String> listOfAllFonts = Arrays.asList(new String[]{ //
             Typeface.SERIF.toString(), //
             Typeface.SANS_SERIF.toString(), //
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
