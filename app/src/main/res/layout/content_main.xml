@@ -152,6 +152,7 @@
         android:layout_toRightOf="@id/lblFontSize"
         android:width="50dp"
         android:id="@+id/btnPlus"
+        android:onClick="pAddOne"
         />
 
     <Button
@@ -164,6 +165,7 @@
         android:layout_toRightOf="@id/btnPlus"
         android:id="@+id/btnMinus"
         android:gravity="center_vertical"
+        android:onClick="pMinusOne"
         />
 
     <EditText

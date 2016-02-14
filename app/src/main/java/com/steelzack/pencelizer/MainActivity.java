@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -40,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
     List<String> listOfAllLanguageCode = ChartizateFontManager.getAllUniCodeBlockStringsJava7();
     List<String> listOfAllDistributions = ChartizateFontManager.getAllDistributionTypes();
-    
+
     final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
 
     private SurfaceView svSelectedColor;
+    private EditText editFontSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
         svSelectedColor = (SurfaceView) findViewById(R.id.svSelectedColor);
 
         spiDistribution.setEnabled(false);
+
+        editFontSize = (EditText)findViewById(R.id.editFontSize);
     }
 
     @Override
@@ -158,5 +162,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void pFindOutputFolder(View view) {
 
+    }
+
+    public void pAddOne(View view) {
+        int currentFontSize = Integer.parseInt(editFontSize.getText().toString());
+        editFontSize.setText(String.valueOf(currentFontSize + 1));
+    }
+
+    public void pMinusOne(View view) {
+        int currentFontSize = Integer.parseInt(editFontSize.getText().toString());
+        editFontSize.setText(String.valueOf(currentFontSize - 1));
     }
 }
