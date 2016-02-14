@@ -243,4 +243,28 @@
         android:layout_below="@id/lblFontType"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/lblSelectOutputFolder"
+        android:gravity="center_vertical"
+        android:height="50dp"
+        android:text="Font type:"
+        android:id="@+id/lblOutputFileName"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblSelectOutputFolder"
+        android:layout_toRightOf="@id/lblOutputFileName"
+        android:height="50dp"
+        android:id="@+id/editOutputFileName"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:text="Noname.png"
+        android:textAlignment="textEnd"
+        />
+
 </RelativeLayout>
