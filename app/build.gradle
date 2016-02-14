@@ -30,5 +30,5 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'javax.activation:activation:1.1.1'
     compile 'com.github.QuadFlask:colorpicker:0.0.9'
-    compile 'chartizate:chartizate-text-writer-android:1.0.1'
+    compile 'chartizate:chartizate-text-writer-android:1.1.0'
 }

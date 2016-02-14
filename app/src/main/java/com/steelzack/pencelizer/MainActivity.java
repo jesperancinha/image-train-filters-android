@@ -23,6 +23,7 @@ import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.steelzack.chartizate.ChartizateEncodingManager;
 import com.steelzack.chartizate.ChartizateEncodingManagerImpl;
 import com.steelzack.chartizate.ChartizateFontManager;
+import com.steelzack.chartizate.ChartizateFontManagerImpl;
 import com.steelzack.chartizate.distributions.ChartizateDistribution;
 import com.steelzack.chartizate.distributions.ChartizateDistributionType;
 import com.steelzack.pencelizer.distribution.manager.DistributionManager;
@@ -40,18 +41,12 @@ public class MainActivity extends AppCompatActivity {
     List<String> listOfAllLanguageCode = ChartizateFontManager.getAllUniCodeBlockStringsJava7();
     List<String> listOfAllDistributions = ChartizateFontManager.getAllDistributionTypes();
     
-    final List<String> listOfAllFonts = Arrays.asList(new String[]{ //
-            Typeface.SERIF.toString(), //
-            Typeface.SANS_SERIF.toString(), //
-            Typeface.MONOSPACE.toString() //
-    });
+    final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
 
     private SurfaceView svSelectedColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
