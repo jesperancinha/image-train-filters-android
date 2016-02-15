@@ -126,11 +126,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void pFindFile(View view) {
-        final Intent intent = new Intent(MainActivity.this, FileManagerActivity.class);
-        startActivity(intent);
-    }
-
     public void pGetBackGroundColor(View view) {
         ColorPickerDialogBuilder
                 .with(view.getContext())
@@ -160,8 +155,16 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void pFindOutputFolder(View view) {
+    public void pFindFile(View view) {
+        final Intent intent = new Intent(MainActivity.this, FileManagerActivity.class);
+        intent.putExtra("directoryManager", false);
+        startActivity(intent);
+    }
 
+    public void pFindOutputFolder(View view) {
+        final Intent intent = new Intent(MainActivity.this, FileManagerActivity.class);
+        intent.putExtra("directoryManager", true);
+        startActivity(intent);
     }
 
     public void pAddOne(View view) {

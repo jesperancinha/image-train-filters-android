@@ -26,9 +26,10 @@ import static java.util.Collections.*;
 /**
  * Created by joao on 6-2-16.
  */
-public class FileManagerActivity extends ListActivity{
+public class FileManagerActivity extends ListActivity {
     private File currentDirectory;
     private FileManagerAdapter fileManagerAdapter;
+    private boolean directoryManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +38,17 @@ public class FileManagerActivity extends ListActivity{
         if (!currentDirectory.exists()) {
             currentDirectory = new File("/");
         }
+        directoryManager = getIntent().getExtras().getBoolean("directoryManager");
         createListOfFiles(currentDirectory);
+
     }
 
-    private void createListOfFiles(File directory){
+    private void createListOfFiles(File directory) {
         final File[] innerFiles = directory.listFiles();
         final List<FileManagerItem> files = new ArrayList<>();
         final List<FileManagerItem> directories = new ArrayList<>();
 
-        if(innerFiles != null) {
+        if (innerFiles != null) {
             for (File file : innerFiles) {
                 final FileType type = file.isDirectory() ? Folder : File;
                 final String mimetype = new MimetypesFileTypeMap().getContentType(file);
@@ -55,7 +58,7 @@ public class FileManagerActivity extends ListActivity{
                         directories.add(new FileManagerItem(file.getName(), fileFormattedDate, Folder, file));
                         break;
                     case File:
-                        if (mimetype.contains(getString(R.string.image_mime_type))) {
+                        if (mimetype.contains(getString(R.string.image_mime_type)) && !directoryManager) {
                             files.add(new FileManagerItem(file.getName(), fileFormattedDate, File, file));
                         }
                         break;
@@ -65,14 +68,14 @@ public class FileManagerActivity extends ListActivity{
 
         sort(directories);
         sort(files);
-        List<FileManagerItem> completeFolderList =  new ArrayList<>();
-        if(directory.getParentFile() != null) {
+        List<FileManagerItem> completeFolderList = new ArrayList<>();
+        if (directory.getParentFile() != null) {
             completeFolderList.add(new FileManagerItem("..", getDateString(directory), Folder, directory.getParentFile()));
         }
         files.addAll(directories);
         completeFolderList.addAll(files);
 
-        fileManagerAdapter = new FileManagerAdapter(FileManagerActivity.this, R.layout.file_navigator, completeFolderList);
+        fileManagerAdapter = new FileManagerAdapter(FileManagerActivity.this, R.layout.file_navigator, completeFolderList, directoryManager);
         this.setListAdapter(fileManagerAdapter);
     }
 
@@ -90,12 +93,10 @@ public class FileManagerActivity extends ListActivity{
 
         final FileManagerItem fileItem = fileManagerAdapter.getItem(position);
 
-        if(fileItem.getFileType() == Folder)
-        {
+        if (fileItem.getFileType() == Folder) {
             createListOfFiles(fileItem.getFile());
 
-        }   else if(fileItem.getFileType() == File)
-        {
+        } else if (fileItem.getFileType() == File) {
             pBackToMain(fileItem);
         }
     }

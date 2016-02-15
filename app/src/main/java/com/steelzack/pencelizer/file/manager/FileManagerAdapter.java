@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,13 +24,15 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem>{
     private final Context context;
     private final int id;
     private final List<FileManagerItem> fileList;
+    private final boolean directoryManager;
 
-    public FileManagerAdapter(Context context, int resource, List<FileManagerItem> objects) {
+    public FileManagerAdapter(Context context, int resource, List<FileManagerItem> objects, boolean directoryManager) {
         super(context, resource, objects);
 
         this.context = context;
         this.id = resource;
         this.fileList = objects;
+        this.directoryManager = directoryManager;
     }
 
     @Override
@@ -43,7 +46,9 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem>{
         final FileManagerItem fileItem = fileList.get(position);
         final TextView fileName = (TextView)v.findViewById(R.id.fileName);
         final TextView fileDate = (TextView)v.findViewById(R.id.fileDate);
-
+        final Button btnAcceptDirectory = (Button)v.findViewById(R.id.btnAcceptFolder);
+        btnAcceptDirectory.setVisibility(directoryManager ? View.VISIBLE : View.INVISIBLE);
+        
         switch (fileItem.getFileType()){
             case Folder:
                 final ImageView imageView = (ImageView)v.findViewById(R.id.typeFolderFile);
