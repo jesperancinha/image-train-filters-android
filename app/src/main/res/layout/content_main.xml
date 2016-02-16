@@ -230,36 +230,36 @@
         android:layout_below="@id/lblFontType"
         />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="File"
-        android:id="@+id/btnFindOutputFolder"
-        android:layout_gravity="right"
-        android:onClick="pFindOutputFolder"
-        android:singleLine="false"
-        android:layout_toRightOf="@id/lblOutputFolder"
-        android:layout_alignParentRight="true"
-        android:height="50dp"
-        android:layout_below="@id/lblFontType"
-        />
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="File"
+            android:id="@+id/btnFindOutputFolder"
+            android:layout_gravity="right"
+            android:onClick="pFindOutputFolder"
+            android:singleLine="false"
+            android:layout_toRightOf="@id/lblOutputFolder"
+            android:layout_alignParentRight="true"
+            android:height="50dp"
+            android:layout_below="@id/lblFontType"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_below="@+id/lblSelectOutputFolder"
-        android:gravity="center_vertical"
-        android:height="50dp"
-        android:text="Font type:"
-        android:id="@+id/lblOutputFileName"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_below="@+id/lblSelectOutputFolder"
+            android:gravity="center_vertical"
+            android:height="50dp"
+            android:text="Font type:"
+            android:id="@+id/lblOutputFileName"
+            />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/lblSelectOutputFolder"
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lblSelectOutputFolder"
         android:layout_toRightOf="@id/lblOutputFileName"
         android:height="50dp"
         android:id="@+id/editOutputFileName"

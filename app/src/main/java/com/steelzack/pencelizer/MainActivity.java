@@ -26,6 +26,7 @@ import com.steelzack.chartizate.ChartizateEncodingManager;
 import com.steelzack.chartizate.ChartizateEncodingManagerImpl;
 import com.steelzack.chartizate.ChartizateFontManager;
 import com.steelzack.chartizate.ChartizateFontManagerImpl;
+import com.steelzack.chartizate.ChartizateManagerImpl;
 import com.steelzack.chartizate.distributions.ChartizateDistribution;
 import com.steelzack.chartizate.distributions.ChartizateDistributionType;
 import com.steelzack.pencelizer.distribution.manager.DistributionManager;
@@ -33,6 +34,11 @@ import com.steelzack.pencelizer.file.manager.FileManagerItem;
 import com.steelzack.pencelizer.font.manager.FontManagerAdapter;
 import com.steelzack.pencelizer.language.manager.LanguageManagerAdapter;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -178,9 +184,6 @@ public class MainActivity extends AppCompatActivity {
         editFontSize.setText(String.valueOf(currentFontSize - 1));
     }
 
-    public void pGenerateFile(View view) {
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -200,5 +203,23 @@ public class MainActivity extends AppCompatActivity {
                 currentSelectedFolder= folderManagerItem;
             }
         }
+    }
+
+    public void pGenerateFile(View view) throws IOException {
+        final InputStream imageFullStream = new FileInputStream(new File(currentSelectedFile.getFile().getAbsolutePath()));
+        final String outputFileName =((EditText)findViewById(R.id.editOutputFileName)).getText().toString();
+
+        final ChartizateManagerImpl manager = new ChartizateManagerImpl( //
+                Color.BLACK, //
+                50, //
+                10, //
+                ChartizateDistributionType.Linear, //
+                "Sans", //
+                5, //
+                Character.UnicodeBlock.LATIN_EXTENDED_A, //
+                imageFullStream, //
+                new File(currentSelectedFolder.getFile(), outputFileName).getAbsolutePath() //
+        );
+        manager.generateConvertedImage();
     }
 }
