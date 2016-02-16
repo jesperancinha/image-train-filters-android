@@ -269,4 +269,18 @@
         android:textAlignment="textEnd"
         />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="Start generation"
+        android:id="@+id/btnStart"
+        android:layout_gravity="right"
+        android:onClick="pGenerateFile"
+        android:singleLine="false"
+        android:layout_alignParentRight="true"
+        android:height="50dp"
+        android:layout_below="@id/editOutputFileName"
+        />
+
 </RelativeLayout>

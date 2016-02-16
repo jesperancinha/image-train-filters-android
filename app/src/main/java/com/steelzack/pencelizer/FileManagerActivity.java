@@ -104,7 +104,10 @@ public class FileManagerActivity extends ListActivity {
     public void pBackToMain(FileManagerItem fileManagerItem) {
         final Intent intent = new Intent(FileManagerActivity.this, MainActivity.class);
         intent.putExtra("fileItem", fileManagerItem);
-        startActivity(intent);
+        setResult(
+                android.app.Activity.RESULT_OK,
+                intent);
+        finish();
     }
 }
 

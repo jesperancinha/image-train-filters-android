@@ -1,6 +1,8 @@
 package com.steelzack.pencelizer.file.manager;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
@@ -11,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.steelzack.pencelizer.FileManagerActivity;
+import com.steelzack.pencelizer.MainActivity;
 import com.steelzack.pencelizer.R;
 
 import java.util.List;
@@ -18,7 +22,7 @@ import java.util.List;
 /**
  * Created by joao on 6-2-16.
  */
-public class FileManagerAdapter extends ArrayAdapter<FileManagerItem>{
+public class FileManagerAdapter extends ArrayAdapter<FileManagerItem> {
 
 
     private final Context context;
@@ -36,25 +40,39 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem>{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, final View convertView, ViewGroup parent) {
         View v = convertView;
         if (v == null) {
-            LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(id, null);
         }
 
         final FileManagerItem fileItem = fileList.get(position);
-        final TextView fileName = (TextView)v.findViewById(R.id.fileName);
-        final TextView fileDate = (TextView)v.findViewById(R.id.fileDate);
-        final Button btnAcceptDirectory = (Button)v.findViewById(R.id.btnAcceptFolder);
-        btnAcceptDirectory.setVisibility(directoryManager ? View.VISIBLE : View.INVISIBLE);
-        
-        switch (fileItem.getFileType()){
+        final TextView fileName = (TextView) v.findViewById(R.id.fileName);
+        final TextView fileDate = (TextView) v.findViewById(R.id.fileDate);
+        final ImageView viewDirectory = (ImageView) v.findViewById(R.id.typeFolderFile);
+
+        if (directoryManager) {
+            viewDirectory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    intent.putExtra("folderItem", fileItem);
+                    final Activity activity = (Activity) FileManagerAdapter.this.context;
+                    activity.setResult(Activity.RESULT_OK, intent);
+                    activity.finish();
+                }
+            });
+        }
+
+        switch (fileItem.getFileType()) {
             case Folder:
-                final ImageView imageView = (ImageView)v.findViewById(R.id.typeFolderFile);
+                final ImageView imageView = (ImageView) v.findViewById(R.id.typeFolderFile);
                 Drawable image = ResourcesCompat.getDrawable(context.getResources(), R.drawable.folder, null);
-                imageView.setImageDrawable(image);break;
-            case File:break;
+                imageView.setImageDrawable(image);
+                break;
+            case File:
+                break;
         }
 
         fileName.setText(fileItem.getFilename());
