@@ -1,5 +1,6 @@
 package com.steelzack.chartizateapp;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,8 +23,11 @@ import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.steelzack.chartizate.ChartizateFontManager;
 import com.steelzack.chartizate.ChartizateFontManagerImpl;
+import com.steelzack.chartizate.ChartizateImageManager;
+import com.steelzack.chartizate.ChartizateImageManagerImpl;
 import com.steelzack.chartizate.ChartizateManagerImpl;
 import com.steelzack.chartizate.distributions.ChartizateDistributionType;
+import com.steelzack.chartizateapp.common.ChartizateSurfaceView;
 import com.steelzack.chartizateapp.common.ChartizateThumbs;
 import com.steelzack.chartizateapp.distribution.manager.DistributionManager;
 import com.steelzack.chartizateapp.file.manager.FileManagerItem;
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     List<String> listOfAllDistributions = ChartizateFontManager.getAllDistributionTypes();
 
     final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
-    private SurfaceView svSelectedColor;
+    private ChartizateSurfaceView svSelectedColor;
     private EditText editFontSize;
 
     @Override
@@ -74,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             if (folderManagerItem != null) {
                 TextView currentFile = (TextView) findViewById(com.steelzack.chartizateapp.R.id.lblOutputFolder);
                 currentFile.setText(folderManagerItem.getFilename());
-                currentSelectedFolder= folderManagerItem;
+                currentSelectedFolder = folderManagerItem;
             }
         }
 
@@ -103,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
         distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spiFontType.setAdapter(fontManagerAdapter);
 
-        svSelectedColor = (SurfaceView) findViewById(com.steelzack.chartizateapp.R.id.svSelectedColor);
+        svSelectedColor = (ChartizateSurfaceView) findViewById(com.steelzack.chartizateapp.R.id.svSelectedColor);
 
         spiDistribution.setEnabled(false);
 
-        editFontSize = (EditText)findViewById(com.steelzack.chartizateapp.R.id.editFontSize);
+        editFontSize = (EditText) findViewById(com.steelzack.chartizateapp.R.id.editFontSize);
     }
 
     @Override
@@ -150,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
                         svSelectedColor.setBackgroundColor(selectedColor);
+                        svSelectedColor.setColor(selectedColor);
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -157,8 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 })
-                .build()
-                .show();
+                .build().show();
     }
 
     public void pFindFile(View view) {
@@ -193,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 final TextView currentFile = (TextView) findViewById(com.steelzack.chartizateapp.R.id.lblESelectedFile);
                 currentFile.setText(fileManagerItem.getFilename());
                 currentSelectedFile = fileManagerItem;
-                final ImageView btnImageFile = (ImageView)findViewById(com.steelzack.chartizateapp.R.id.fileImageSourcePreview);
+                final ImageView btnImageFile = (ImageView) findViewById(com.steelzack.chartizateapp.R.id.fileImageSourcePreview);
 
                 try {
                     ChartizateThumbs.setImageThumbnail(btnImageFile, new FileInputStream(fileManagerItem.getFile()));
@@ -206,17 +210,17 @@ public class MainActivity extends AppCompatActivity {
             if (folderManagerItem != null) {
                 final TextView currentFile = (TextView) findViewById(com.steelzack.chartizateapp.R.id.lblOutputFolder);
                 currentFile.setText(folderManagerItem.getFilename());
-                currentSelectedFolder= folderManagerItem;
+                currentSelectedFolder = folderManagerItem;
             }
         }
     }
 
     public void pGenerateFile(View view) throws IOException {
         final InputStream imageFullStream = new FileInputStream(new File(currentSelectedFile.getFile().getAbsolutePath()));
-        final String outputFileName =((EditText)findViewById(com.steelzack.chartizateapp.R.id.editOutputFileName)).getText().toString();
+        final String outputFileName = ((EditText) findViewById(com.steelzack.chartizateapp.R.id.editOutputFileName)).getText().toString();
 
         final ChartizateManagerImpl manager = new ChartizateManagerImpl( //
-                Color.BLACK, //
+                svSelectedColor.getColor(), //
                 50, //
                 10, //
                 ChartizateDistributionType.Linear, //
