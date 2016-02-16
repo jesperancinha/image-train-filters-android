@@ -214,15 +214,18 @@ public class MainActivity extends AppCompatActivity {
         final InputStream imageFullStream = new FileInputStream(new File(currentSelectedFile.getFile().getAbsolutePath()));
         final String outputFileName = ((EditText) findViewById(com.steelzack.chartizateapp.R.id.editOutputFileName)).getText().toString();
         final Integer fontSize = Integer.parseInt(((EditText) findViewById(R.id.editFontSize)).getText().toString());
+        final String fontType = ((Spinner) findViewById(R.id.spiFontType)).getSelectedItem().toString();
+        final String alphabet = ((Spinner) findViewById(R.id.spiLanguageCode)).getSelectedItem().toString();
+
 
         final ChartizateManagerImpl manager = new ChartizateManagerImpl( //
                 svSelectedColor.getColor(), //
                 50, //
                 10, //
                 ChartizateDistributionType.Linear, //
-                "Sans", //
+                fontType, //
                 fontSize, //
-                Character.UnicodeBlock.LATIN_EXTENDED_A, //
+                Character.UnicodeBlock.forName(alphabet), //
                 imageFullStream, //
                 new File(currentSelectedFolder.getFile(), outputFileName).getAbsolutePath() //
         );
