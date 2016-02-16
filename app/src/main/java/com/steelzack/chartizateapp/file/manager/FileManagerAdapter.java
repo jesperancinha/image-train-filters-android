@@ -1,4 +1,4 @@
-package com.steelzack.pencelizer.file.manager;
+package com.steelzack.chartizateapp.file.manager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,13 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.steelzack.pencelizer.FileManagerActivity;
-import com.steelzack.pencelizer.MainActivity;
-import com.steelzack.pencelizer.R;
+import com.steelzack.chartizateapp.MainActivity;
+import com.steelzack.chartizateapp.common.ChartizateThumbs;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,9 +53,9 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem> {
         }
 
         final FileManagerItem fileItem = fileList.get(position);
-        final TextView fileName = (TextView) v.findViewById(R.id.fileName);
-        final TextView fileDate = (TextView) v.findViewById(R.id.fileDate);
-        final ImageView viewDirectory = (ImageView) v.findViewById(R.id.typeFolderFile);
+        final TextView fileName = (TextView) v.findViewById(com.steelzack.chartizateapp.R.id.fileName);
+        final TextView fileDate = (TextView) v.findViewById(com.steelzack.chartizateapp.R.id.fileDate);
+        final ImageView viewDirectory = (ImageView) v.findViewById(com.steelzack.chartizateapp.R.id.typeFolderFile);
 
         if (directoryManager) {
             viewDirectory.setOnClickListener(new View.OnClickListener() {
@@ -72,15 +70,13 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem> {
             });
         }
 
-        final ImageView imageView = (ImageView) v.findViewById(R.id.typeFolderFile);
+        final ImageView imageView = (ImageView) v.findViewById(com.steelzack.chartizateapp.R.id.typeFolderFile);
         switch (fileItem.getFileType()) {
             case Folder:
-                final Drawable image = ResourcesCompat.getDrawable(context.getResources(), R.drawable.folder, null);
+                final Drawable image = ResourcesCompat.getDrawable(context.getResources(), com.steelzack.chartizateapp.R.drawable.folder, null);
                 imageView.setImageDrawable(image);
                 break;
             case File:
-                final BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.RGB_565;
                 InputStream inputStream = null;
                 try {
                     inputStream = new FileInputStream(new File(fileItem.getFile().getAbsolutePath()));
@@ -88,8 +84,8 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem> {
                     e.printStackTrace();
                     throw new RuntimeException(e);
                 }
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
-                imageView.setImageBitmap(ThumbnailUtils.extractThumbnail(bitmap,30,30));
+
+                ChartizateThumbs.setImageThumbnail(imageView, inputStream);
 
                 break;
         }

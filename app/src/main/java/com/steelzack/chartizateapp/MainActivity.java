@@ -1,13 +1,10 @@
-package com.steelzack.pencelizer;
+package com.steelzack.chartizateapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -15,6 +12,7 @@ import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,27 +20,28 @@ import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
-import com.steelzack.chartizate.ChartizateEncodingManager;
-import com.steelzack.chartizate.ChartizateEncodingManagerImpl;
 import com.steelzack.chartizate.ChartizateFontManager;
 import com.steelzack.chartizate.ChartizateFontManagerImpl;
 import com.steelzack.chartizate.ChartizateManagerImpl;
-import com.steelzack.chartizate.distributions.ChartizateDistribution;
 import com.steelzack.chartizate.distributions.ChartizateDistributionType;
-import com.steelzack.pencelizer.distribution.manager.DistributionManager;
-import com.steelzack.pencelizer.file.manager.FileManagerItem;
-import com.steelzack.pencelizer.font.manager.FontManagerAdapter;
-import com.steelzack.pencelizer.language.manager.LanguageManagerAdapter;
+import com.steelzack.chartizateapp.common.ChartizateThumbs;
+import com.steelzack.chartizateapp.distribution.manager.DistributionManager;
+import com.steelzack.chartizateapp.file.manager.FileManagerItem;
+import com.steelzack.chartizateapp.font.manager.FontManagerAdapter;
+import com.steelzack.chartizateapp.language.manager.LanguageManagerAdapter;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int FILE_FIND = 0;
+
+    public static final int FOLDER_FIND = 1;
 
     private FileManagerItem currentSelectedFile = null;
 
@@ -59,27 +58,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setContentView(com.steelzack.chartizateapp.R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(com.steelzack.chartizateapp.R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (getIntent() != null && getIntent().getExtras() != null) {
             final FileManagerItem fileManagerItem = (FileManagerItem) getIntent().getExtras().get("fileItem");
             if (fileManagerItem != null) {
-                TextView currentFile = (TextView) findViewById(R.id.lblESelectedFile);
+                TextView currentFile = (TextView) findViewById(com.steelzack.chartizateapp.R.id.lblESelectedFile);
                 currentFile.setText(fileManagerItem.getFilename());
                 currentSelectedFile = fileManagerItem;
             }
 
             final FileManagerItem folderManagerItem = (FileManagerItem) getIntent().getExtras().get("folderItem");
             if (folderManagerItem != null) {
-                TextView currentFile = (TextView) findViewById(R.id.lblOutputFolder);
+                TextView currentFile = (TextView) findViewById(com.steelzack.chartizateapp.R.id.lblOutputFolder);
                 currentFile.setText(folderManagerItem.getFilename());
                 currentSelectedFolder= folderManagerItem;
             }
         }
 
-        final Spinner spiLanguageCode = (Spinner) findViewById(R.id.spiLanguageCode);
+        final Spinner spiLanguageCode = (Spinner) findViewById(com.steelzack.chartizateapp.R.id.spiLanguageCode);
         final LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter( //
                 this, //
                 android.R.layout.simple_spinner_item, listOfAllLanguageCode //
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spiLanguageCode.setAdapter(dataAdapter);
 
-        final Spinner spiDistribution = (Spinner) findViewById(R.id.spiDistribution);
+        final Spinner spiDistribution = (Spinner) findViewById(com.steelzack.chartizateapp.R.id.spiDistribution);
         final DistributionManager distributionDataAdapter = new DistributionManager( //
                 this, //
                 android.R.layout.simple_spinner_item, listOfAllDistributions //
@@ -96,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         spiDistribution.setAdapter(distributionDataAdapter);
 
 
-        final Spinner spiFontType = (Spinner) findViewById(R.id.spiFontType);
+        final Spinner spiFontType = (Spinner) findViewById(com.steelzack.chartizateapp.R.id.spiFontType);
         final FontManagerAdapter fontManagerAdapter = new FontManagerAdapter( //
                 this, //
                 android.R.layout.simple_spinner_item, listOfAllFonts //
@@ -104,17 +103,17 @@ public class MainActivity extends AppCompatActivity {
         distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spiFontType.setAdapter(fontManagerAdapter);
 
-        svSelectedColor = (SurfaceView) findViewById(R.id.svSelectedColor);
+        svSelectedColor = (SurfaceView) findViewById(com.steelzack.chartizateapp.R.id.svSelectedColor);
 
         spiDistribution.setEnabled(false);
 
-        editFontSize = (EditText)findViewById(R.id.editFontSize);
+        editFontSize = (EditText)findViewById(com.steelzack.chartizateapp.R.id.editFontSize);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(com.steelzack.chartizateapp.R.menu.menu_main, menu);
         return true;
     }
 
@@ -126,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == com.steelzack.chartizateapp.R.id.action_settings) {
             return true;
         }
 
@@ -165,13 +164,13 @@ public class MainActivity extends AppCompatActivity {
     public void pFindFile(View view) {
         final Intent intent = new Intent(MainActivity.this, FileManagerActivity.class);
         intent.putExtra("directoryManager", false);
-        startActivityForResult(intent, 123);
+        startActivityForResult(intent, FILE_FIND);
     }
 
     public void pFindOutputFolder(View view) {
         final Intent intent = new Intent(MainActivity.this, FileManagerActivity.class);
         intent.putExtra("directoryManager", true);
-        startActivityForResult(intent, 123);
+        startActivityForResult(intent, FOLDER_FIND);
     }
 
     public void pAddOne(View view) {
@@ -191,14 +190,21 @@ public class MainActivity extends AppCompatActivity {
         if (data != null && data.getExtras() != null) {
             final FileManagerItem fileManagerItem = (FileManagerItem) data.getExtras().get("fileItem");
             if (fileManagerItem != null) {
-                TextView currentFile = (TextView) findViewById(R.id.lblESelectedFile);
+                final TextView currentFile = (TextView) findViewById(com.steelzack.chartizateapp.R.id.lblESelectedFile);
                 currentFile.setText(fileManagerItem.getFilename());
                 currentSelectedFile = fileManagerItem;
+                final ImageView btnImageFile = (ImageView)findViewById(com.steelzack.chartizateapp.R.id.fileImageSourcePreview);
+
+                try {
+                    ChartizateThumbs.setImageThumbnail(btnImageFile, new FileInputStream(fileManagerItem.getFile()));
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             final FileManagerItem folderManagerItem = (FileManagerItem) data.getExtras().get("folderItem");
             if (folderManagerItem != null) {
-                TextView currentFile = (TextView) findViewById(R.id.lblOutputFolder);
+                final TextView currentFile = (TextView) findViewById(com.steelzack.chartizateapp.R.id.lblOutputFolder);
                 currentFile.setText(folderManagerItem.getFilename());
                 currentSelectedFolder= folderManagerItem;
             }
@@ -207,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void pGenerateFile(View view) throws IOException {
         final InputStream imageFullStream = new FileInputStream(new File(currentSelectedFile.getFile().getAbsolutePath()));
-        final String outputFileName =((EditText)findViewById(R.id.editOutputFileName)).getText().toString();
+        final String outputFileName =((EditText)findViewById(com.steelzack.chartizateapp.R.id.editOutputFileName)).getText().toString();
 
         final ChartizateManagerImpl manager = new ChartizateManagerImpl( //
                 Color.BLACK, //

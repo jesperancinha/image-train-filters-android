@@ -1,4 +1,4 @@
-package com.steelzack.pencelizer.file.manager;
+package com.steelzack.chartizateapp.file.manager;
 
 import java.io.File;
 import java.io.Serializable;

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.steelzack.pencelizer.FileManagerActivity">
+    tools:context="com.steelzack.chartizateapp.FileManagerActivity">
 
     <ImageView
         android:layout_width="wrap_content"

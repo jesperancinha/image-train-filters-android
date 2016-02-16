@@ -1,4 +1,4 @@
-package com.steelzack.pencelizer.distribution.manager;
+package com.steelzack.chartizateapp.distribution.manager;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;

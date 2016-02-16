@@ -1,4 +1,4 @@
-package com.steelzack.pencelizer;
+package com.steelzack.chartizateapp;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -7,9 +7,9 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ListView;
 
-import com.steelzack.pencelizer.file.manager.FileManagerAdapter;
-import com.steelzack.pencelizer.file.manager.FileManagerItem;
-import com.steelzack.pencelizer.file.manager.FileType;
+import com.steelzack.chartizateapp.file.manager.FileManagerAdapter;
+import com.steelzack.chartizateapp.file.manager.FileManagerItem;
+import com.steelzack.chartizateapp.file.manager.FileType;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -19,8 +19,6 @@ import java.util.List;
 
 import javax.activation.MimetypesFileTypeMap;
 
-import static com.steelzack.pencelizer.file.manager.FileType.File;
-import static com.steelzack.pencelizer.file.manager.FileType.Folder;
 import static java.util.Collections.*;
 
 /**
@@ -50,16 +48,16 @@ public class FileManagerActivity extends ListActivity {
 
         if (innerFiles != null) {
             for (File file : innerFiles) {
-                final FileType type = file.isDirectory() ? Folder : File;
+                final FileType type = file.isDirectory() ? FileType.Folder : FileType.File;
                 final String mimetype = new MimetypesFileTypeMap().getContentType(file);
                 final String fileFormattedDate = getDateString(file);
                 switch (type) {
                     case Folder:
-                        directories.add(new FileManagerItem(file.getName(), fileFormattedDate, Folder, file));
+                        directories.add(new FileManagerItem(file.getName(), fileFormattedDate, FileType.Folder, file));
                         break;
                     case File:
-                        if (mimetype.contains(getString(R.string.image_mime_type)) && !directoryManager) {
-                            files.add(new FileManagerItem(file.getName(), fileFormattedDate, File, file));
+                        if (mimetype.contains(getString(com.steelzack.chartizateapp.R.string.image_mime_type)) && !directoryManager) {
+                            files.add(new FileManagerItem(file.getName(), fileFormattedDate, FileType.File, file));
                         }
                         break;
                 }
@@ -70,12 +68,12 @@ public class FileManagerActivity extends ListActivity {
         sort(files);
         List<FileManagerItem> completeFolderList = new ArrayList<>();
         if (directory.getParentFile() != null) {
-            completeFolderList.add(new FileManagerItem("..", getDateString(directory), Folder, directory.getParentFile()));
+            completeFolderList.add(new FileManagerItem("..", getDateString(directory), FileType.Folder, directory.getParentFile()));
         }
         files.addAll(directories);
         completeFolderList.addAll(files);
 
-        fileManagerAdapter = new FileManagerAdapter(FileManagerActivity.this, R.layout.file_navigator, completeFolderList, directoryManager);
+        fileManagerAdapter = new FileManagerAdapter(FileManagerActivity.this, com.steelzack.chartizateapp.R.layout.file_navigator, completeFolderList, directoryManager);
         this.setListAdapter(fileManagerAdapter);
     }
 
@@ -93,10 +91,10 @@ public class FileManagerActivity extends ListActivity {
 
         final FileManagerItem fileItem = fileManagerAdapter.getItem(position);
 
-        if (fileItem.getFileType() == Folder) {
+        if (fileItem.getFileType() == FileType.Folder) {
             createListOfFiles(fileItem.getFile());
 
-        } else if (fileItem.getFileType() == File) {
+        } else if (fileItem.getFileType() == FileType.File) {
             pBackToMain(fileItem);
         }
     }
