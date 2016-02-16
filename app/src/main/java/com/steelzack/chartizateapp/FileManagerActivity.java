@@ -19,7 +19,7 @@ import java.util.List;
 
 import javax.activation.MimetypesFileTypeMap;
 
-import static java.util.Collections.*;
+import static java.util.Collections.sort;
 
 /**
  * Created by joao on 6-2-16.
