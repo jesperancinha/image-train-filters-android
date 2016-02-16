@@ -1,4 +1,4 @@
-package com.steelzack.pencelizer.font.manager;
+package com.steelzack.chartizateapp.font.manager;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;

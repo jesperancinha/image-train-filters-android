@@ -1,22 +1,27 @@
-package com.steelzack.pencelizer.file.manager;
+package com.steelzack.chartizateapp.file.manager;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.media.ThumbnailUtils;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.steelzack.pencelizer.FileManagerActivity;
-import com.steelzack.pencelizer.MainActivity;
-import com.steelzack.pencelizer.R;
+import com.steelzack.chartizateapp.MainActivity;
+import com.steelzack.chartizateapp.common.ChartizateThumbs;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -48,9 +53,9 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem> {
         }
 
         final FileManagerItem fileItem = fileList.get(position);
-        final TextView fileName = (TextView) v.findViewById(R.id.fileName);
-        final TextView fileDate = (TextView) v.findViewById(R.id.fileDate);
-        final ImageView viewDirectory = (ImageView) v.findViewById(R.id.typeFolderFile);
+        final TextView fileName = (TextView) v.findViewById(com.steelzack.chartizateapp.R.id.fileName);
+        final TextView fileDate = (TextView) v.findViewById(com.steelzack.chartizateapp.R.id.fileDate);
+        final ImageView viewDirectory = (ImageView) v.findViewById(com.steelzack.chartizateapp.R.id.typeFolderFile);
 
         if (directoryManager) {
             viewDirectory.setOnClickListener(new View.OnClickListener() {
@@ -65,13 +70,23 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem> {
             });
         }
 
+        final ImageView imageView = (ImageView) v.findViewById(com.steelzack.chartizateapp.R.id.typeFolderFile);
         switch (fileItem.getFileType()) {
             case Folder:
-                final ImageView imageView = (ImageView) v.findViewById(R.id.typeFolderFile);
-                Drawable image = ResourcesCompat.getDrawable(context.getResources(), R.drawable.folder, null);
+                final Drawable image = ResourcesCompat.getDrawable(context.getResources(), com.steelzack.chartizateapp.R.drawable.folder, null);
                 imageView.setImageDrawable(image);
                 break;
             case File:
+                InputStream inputStream = null;
+                try {
+                    inputStream = new FileInputStream(new File(fileItem.getFile().getAbsolutePath()));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+
+                ChartizateThumbs.setImageThumbnail(imageView, inputStream);
+
                 break;
         }
 

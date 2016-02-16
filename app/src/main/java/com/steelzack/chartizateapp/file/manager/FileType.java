@@ -1,4 +1,4 @@
-package com.steelzack.pencelizer.file.manager;
+package com.steelzack.chartizateapp.file.manager;
 
 /**
  * Created by joao on 6-2-16.

@@ -1,6 +1,6 @@
-# pencelizer-app-android
+# chartizate-app-android
 
-This is the app that will use the pencelizer library
+This is the app that will use the chartizate library
 
 > **It will be available soon...**
 > - Keep comming back.
