@@ -1,16 +1,13 @@
 package com.steelzack.chartizateapp;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,8 +20,6 @@ import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.steelzack.chartizate.ChartizateFontManager;
 import com.steelzack.chartizate.ChartizateFontManagerImpl;
-import com.steelzack.chartizate.ChartizateImageManager;
-import com.steelzack.chartizate.ChartizateImageManagerImpl;
 import com.steelzack.chartizate.ChartizateManagerImpl;
 import com.steelzack.chartizate.distributions.ChartizateDistributionType;
 import com.steelzack.chartizateapp.common.ChartizateSurfaceView;
@@ -218,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
     public void pGenerateFile(View view) throws IOException {
         final InputStream imageFullStream = new FileInputStream(new File(currentSelectedFile.getFile().getAbsolutePath()));
         final String outputFileName = ((EditText) findViewById(com.steelzack.chartizateapp.R.id.editOutputFileName)).getText().toString();
+        final Integer fontSize = Integer.parseInt(((EditText) findViewById(R.id.editFontSize)).getText().toString());
 
         final ChartizateManagerImpl manager = new ChartizateManagerImpl( //
                 svSelectedColor.getColor(), //
@@ -225,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
                 10, //
                 ChartizateDistributionType.Linear, //
                 "Sans", //
-                5, //
+                fontSize, //
                 Character.UnicodeBlock.LATIN_EXTENDED_A, //
                 imageFullStream, //
                 new File(currentSelectedFolder.getFile(), outputFileName).getAbsolutePath() //
