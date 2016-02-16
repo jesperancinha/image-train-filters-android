@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.steelzack.chartizateapp.R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(com.steelzack.chartizateapp.R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(com.steelzack.chartizateapp.R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (getIntent() != null && getIntent().getExtras() != null) {
@@ -138,11 +138,6 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == com.steelzack.chartizateapp.R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

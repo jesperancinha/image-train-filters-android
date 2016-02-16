@@ -248,7 +248,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="File"
+        android:text="Folder"
         android:id="@+id/btnFindOutputFolder"
         android:layout_gravity="right"
         android:onClick="pFindOutputFolder"
