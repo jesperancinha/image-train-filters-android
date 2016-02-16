@@ -3,7 +3,10 @@ package com.steelzack.pencelizer.file.manager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.media.ThumbnailUtils;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,10 @@ import com.steelzack.pencelizer.FileManagerActivity;
 import com.steelzack.pencelizer.MainActivity;
 import com.steelzack.pencelizer.R;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -65,13 +72,25 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem> {
             });
         }
 
+        final ImageView imageView = (ImageView) v.findViewById(R.id.typeFolderFile);
         switch (fileItem.getFileType()) {
             case Folder:
-                final ImageView imageView = (ImageView) v.findViewById(R.id.typeFolderFile);
-                Drawable image = ResourcesCompat.getDrawable(context.getResources(), R.drawable.folder, null);
+                final Drawable image = ResourcesCompat.getDrawable(context.getResources(), R.drawable.folder, null);
                 imageView.setImageDrawable(image);
                 break;
             case File:
+                final BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+                InputStream inputStream = null;
+                try {
+                    inputStream = new FileInputStream(new File(fileItem.getFile().getAbsolutePath()));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
+                imageView.setImageBitmap(ThumbnailUtils.extractThumbnail(bitmap,30,30));
+
                 break;
         }
 
