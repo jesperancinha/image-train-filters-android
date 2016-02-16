@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/typeFolderFile"
         android:layout_marginLeft="5dip"
+        android:minWidth="30dp"
         />
 
     <TextView
@@ -21,6 +22,7 @@
         android:id="@+id/fileName"
         android:layout_toRightOf="@id/typeFolderFile"
         android:layout_marginLeft="5dip"
+        android:minWidth="100dp"
         />
 
     <TextView
@@ -28,8 +30,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/fileDate"
         android:layout_toRightOf="@id/fileName"
-        android:layout_alignParentRight="true"
         android:layout_marginLeft="5dip"
+        android:minWidth="170dp"
         />
-
 </RelativeLayout>

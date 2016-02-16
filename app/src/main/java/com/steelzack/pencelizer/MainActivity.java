@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.steelzack.chartizate.ChartizateEncodingManager;
 import com.steelzack.chartizate.ChartizateEncodingManagerImpl;
 import com.steelzack.chartizate.ChartizateFontManager;
 import com.steelzack.chartizate.ChartizateFontManagerImpl;
+import com.steelzack.chartizate.ChartizateManagerImpl;
 import com.steelzack.chartizate.distributions.ChartizateDistribution;
 import com.steelzack.chartizate.distributions.ChartizateDistributionType;
 import com.steelzack.pencelizer.distribution.manager.DistributionManager;
@@ -32,6 +34,11 @@ import com.steelzack.pencelizer.file.manager.FileManagerItem;
 import com.steelzack.pencelizer.font.manager.FontManagerAdapter;
 import com.steelzack.pencelizer.language.manager.LanguageManagerAdapter;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,11 +46,13 @@ public class MainActivity extends AppCompatActivity {
 
     private FileManagerItem currentSelectedFile = null;
 
+    private FileManagerItem currentSelectedFolder = null;
+
     List<String> listOfAllLanguageCode = ChartizateFontManager.getAllUniCodeBlockStringsJava7();
+
     List<String> listOfAllDistributions = ChartizateFontManager.getAllDistributionTypes();
 
     final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
-
     private SurfaceView svSelectedColor;
     private EditText editFontSize;
 
@@ -54,21 +63,19 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         if (getIntent() != null && getIntent().getExtras() != null) {
             final FileManagerItem fileManagerItem = (FileManagerItem) getIntent().getExtras().get("fileItem");
             if (fileManagerItem != null) {
                 TextView currentFile = (TextView) findViewById(R.id.lblESelectedFile);
                 currentFile.setText(fileManagerItem.getFilename());
                 currentSelectedFile = fileManagerItem;
+            }
+
+            final FileManagerItem folderManagerItem = (FileManagerItem) getIntent().getExtras().get("folderItem");
+            if (folderManagerItem != null) {
+                TextView currentFile = (TextView) findViewById(R.id.lblOutputFolder);
+                currentFile.setText(folderManagerItem.getFilename());
+                currentSelectedFolder= folderManagerItem;
             }
         }
 
@@ -126,11 +133,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void pFindFile(View view) {
-        final Intent intent = new Intent(MainActivity.this, FileManagerActivity.class);
-        startActivity(intent);
-    }
-
     public void pGetBackGroundColor(View view) {
         ColorPickerDialogBuilder
                 .with(view.getContext())
@@ -160,8 +162,16 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void pFindOutputFolder(View view) {
+    public void pFindFile(View view) {
+        final Intent intent = new Intent(MainActivity.this, FileManagerActivity.class);
+        intent.putExtra("directoryManager", false);
+        startActivityForResult(intent, 123);
+    }
 
+    public void pFindOutputFolder(View view) {
+        final Intent intent = new Intent(MainActivity.this, FileManagerActivity.class);
+        intent.putExtra("directoryManager", true);
+        startActivityForResult(intent, 123);
     }
 
     public void pAddOne(View view) {
@@ -172,5 +182,44 @@ public class MainActivity extends AppCompatActivity {
     public void pMinusOne(View view) {
         int currentFontSize = Integer.parseInt(editFontSize.getText().toString());
         editFontSize.setText(String.valueOf(currentFontSize - 1));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data != null && data.getExtras() != null) {
+            final FileManagerItem fileManagerItem = (FileManagerItem) data.getExtras().get("fileItem");
+            if (fileManagerItem != null) {
+                TextView currentFile = (TextView) findViewById(R.id.lblESelectedFile);
+                currentFile.setText(fileManagerItem.getFilename());
+                currentSelectedFile = fileManagerItem;
+            }
+
+            final FileManagerItem folderManagerItem = (FileManagerItem) data.getExtras().get("folderItem");
+            if (folderManagerItem != null) {
+                TextView currentFile = (TextView) findViewById(R.id.lblOutputFolder);
+                currentFile.setText(folderManagerItem.getFilename());
+                currentSelectedFolder= folderManagerItem;
+            }
+        }
+    }
+
+    public void pGenerateFile(View view) throws IOException {
+        final InputStream imageFullStream = new FileInputStream(new File(currentSelectedFile.getFile().getAbsolutePath()));
+        final String outputFileName =((EditText)findViewById(R.id.editOutputFileName)).getText().toString();
+
+        final ChartizateManagerImpl manager = new ChartizateManagerImpl( //
+                Color.BLACK, //
+                50, //
+                10, //
+                ChartizateDistributionType.Linear, //
+                "Sans", //
+                5, //
+                Character.UnicodeBlock.LATIN_EXTENDED_A, //
+                imageFullStream, //
+                new File(currentSelectedFolder.getFile(), outputFileName).getAbsolutePath() //
+        );
+        manager.generateConvertedImage();
     }
 }
