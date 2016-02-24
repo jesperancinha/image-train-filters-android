@@ -20,7 +20,9 @@
         android:text="Image file"
         android:id="@+id/lblSelectedFile"
         android:gravity="center_vertical"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
+
         />
 
     <TextView
@@ -33,26 +35,28 @@
         android:paddingRight="20dp"
         android:layout_toRightOf="@+id/lblSelectedFile"
         android:gravity="center_vertical"
-        android:height="50dp"
-        android:maxWidth="200dp"
+        android:height="@dimen/menu_item_height"
+        android:minWidth="200dp"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/menu_item_height"
         android:id="@+id/fileImageSourcePreview"
         android:layout_toRightOf="@id/lblESelectedFile"
         android:layout_marginLeft="5dip"
         android:maxWidth="30dp"
         android:minWidth="0dp"
         android:foregroundGravity="center_vertical"
-        android:maxHeight="50dp"
+        android:maxHeight="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/menu_item_btn_height"
         android:text="File"
         android:id="@+id/btnFindFile"
         android:layout_gravity="right"
@@ -60,8 +64,10 @@
         android:singleLine="false"
         android:layout_toRightOf="@id/fileImageSourcePreview"
         android:layout_alignParentRight="true"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
         android:minWidth="100dp"
+        android:maxHeight="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <TextView
@@ -72,17 +78,20 @@
         android:text="Char coding"
         android:gravity="center_vertical"
         android:id="@+id/lblLanguageCoding"
-        android:height="50dp"/>
+        android:height="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
+        />
 
     <Spinner
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/menu_item_height"
         android:id="@+id/spiLanguageCode"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/lblLanguageCoding"
         android:layout_below="@id/lblSelectedFile"
-        android:minHeight="50dp"/>
-
+        android:minHeight="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -91,18 +100,20 @@
         android:layout_below="@id/lblLanguageCoding"
         android:gravity="center_vertical"
         android:id="@+id/lblDistribution"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
         android:text="Distribution"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <Spinner
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/menu_item_height"
         android:id="@+id/spiDistribution"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/lblDistribution"
         android:layout_below="@id/lblLanguageCoding"
-        android:minHeight="50dp"
+        android:minHeight="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <TextView
@@ -112,28 +123,31 @@
         android:layout_below="@id/lblDistribution"
         android:gravity="center_vertical"
         android:id="@+id/lblBackgroundColor"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
         android:text="Background color:"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <com.steelzack.chartizateapp.common.ChartizateSurfaceView
-        android:layout_width="20dp"
+        android:layout_width="100dp"
         android:layout_height="20dp"
         android:id="@+id/svSelectedColor"
         android:layout_below="@+id/lblDistribution"
         android:layout_toRightOf="@id/lblBackgroundColor"
-        android:minHeight="50dp"
+        android:minHeight="@dimen/menu_item_height"
         android:foregroundGravity="center_vertical"
-        android:minWidth="50dp"
+        android:minWidth="@dimen/menu_item_height"
         android:focusable="false"
-        android:layout_marginTop="20dp"
-        android:background="#ffffff" />
+        android:layout_marginTop="5dp"
+        android:background="#ffffff"
+        android:textSize="@dimen/menu_item_font"
+        />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_below="@id/lblDistribution"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/menu_item_btn_height"
         android:text="Pick Color"
         android:id="@+id/btnBackgroundColor"
         android:layout_gravity="right"
@@ -141,7 +155,10 @@
         android:singleLine="false"
         android:layout_toRightOf="@id/svSelectedColor"
         android:layout_alignParentRight="true"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
+        android:maxHeight="@dimen/menu_item_height"
+        android:maxWidth="200dp"
         />
 
     <TextView
@@ -150,29 +167,31 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_below="@+id/lblBackgroundColor"
         android:gravity="center_vertical"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
         android:text="Font size:"
         android:id="@+id/lblFontSize"
         android:layout_alignParentLeft="true"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <Button
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:height="50dp"
+        android:layout_width="@dimen/menu_item_btn_height"
+        android:layout_height="@dimen/menu_item_btn_height"
+        android:height="@dimen/menu_item_height"
         android:text="+"
         android:textAlignment="center"
         android:layout_below="@id/lblBackgroundColor"
         android:layout_toRightOf="@id/lblFontSize"
-        android:width="50dp"
+        android:width="@dimen/menu_item_height"
         android:id="@+id/btnPlus"
         android:onClick="pAddOne"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <Button
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:height="50dp"
+        android:layout_width="@dimen/menu_item_btn_height"
+        android:layout_height="@dimen/menu_item_btn_height"
+        android:height="@dimen/menu_item_height"
         android:text="-"
         android:textAlignment="center"
         android:layout_below="@id/lblBackgroundColor"
@@ -180,21 +199,24 @@
         android:id="@+id/btnMinus"
         android:gravity="center_vertical"
         android:onClick="pMinusOne"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/lblBackgroundColor"
+        android:layout_height="@dimen/menu_item_btn_height"
+        android:layout_below="@id/btnBackgroundColor"
         android:layout_toRightOf="@id/btnMinus"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
+        android:textAlignment="textEnd"
         android:id="@+id/editFontSize"
         android:gravity="center_vertical"
         android:layout_alignParentRight="true"
         android:text="10"
-        android:textAlignment="textEnd"
+        android:paddingTop="0dp"
         android:enabled="false"
         android:textColor="#000000"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <TextView
@@ -203,19 +225,21 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_below="@+id/lblFontSize"
         android:gravity="center_vertical"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
         android:text="Font type:"
         android:id="@+id/lblFontType"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <Spinner
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/menu_item_height"
         android:id="@+id/spiFontType"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/lblFontType"
         android:layout_below="@id/lblFontSize"
-        android:minHeight="50dp"
+        android:minHeight="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
         />
 
 
@@ -226,8 +250,9 @@
         android:text="Output folder"
         android:id="@+id/lblSelectOutputFolder"
         android:gravity="center_vertical"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
         android:layout_below="@id/lblFontType"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <TextView
@@ -240,14 +265,16 @@
         android:paddingRight="20dp"
         android:layout_toRightOf="@id/lblSelectOutputFolder"
         android:gravity="center_vertical"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
         android:layout_below="@id/lblFontType"
+        android:textSize="@dimen/menu_item_font"
+        android:minWidth="200dp"
         />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/menu_item_btn_height"
         android:text="Folder"
         android:id="@+id/btnFindOutputFolder"
         android:layout_gravity="right"
@@ -255,8 +282,10 @@
         android:singleLine="false"
         android:layout_toRightOf="@id/lblOutputFolder"
         android:layout_alignParentRight="true"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
         android:layout_below="@id/lblFontType"
+        android:textSize="@dimen/menu_item_font"
+        android:maxWidth="200dp"
         />
 
     <TextView
@@ -265,9 +294,10 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_below="@+id/lblSelectOutputFolder"
         android:gravity="center_vertical"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
         android:text="Font type:"
         android:id="@+id/lblOutputFileName"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <EditText
@@ -275,26 +305,39 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/lblSelectOutputFolder"
         android:layout_toRightOf="@id/lblOutputFileName"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
         android:id="@+id/editOutputFileName"
         android:gravity="center_vertical"
         android:layout_alignParentRight="true"
         android:text="Noname.png"
         android:textAlignment="textEnd"
+        android:textSize="@dimen/menu_item_font"
         />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/menu_item_btn_height"
         android:text="Start generation"
         android:id="@+id/btnStart"
         android:layout_gravity="right"
         android:onClick="pGenerateFile"
         android:singleLine="false"
         android:layout_alignParentRight="true"
-        android:height="50dp"
+        android:height="@dimen/menu_item_height"
         android:layout_below="@id/editOutputFileName"
+        android:textSize="@dimen/menu_item_font"
+        android:maxWidth="200dp"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="@dimen/menu_item_font"
+        android:id="@+id/textStatus"
+        android:layout_below="@+id/btnStart"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/btnStart" />
 
 </RelativeLayout>

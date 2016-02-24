@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="menu_item_height">30dp</dimen>
+    <dimen name="menu_item_font">10sp</dimen>
+    <dimen name="menu_item_btn_height">40dp</dimen>
+    <dimen name="directory_item_dim">50dp</dimen>
+</resources>
