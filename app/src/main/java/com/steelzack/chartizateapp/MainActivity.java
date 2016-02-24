@@ -32,6 +32,8 @@ import com.steelzack.chartizateapp.file.manager.FileManagerItem;
 import com.steelzack.chartizateapp.font.manager.FontManagerAdapter;
 import com.steelzack.chartizateapp.language.manager.LanguageManagerAdapter;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -50,19 +52,26 @@ public class MainActivity extends AppCompatActivity {
 
     private FileManagerItem currentSelectedFolder = null;
 
-    List<String> listOfAllLanguageCode = ChartizateFontManager.getAllUniCodeBlockStringsJava7();
+    final List<String> listOfAllLanguageCode = ChartizateFontManager.getAllUniCodeBlockStringsJava7();
 
-    List<String> listOfAllDistributions = ChartizateFontManager.getAllDistributionTypes();
+    final List<String> listOfAllDistributions = ChartizateFontManager.getAllDistributionTypes();
 
     final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
+
     private ChartizateSurfaceView svSelectedColor;
+
     private EditText editFontSize;
+
+    private Button btnStart;
+
+    private TextView textStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Collections.sort(listOfAllLanguageCode);
+        Collections.sort(listOfAllFonts);
 
         setContentView(com.steelzack.chartizateapp.R.layout.activity_main);
         final Toolbar toolbar = (Toolbar) findViewById(com.steelzack.chartizateapp.R.id.toolbar);
@@ -115,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
         editFontSize = (EditText) findViewById(com.steelzack.chartizateapp.R.id.editFontSize);
 
-        final Button btnStartGeneration = (Button) findViewById(R.id.btnStart);
-        btnStartGeneration.setEnabled(validate());
+        btnStart = (Button) findViewById(R.id.btnStart);
+        btnStart.setEnabled(validate());
 
         final EditText editFileName = (EditText) findViewById(R.id.editOutputFileName);
         editFileName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -127,6 +136,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        textStatus = (TextView) findViewById(R.id.textStatus);
+
     }
 
     @Override
@@ -275,42 +287,63 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void pGenerateFile(View view) throws IOException {
-        final File rawCurrehtSelectedFile = currentSelectedFile.getFile();
-        final String rawFontSize = ((EditText) findViewById(R.id.editFontSize)).getText().toString();
-        final String outputFileName = ((EditText) findViewById(com.steelzack.chartizateapp.R.id.editOutputFileName)).getText().toString();
-        final String fontType = ((Spinner) findViewById(R.id.spiFontType)).getSelectedItem().toString();
-        final String alphabet = ((Spinner) findViewById(R.id.spiLanguageCode)).getSelectedItem().toString();
+        btnStart.setEnabled(false);
+        textStatus.setText("Please wait while chartizating...");
+        final Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final File rawCurrehtSelectedFile = currentSelectedFile.getFile();
+                    final String rawFontSize = ((EditText) findViewById(R.id.editFontSize)).getText().toString();
+                    final String outputFileName = ((EditText) findViewById(R.id.editOutputFileName)).getText().toString();
+                    final String fontType = ((Spinner) findViewById(R.id.spiFontType)).getSelectedItem().toString();
+                    final String alphabet = ((Spinner) findViewById(R.id.spiLanguageCode)).getSelectedItem().toString();
 
-        final InputStream imageFullStream = new FileInputStream(new File(rawCurrehtSelectedFile.getAbsolutePath()));
+                    final InputStream imageFullStream = new FileInputStream(new File(rawCurrehtSelectedFile.getAbsolutePath()));
 
-        final Integer fontSize = Integer.parseInt(rawFontSize);
-        final int svSelectedColorColor = svSelectedColor.getColor();
+                    final Integer fontSize = Integer.parseInt(rawFontSize);
+                    final int svSelectedColorColor = svSelectedColor.getColor();
 
-        try {
-            final ChartizateManagerImpl manager = new ChartizateManagerImpl( //
-                    svSelectedColorColor, //
-                    50, //
-                    10, //
-                    ChartizateDistributionType.Linear, //
-                    fontType, //
-                    fontSize, //
-                    Character.UnicodeBlock.forName(alphabet), //
-                    imageFullStream, //
-                    new File(currentSelectedFolder.getFile(), outputFileName).getAbsolutePath() //
-            );
-            manager.generateConvertedImage();
-        } catch (IllegalArgumentException e) {
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("Error with your code selection")
-                    .setMessage("Unfortunatelly this Unicode is not supported. If you want a working example, try: LATIN_EXTENDED_A")
-                    .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    try {
+                        final ChartizateManagerImpl manager = new ChartizateManagerImpl( //
+                                svSelectedColorColor, //
+                                50, //
+                                10, //
+                                ChartizateDistributionType.Linear, //
+                                fontType, //
+                                fontSize, //
+                                Character.UnicodeBlock.forName(alphabet), //
+                                imageFullStream, //
+                                new File(currentSelectedFolder.getFile(), outputFileName).getAbsolutePath() //
+                        );
+                        manager.generateConvertedImage();
+                    } catch (IllegalArgumentException e) {
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Error with your code selection")
+                                .setMessage("Unfortunatelly this Unicode is not supported. If you want a working example, try: LATIN_EXTENDED_A")
+                                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                    @Override
+                                    public void onCancel(DialogInterface dialog) {
+
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    textStatus.setText("Done!");
+                    btnStart.post(new Runnable() {
                         @Override
-                        public void onCancel(DialogInterface dialog) {
+                        public void run() {
+                            btnStart.setEnabled(true);
 
                         }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        }
+                    });
+                }
+            }
+        };
+        textStatus.post(task);
     }
 }
