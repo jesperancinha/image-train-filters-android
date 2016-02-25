@@ -316,6 +316,63 @@
         android:textSize="@dimen/menu_item_font"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/lblOutputFileName"
+        android:gravity="bottom"
+        android:height="@dimen/menu_item_height"
+        android:text="Density:"
+        android:id="@+id/lblDensity"
+        android:textSize="@dimen/menu_item_font"
+        android:layout_centerVertical="true"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/editOutputFileName"
+        android:layout_toRightOf="@id/lblOutputFileName"
+        android:height="@dimen/menu_item_height"
+        android:id="@+id/editDensity"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:textAlignment="textEnd"
+        android:textSize="@dimen/menu_item_font"
+        android:inputType="numberDecimal"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/lblDensity"
+        android:gravity="bottom"
+        android:height="@dimen/menu_item_height"
+        android:text="Range:"
+        android:id="@+id/lblRange"
+        android:textSize="@dimen/menu_item_font"
+        android:layout_centerVertical="true"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/editDensity"
+        android:layout_toRightOf="@id/lblOutputFileName"
+        android:height="@dimen/menu_item_height"
+        android:id="@+id/editRange"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:textAlignment="textEnd"
+        android:textSize="@dimen/menu_item_font"
+        android:inputType="numberDecimal"
+        />
+
+
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
@@ -327,7 +384,7 @@
         android:singleLine="false"
         android:layout_alignParentRight="true"
         android:height="@dimen/menu_item_height"
-        android:layout_below="@id/editOutputFileName"
+        android:layout_below="@id/editRange"
         android:textSize="@dimen/menu_item_font"
         android:maxWidth="200dp"
         />
