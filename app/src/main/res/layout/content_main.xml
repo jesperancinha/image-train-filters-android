@@ -217,6 +217,7 @@
         android:enabled="false"
         android:textColor="#000000"
         android:textSize="@dimen/menu_item_font"
+        android:inputType="number"
         />
 
     <TextView
@@ -341,7 +342,7 @@
         android:layout_alignParentRight="true"
         android:textAlignment="textEnd"
         android:textSize="@dimen/menu_item_font"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         />
 
     <TextView
@@ -369,7 +370,7 @@
         android:layout_alignParentRight="true"
         android:textAlignment="textEnd"
         android:textSize="@dimen/menu_item_font"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         />
 
 
