@@ -293,17 +293,19 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_below="@+id/lblSelectOutputFolder"
-        android:gravity="center_vertical"
+        android:gravity="bottom"
         android:height="@dimen/menu_item_height"
-        android:text="Font type:"
+            android:text="Output file:"
         android:id="@+id/lblOutputFileName"
         android:textSize="@dimen/menu_item_font"
+        android:layout_centerVertical="true"
         />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/lblSelectOutputFolder"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/btnFindOutputFolder"
         android:layout_toRightOf="@id/lblOutputFileName"
         android:height="@dimen/menu_item_height"
         android:id="@+id/editOutputFileName"
