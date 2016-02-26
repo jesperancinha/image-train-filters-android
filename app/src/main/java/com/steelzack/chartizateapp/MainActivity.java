@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -131,14 +132,31 @@ public class MainActivity extends AppCompatActivity {
         editFileName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                final Button btnStartGeneration = (Button) findViewById(R.id.btnStart);
-                btnStartGeneration.setEnabled(validate());
+                checkButtonStart();
                 return true;
             }
         });
 
         textStatus = (TextView) findViewById(R.id.textStatus);
 
+
+        final EditText density = ((EditText)findViewById(R.id.editDensity));
+        density.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                checkButtonStart();
+                return false;
+            }
+        });
+
+        final EditText range = ((EditText)findViewById(R.id.editRange));
+        range.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                checkButtonStart();
+                return false;
+            }
+        });
     }
 
     @Override
@@ -185,39 +203,40 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .build().show();
-        final Button btnStartGeneration = (Button) findViewById(R.id.btnStart);
-        btnStartGeneration.setEnabled(validate());
+        checkButtonStart();
     }
 
     public void pFindFile(View view) {
         final Intent intent = new Intent(MainActivity.this, FileManagerActivity.class);
         intent.putExtra("directoryManager", false);
         startActivityForResult(intent, FILE_FIND);
-        final Button btnStartGeneration = (Button) findViewById(R.id.btnStart);
-        btnStartGeneration.setEnabled(validate());
+        checkButtonStart();
     }
 
     public void pFindOutputFolder(View view) {
         final Intent intent = new Intent(MainActivity.this, FileManagerActivity.class);
         intent.putExtra("directoryManager", true);
         startActivityForResult(intent, FOLDER_FIND);
-        final Button btnStartGeneration = (Button) findViewById(R.id.btnStart);
-        btnStartGeneration.setEnabled(validate());
+        checkButtonStart();
     }
 
     public void pAddOne(View view) {
         int currentFontSize = Integer.parseInt(editFontSize.getText().toString());
         editFontSize.setText(String.valueOf(currentFontSize + 1));
-        final Button btnStartGeneration = (Button) findViewById(R.id.btnStart);
-        btnStartGeneration.setEnabled(validate());
+        checkButtonStart();
     }
 
     public void pMinusOne(View view) {
         int currentFontSize = Integer.parseInt(editFontSize.getText().toString());
         editFontSize.setText(String.valueOf(currentFontSize - 1));
+        checkButtonStart();
+    }
+
+    public void checkButtonStart() {
         final Button btnStartGeneration = (Button) findViewById(R.id.btnStart);
         btnStartGeneration.setEnabled(validate());
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -245,8 +264,7 @@ public class MainActivity extends AppCompatActivity {
                 currentSelectedFolder = folderManagerItem;
             }
         }
-        final Button btnStartGeneration = (Button) findViewById(R.id.btnStart);
-        btnStartGeneration.setEnabled(validate());
+        checkButtonStart();
     }
 
     public boolean validate() {
@@ -282,6 +300,15 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
 
+        final String density = ((EditText) findViewById(R.id.editDensity)).getText().toString();
+        if (density.isEmpty()) {
+            return false;
+        }
+
+        final String range = ((EditText) findViewById(R.id.editRange)).getText().toString();
+        if (range.isEmpty()) {
+            return false;
+        }
         return true;
     }
 
@@ -298,6 +325,8 @@ public class MainActivity extends AppCompatActivity {
                     final String outputFileName = ((EditText) findViewById(R.id.editOutputFileName)).getText().toString();
                     final String fontType = ((Spinner) findViewById(R.id.spiFontType)).getSelectedItem().toString();
                     final String alphabet = ((Spinner) findViewById(R.id.spiLanguageCode)).getSelectedItem().toString();
+                    final Integer dennsity = Integer.parseInt(((EditText) findViewById(R.id.editDensity)).getText().toString());
+                    final Integer range = Integer.parseInt(((EditText) findViewById(R.id.editRange)).getText().toString());
 
                     final InputStream imageFullStream = new FileInputStream(new File(rawCurrehtSelectedFile.getAbsolutePath()));
 
@@ -307,8 +336,8 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         final ChartizateManagerImpl manager = new ChartizateManagerImpl( //
                                 svSelectedColorColor, //
-                                50, //
-                                10, //
+                                dennsity, //
+                                range, //
                                 ChartizateDistributionType.Linear, //
                                 fontType, //
                                 fontSize, //
