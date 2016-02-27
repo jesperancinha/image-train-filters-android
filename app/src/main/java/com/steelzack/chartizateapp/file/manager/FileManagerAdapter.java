@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
 import android.support.v4.content.res.ResourcesCompat;
@@ -68,6 +69,8 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem> {
                     activity.finish();
                 }
             });
+            viewDirectory.setBackgroundColor(Color.BLACK);
+            viewDirectory.setPadding(3,3,3,3);
         }
 
         final ImageView imageView = (ImageView) v.findViewById(com.steelzack.chartizateapp.R.id.typeFolderFile);
