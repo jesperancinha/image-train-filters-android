@@ -158,7 +158,7 @@
         android:height="@dimen/menu_item_height"
         android:textSize="@dimen/menu_item_font"
         android:maxHeight="@dimen/menu_item_height"
-        android:maxWidth="200dp"
+        android:maxWidth="@dimen/max_button_width"
         />
 
     <TextView
@@ -378,8 +378,24 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/menu_item_btn_height"
-        android:text="Start generation"
+        android:text="Generate and view"
         android:id="@+id/btnStart"
+        android:layout_gravity="right"
+        android:onClick="pGenerateFile"
+        android:singleLine="false"
+        android:height="@dimen/menu_item_height"
+        android:layout_below="@id/editRange"
+        android:textSize="@dimen/menu_item_font"
+        android:layout_toLeftOf="@id/btnStartAndEmail"
+        android:maxWidth="200dp"
+        />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/menu_item_btn_height"
+        android:text="Generate and email"
+        android:id="@+id/btnStartAndEmail"
         android:layout_gravity="right"
         android:onClick="pGenerateFile"
         android:singleLine="false"

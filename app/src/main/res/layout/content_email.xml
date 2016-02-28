@@ -122,6 +122,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/editEmailText"
         android:layout_toRightOf="@id/texEmailAttachment"
+        android:id="@+id/imageViewGeneratedAttachment"
         />
 
 </RelativeLayout>
