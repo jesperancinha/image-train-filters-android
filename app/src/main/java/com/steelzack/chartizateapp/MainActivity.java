@@ -3,7 +3,9 @@ package com.steelzack.chartizateapp;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -92,13 +94,13 @@ public class MainActivity extends FragmentActivity {
         mainFragment.getBtnStart().setEnabled(false);
         mainFragment.getBtnStartEmail().setEnabled(false);
         mainFragment.getTextStatus().setText("Please wait while chartizating...");
+                    final String outputFileName = ((EditText) mainFragment.getMainView().findViewById(R.id.editOutputFileName)).getText().toString();
         final Runnable task = new Runnable() {
             @Override
             public void run() {
                 try {
                     final File rawCurrehtSelectedFile = mainFragment.getCurrentSelectedFile().getFile();
                     final String rawFontSize = ((EditText) mainFragment.getMainView().findViewById(R.id.editFontSize)).getText().toString();
-                    final String outputFileName = ((EditText) mainFragment.getMainView().findViewById(R.id.editOutputFileName)).getText().toString();
                     final String fontType = ((Spinner) mainFragment.getMainView().findViewById(R.id.spiFontType)).getSelectedItem().toString();
                     final String alphabet = ((Spinner) mainFragment.getMainView().findViewById(R.id.spiLanguageCode)).getSelectedItem().toString();
                     final Integer dennsity = Integer.parseInt(((EditText) mainFragment.getMainView().findViewById(R.id.editDensity)).getText().toString());
@@ -144,8 +146,18 @@ public class MainActivity extends FragmentActivity {
                         public void run() {
                             mainFragment.getBtnStart().setEnabled(true);
                             mainFragment.getBtnStartEmail().setEnabled(true);
-                            chartizatePager.setCurrentItem(1);
-
+                            chartizatePager.setCurrentItem(2);
+                            final ImageView imageView = (ImageView) findViewById(R.id.imageViewGenerated);
+                            final ImageView imageViewEmail = (ImageView) findViewById(R.id.imageViewGeneratedAttachment);
+                            final Uri uri = Uri.fromFile(new File(mainFragment.getCurrentSelectedFolder().getFile(), outputFileName));
+                            ChartizateThumbs.setImage( //
+                                    imageView, //
+                                    uri //
+                            );
+                            ChartizateThumbs.setImage( //
+                                    imageViewEmail, //
+                                    uri //
+                            );
                         }
                     });
                 }
