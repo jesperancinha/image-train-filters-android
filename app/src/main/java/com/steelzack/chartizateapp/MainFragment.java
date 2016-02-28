@@ -66,9 +66,9 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        mainView = inflater.inflate(R.layout.content_main, container, false);
-
+        if (mainView == null) {
+            mainView = inflater.inflate(R.layout.content_main, container, false);
+        }
 
         Collections.sort(listOfAllLanguageCode);
         Collections.sort(listOfAllFonts);
