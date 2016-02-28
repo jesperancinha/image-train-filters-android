@@ -144,6 +144,7 @@ public class MainActivity extends FragmentActivity {
                         public void run() {
                             mainFragment.getBtnStart().setEnabled(true);
                             mainFragment.getBtnStartEmail().setEnabled(true);
+                            chartizatePager.setCurrentItem(1);
 
                         }
                     });
