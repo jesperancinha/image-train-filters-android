@@ -1,0 +1,128 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:height="50dp"
+        android:width="100dp"
+        android:gravity="center_vertical"
+        android:id="@+id/lblEmailFrom"
+        android:text="From:"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/menu_item_mail_height"
+        android:layout_toRightOf="@id/lblEmailFrom"
+        android:layout_alignParentRight="true"
+        android:hint="From email"
+        android:id="@+id/editEmailFrom"
+        android:inputType="textEmailAddress"
+        />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:height="50dp"
+        android:width="100dp"
+        android:layout_below="@id/lblEmailFrom"
+        android:gravity="center_vertical"
+        android:id="@+id/lblEmailTo"
+        android:text="To:"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/menu_item_mail_height"
+        android:layout_toRightOf="@id/lblEmailTo"
+        android:layout_alignParentRight="true"
+        android:hint="To email"
+        android:id="@+id/editEmailTo"
+        android:layout_below="@id/lblEmailFrom"
+        android:inputType="textEmailAddress"
+        />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:height="50dp"
+        android:width="100dp"
+        android:layout_below="@id/lblEmailTo"
+        android:gravity="center_vertical"
+        android:id="@+id/lblEmailCC"
+        android:text="CC:"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/menu_item_mail_height"
+        android:layout_toRightOf="@id/lblEmailCC"
+        android:layout_alignParentRight="true"
+        android:hint="CC email"
+        android:id="@+id/editEmailCC"
+        android:layout_below="@id/lblEmailTo"
+        android:inputType="textEmailAddress"
+        />
+
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:height="50dp"
+        android:width="100dp"
+        android:layout_below="@id/lblEmailCC"
+        android:gravity="center_vertical"
+        android:id="@+id/lblEmailBCC"
+        android:text="BCC:"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/menu_item_mail_height"
+        android:layout_toRightOf="@id/lblEmailBCC"
+        android:layout_alignParentRight="true"
+        android:hint="BCC email"
+        android:id="@+id/ediEmailBCC"
+        android:layout_below="@id/lblEmailCC"
+        android:inputType="textEmailAddress"
+        />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:height="50dp"
+        android:width="100dp"
+        android:layout_below="@id/lblEmailBCC"
+        android:gravity="center_vertical"
+        android:id="@+id/lblEmailText"
+        android:text="Text:"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPostalAddress"
+        android:ems="10"
+        android:id="@+id/editEmailText"
+        android:layout_below="@+id/ediEmailBCC"
+        android:layout_toEndOf="@+id/lblEmailBCC"
+        android:hint="Email text"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:height="50dp"
+        android:width="100dp"
+        android:layout_below="@id/lblEmailText"
+        android:gravity="center_vertical"
+        android:id="@+id/texEmailAttachment"
+        android:text="Result Image:"/>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/editEmailText"
+        android:layout_toRightOf="@id/texEmailAttachment"
+        android:id="@+id/imageViewGeneratedAttachment"
+        />
+
+</RelativeLayout>
