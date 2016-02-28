@@ -386,7 +386,7 @@
         android:height="@dimen/menu_item_height"
         android:layout_below="@id/editRange"
         android:textSize="@dimen/menu_item_font"
-        android:layout_toLeftOf="@id/btnStartAndEmail"
+        android:layout_toLeftOf="@+id/btnStartAndEmail"
         android:maxWidth="200dp"
         />
 

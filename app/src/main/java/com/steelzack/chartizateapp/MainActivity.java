@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnStart;
 
+    private Button btnStartEmail;
+
     private TextView textStatus;
 
     @Override
@@ -126,7 +128,9 @@ public class MainActivity extends AppCompatActivity {
         editFontSize = (EditText) findViewById(com.steelzack.chartizateapp.R.id.editFontSize);
 
         btnStart = (Button) findViewById(R.id.btnStart);
-        btnStart.setEnabled(validate());
+        btnStartEmail = (Button) findViewById(R.id.btnStartAndEmail);
+        btnStart.setEnabled(false);
+        btnStartEmail.setEnabled(false);
 
         final EditText editFileName = (EditText) findViewById(R.id.editOutputFileName);
         editFileName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -233,8 +237,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkButtonStart() {
-        final Button btnStartGeneration = (Button) findViewById(R.id.btnStart);
-        btnStartGeneration.setEnabled(validate());
+        boolean validate = validate();
+        btnStart.setEnabled(validate);
+        btnStartEmail.setEnabled(validate);
     }
 
 
@@ -315,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void pGenerateFile(View view) throws IOException {
         btnStart.setEnabled(false);
+        btnStartEmail.setEnabled(false);
         textStatus.setText("Please wait while chartizating...");
         final Runnable task = new Runnable() {
             @Override
@@ -367,6 +373,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             btnStart.setEnabled(true);
+                            btnStartEmail.setEnabled(true);
 
                         }
                     });
