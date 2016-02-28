@@ -4,4 +4,5 @@
     <dimen name="menu_item_font">10sp</dimen>
     <dimen name="menu_item_btn_height">40dp</dimen>
     <dimen name="directory_item_dim">50dp</dimen>
+    <dimen name="menu_item_mail_height">50dp</dimen>
 </resources>
