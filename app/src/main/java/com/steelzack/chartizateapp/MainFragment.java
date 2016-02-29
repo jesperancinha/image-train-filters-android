@@ -1,5 +1,6 @@
 package com.steelzack.chartizateapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -134,6 +135,8 @@ public class MainFragment extends Fragment {
             spiFontType.setAdapter(fontManagerAdapter);
 
             svSelectedColor = (ChartizateSurfaceView) getMainView().findViewById(com.steelzack.chartizateapp.R.id.svSelectedColor);
+            svSelectedColor.setColor(Color.BLACK);
+            getSvSelectedColor().setBackgroundColor(Color.BLACK);
 
             spiDistribution.setEnabled(false);
 
