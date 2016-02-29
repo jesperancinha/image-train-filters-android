@@ -145,15 +145,32 @@ public class MainActivity extends FragmentActivity {
                         @Override
                         public void run() {
                             mainFragment.getBtnStart().setEnabled(true);
+                        }
+                    });
+                    mainFragment.getBtnStartEmail().post(new Runnable() {
+                        @Override
+                        public void run() {
                             mainFragment.getBtnStartEmail().setEnabled(true);
-                            chartizatePager.setCurrentItem(2);
-                            final ImageView imageView = (ImageView) findViewById(R.id.imageViewGenerated);
-                            final ImageView imageViewEmail = (ImageView) findViewById(R.id.imageViewGeneratedAttachment);
-                            final Uri uri = Uri.fromFile(new File(mainFragment.getCurrentSelectedFolder().getFile(), outputFileName));
+                        }
+                    });
+                    chartizatePager.setCurrentItem(2);
+                    final ViewFragment viewFragment = (ViewFragment) getSupportFragmentManager().getFragments().get(2);
+                    final ImageView imageView = viewFragment.getImageView();
+                    final ImageView imageViewEmail = (ImageView) findViewById(R.id.imageViewGeneratedAttachment);
+                    final Uri uri = Uri.fromFile(new File(mainFragment.getCurrentSelectedFolder().getFile(), outputFileName));
+
+                    imageView.post(new Runnable() {
+                        @Override
+                        public void run() {
                             ChartizateThumbs.setImage( //
                                     imageView, //
                                     uri //
                             );
+                        }
+                    });
+                    imageViewEmail.post(new Runnable() {
+                        @Override
+                        public void run() {
                             ChartizateThumbs.setImage( //
                                     imageViewEmail, //
                                     uri //
