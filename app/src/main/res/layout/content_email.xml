@@ -1,32 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:height="50dp"
-        android:width="100dp"
-        android:gravity="center_vertical"
-        android:id="@+id/lblEmailFrom"
-        android:text="From:"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/menu_item_mail_height"
-        android:layout_toRightOf="@id/lblEmailFrom"
-        android:layout_alignParentRight="true"
-        android:hint="From email"
-        android:id="@+id/editEmailFrom"
-        android:inputType="textEmailAddress"
-        />
 
     <TextView
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:height="50dp"
         android:width="100dp"
-        android:layout_below="@id/lblEmailFrom"
         android:gravity="center_vertical"
         android:id="@+id/lblEmailTo"
         android:text="To:"/>
@@ -38,7 +18,6 @@
         android:layout_alignParentRight="true"
         android:hint="To email"
         android:id="@+id/editEmailTo"
-        android:layout_below="@id/lblEmailFrom"
         android:inputType="textEmailAddress"
         />
 
@@ -80,7 +59,7 @@
         android:layout_toRightOf="@id/lblEmailBCC"
         android:layout_alignParentRight="true"
         android:hint="BCC email"
-        android:id="@+id/ediEmailBCC"
+        android:id="@+id/editEmailBCC"
         android:layout_below="@id/lblEmailCC"
         android:inputType="textEmailAddress"
         />
@@ -101,7 +80,7 @@
         android:inputType="textPostalAddress"
         android:ems="10"
         android:id="@+id/editEmailText"
-        android:layout_below="@+id/ediEmailBCC"
+        android:layout_below="@+id/editEmailBCC"
         android:layout_toEndOf="@+id/lblEmailBCC"
         android:hint="Email text"
         android:layout_alignParentRight="true"/>
@@ -116,13 +95,22 @@
         android:id="@+id/texEmailAttachment"
         android:text="Result Image:"/>
 
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/editEmailText"
         android:layout_toRightOf="@id/texEmailAttachment"
         android:id="@+id/imageViewGeneratedAttachment"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Email"
+        android:id="@+id/button"
+        android:layout_below="@+id/texEmailAttachment"
+        android:layout_toStartOf="@+id/imageViewGeneratedAttachment"
+        android:onClick="pSendEmail"
         />
 
 </RelativeLayout>
