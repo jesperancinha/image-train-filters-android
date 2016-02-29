@@ -26,6 +26,7 @@ public class ChartizateThumbs {
 
     public static void setImage(ImageView imageView, Uri uri)
     {
+        imageView.setImageURI(null);
         imageView.setImageURI(uri);
     }
 }

@@ -66,94 +66,93 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (mainView == null) {
+            mainView = inflater.inflate(R.layout.content_main, container, false);
+            Collections.sort(listOfAllLanguageCode);
+            Collections.sort(listOfAllFonts);
 
-        mainView = inflater.inflate(R.layout.content_main, container, false);
+            if (getActivity().getIntent() != null && getActivity().getIntent().getExtras() != null) {
+                final FileManagerItem fileManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("fileItem");
+                if (fileManagerItem != null) {
+                    TextView currentFile = (TextView) getMainView().findViewById(com.steelzack.chartizateapp.R.id.lblESelectedFile);
+                    currentFile.setText(fileManagerItem.getFilename());
+                    setCurrentSelectedFile(fileManagerItem);
+                }
 
-
-        Collections.sort(listOfAllLanguageCode);
-        Collections.sort(listOfAllFonts);
-
-        if (getActivity().getIntent() != null && getActivity().getIntent().getExtras() != null) {
-            final FileManagerItem fileManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("fileItem");
-            if (fileManagerItem != null) {
-                TextView currentFile = (TextView) getMainView().findViewById(com.steelzack.chartizateapp.R.id.lblESelectedFile);
-                currentFile.setText(fileManagerItem.getFilename());
-                setCurrentSelectedFile(fileManagerItem);
+                final FileManagerItem folderManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("folderItem");
+                if (folderManagerItem != null) {
+                    TextView currentFile = (TextView) getMainView().findViewById(com.steelzack.chartizateapp.R.id.lblOutputFolder);
+                    currentFile.setText(folderManagerItem.getFilename());
+                    setCurrentSelectedFolder(folderManagerItem);
+                }
             }
 
-            final FileManagerItem folderManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("folderItem");
-            if (folderManagerItem != null) {
-                TextView currentFile = (TextView) getMainView().findViewById(com.steelzack.chartizateapp.R.id.lblOutputFolder);
-                currentFile.setText(folderManagerItem.getFilename());
-                setCurrentSelectedFolder(folderManagerItem);
-            }
+            final Spinner spiLanguageCode = (Spinner) getMainView().findViewById(com.steelzack.chartizateapp.R.id.spiLanguageCode);
+            final LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter( //
+                    getActivity(), //
+                    android.R.layout.simple_spinner_item, listOfAllLanguageCode //
+            );
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spiLanguageCode.setAdapter(dataAdapter);
+
+            final Spinner spiDistribution = (Spinner) getMainView().findViewById(com.steelzack.chartizateapp.R.id.spiDistribution);
+            final DistributionManager distributionDataAdapter = new DistributionManager( //
+                    getActivity(), //
+                    android.R.layout.simple_spinner_item, listOfAllDistributions //
+            );
+            distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spiDistribution.setAdapter(distributionDataAdapter);
+
+
+            final Spinner spiFontType = (Spinner) getMainView().findViewById(com.steelzack.chartizateapp.R.id.spiFontType);
+            final FontManagerAdapter fontManagerAdapter = new FontManagerAdapter( //
+                    getActivity(), //
+                    android.R.layout.simple_spinner_item, listOfAllFonts //
+            );
+            distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spiFontType.setAdapter(fontManagerAdapter);
+
+            svSelectedColor = (ChartizateSurfaceView) getMainView().findViewById(com.steelzack.chartizateapp.R.id.svSelectedColor);
+
+            spiDistribution.setEnabled(false);
+
+            editFontSize = (EditText) getMainView().findViewById(com.steelzack.chartizateapp.R.id.editFontSize);
+
+            btnStart = (Button) getMainView().findViewById(R.id.btnStart);
+            btnStartEmail = (Button) getMainView().findViewById(R.id.btnStartAndEmail);
+            getBtnStart().setEnabled(false);
+            getBtnStartEmail().setEnabled(false);
+
+            final EditText editFileName = (EditText) getMainView().findViewById(R.id.editOutputFileName);
+            editFileName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    checkButtonStart();
+                    return true;
+                }
+            });
+
+            textStatus = (TextView) getMainView().findViewById(R.id.textStatus);
+
+
+            final EditText density = ((EditText) getMainView().findViewById(R.id.editDensity));
+            density.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    checkButtonStart();
+                    return false;
+                }
+            });
+
+            final EditText range = ((EditText) getMainView().findViewById(R.id.editRange));
+            range.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    checkButtonStart();
+                    return false;
+                }
+            });
         }
-
-        final Spinner spiLanguageCode = (Spinner) getMainView().findViewById(com.steelzack.chartizateapp.R.id.spiLanguageCode);
-        final LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter( //
-                getActivity(), //
-                android.R.layout.simple_spinner_item, listOfAllLanguageCode //
-        );
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spiLanguageCode.setAdapter(dataAdapter);
-
-        final Spinner spiDistribution = (Spinner) getMainView().findViewById(com.steelzack.chartizateapp.R.id.spiDistribution);
-        final DistributionManager distributionDataAdapter = new DistributionManager( //
-                getActivity(), //
-                android.R.layout.simple_spinner_item, listOfAllDistributions //
-        );
-        distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spiDistribution.setAdapter(distributionDataAdapter);
-
-
-        final Spinner spiFontType = (Spinner) getMainView().findViewById(com.steelzack.chartizateapp.R.id.spiFontType);
-        final FontManagerAdapter fontManagerAdapter = new FontManagerAdapter( //
-                getActivity(), //
-                android.R.layout.simple_spinner_item, listOfAllFonts //
-        );
-        distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spiFontType.setAdapter(fontManagerAdapter);
-
-        svSelectedColor = (ChartizateSurfaceView) getMainView().findViewById(com.steelzack.chartizateapp.R.id.svSelectedColor);
-
-        spiDistribution.setEnabled(false);
-
-        editFontSize = (EditText) getMainView().findViewById(com.steelzack.chartizateapp.R.id.editFontSize);
-
-        btnStart = (Button) getMainView().findViewById(R.id.btnStart);
-        btnStartEmail = (Button) getMainView().findViewById(R.id.btnStartAndEmail);
-        getBtnStart().setEnabled(false);
-        getBtnStartEmail().setEnabled(false);
-
-        final EditText editFileName = (EditText) getMainView().findViewById(R.id.editOutputFileName);
-        editFileName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                checkButtonStart();
-                return true;
-            }
-        });
-
-        textStatus = (TextView) getMainView().findViewById(R.id.textStatus);
-
-
-        final EditText density = ((EditText) getMainView().findViewById(R.id.editDensity));
-        density.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                checkButtonStart();
-                return false;
-            }
-        });
-
-        final EditText range = ((EditText) getMainView().findViewById(R.id.editRange));
-        range.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                checkButtonStart();
-                return false;
-            }
-        });
         return getMainView();
     }
 
