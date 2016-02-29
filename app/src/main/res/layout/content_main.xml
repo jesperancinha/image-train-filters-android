@@ -34,7 +34,7 @@
         android:layout_toRightOf="@+id/lblSelectedFile"
         android:gravity="center_vertical"
         android:height="@dimen/menu_item_height"
-        android:minWidth="200dp"
+        android:minWidth="150dp"
         android:textSize="@dimen/menu_item_font"
         />
 
@@ -267,12 +267,12 @@
         android:height="@dimen/menu_item_height"
         android:layout_below="@id/lblFontType"
         android:textSize="@dimen/menu_item_font"
-        android:minWidth="200dp"
+        android:minWidth="150dp"
         />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/max_button_width"
         android:layout_height="@dimen/menu_item_btn_height"
         android:text="Folder"
         android:id="@+id/btnFindOutputFolder"
@@ -284,7 +284,7 @@
         android:height="@dimen/menu_item_height"
         android:layout_below="@id/lblFontType"
         android:textSize="@dimen/menu_item_font"
-        android:maxWidth="200dp"
+        android:maxWidth="@dimen/max_button_width"
         />
 
     <TextView

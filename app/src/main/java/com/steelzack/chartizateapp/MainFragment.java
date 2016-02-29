@@ -1,11 +1,15 @@
 package com.steelzack.chartizateapp;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,7 +24,9 @@ import com.steelzack.chartizateapp.font.manager.FontManagerAdapter;
 import com.steelzack.chartizateapp.language.manager.LanguageManagerAdapter;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -30,12 +36,13 @@ public class MainFragment extends Fragment {
     public static final int FILE_FIND = 0;
 
     public static final int FOLDER_FIND = 1;
+    public static final String EMPTY_SELECTION = "------------------------------------------------------------------";
 
     private FileManagerItem currentSelectedFile = null;
 
     private FileManagerItem currentSelectedFolder = null;
 
-    final List<String> listOfAllLanguageCode = ChartizateFontManager.getAllUniCodeBlockStringsJava7();
+    List<String> listOfAllLanguageCode = ChartizateFontManager.getAllUniCodeBlockStringsJava7();
 
     final List<String> listOfAllDistributions = ChartizateFontManager.getAllDistributionTypes();
 
@@ -61,7 +68,16 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mainView == null) {
             mainView = inflater.inflate(R.layout.content_main, container, false);
-            Collections.sort(listOfAllLanguageCode);
+            listOfAllLanguageCode = new ArrayList<>(listOfAllLanguageCode);
+            listOfAllLanguageCode.add(EMPTY_SELECTION);
+            Collections.sort(listOfAllLanguageCode, new Comparator<String>() {
+                @Override
+                public int compare(String lhs, String rhs) {
+                    Integer x = getInteger(lhs, rhs,EMPTY_SELECTION);
+                    if (x != null) return x;
+                    return lhs.compareTo(rhs);
+                }
+            });
             Collections.sort(listOfAllFonts);
 
             if (getActivity().getIntent() != null && getActivity().getIntent().getExtras() != null) {
@@ -87,6 +103,18 @@ public class MainFragment extends Fragment {
             );
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spiLanguageCode.setAdapter(dataAdapter);
+            spiLanguageCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    checkButtonStart();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+
+            });
 
             final Spinner spiDistribution = (Spinner) getMainView().findViewById(com.steelzack.chartizateapp.R.id.spiDistribution);
             final DistributionManager distributionDataAdapter = new DistributionManager( //
@@ -149,6 +177,18 @@ public class MainFragment extends Fragment {
         return getMainView();
     }
 
+    @Nullable
+    public Integer getInteger(String lhs, String rhs, String code) {
+        if(lhs.equals(code))
+        {
+            return -1;
+        }
+        if(rhs.equals(code)){
+            return 1;
+        }
+        return null;
+    }
+
     public void checkButtonStart() {
         boolean validate = validate();
         getBtnStart().setEnabled(validate);
@@ -184,7 +224,7 @@ public class MainFragment extends Fragment {
             return false;
         }
         final String alphabet = ((Spinner) getMainView().findViewById(R.id.spiLanguageCode)).getSelectedItem().toString();
-        if (alphabet.isEmpty()) {
+        if (alphabet.isEmpty() || alphabet.equals(EMPTY_SELECTION)) {
             return false;
         }
 
