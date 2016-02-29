@@ -58,7 +58,7 @@ public class FileManagerAdapter extends ArrayAdapter<FileManagerItem> {
         final TextView fileDate = (TextView) v.findViewById(com.steelzack.chartizateapp.R.id.fileDate);
         final ImageView viewDirectory = (ImageView) v.findViewById(com.steelzack.chartizateapp.R.id.typeFolderFile);
 
-        if (directoryManager) {
+        if (directoryManager && !fileItem.getFilename().equals("..")) {
             viewDirectory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

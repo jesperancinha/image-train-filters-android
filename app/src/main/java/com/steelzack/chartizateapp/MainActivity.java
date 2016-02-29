@@ -268,7 +268,6 @@ public class MainActivity extends FragmentActivity {
         emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
         try {
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
             Log.i("Mail sent!", "");
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(MainActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
