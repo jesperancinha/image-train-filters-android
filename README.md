@@ -14,7 +14,7 @@ The app currently uses a color picker from:
 
 ## License
 
-```
+```text
 Copyright 2016-2019 João Esperancinha (jesperancinha)
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,13 +32,29 @@ limitations under the License.
 
 ## About me
 
--   Twitter [@jofisaes](https://twitter.com/jofisaes)
--   GitHub [jesperancinha](https://github.com/jesperancinha)
+-   [![Generic badge](https://img.shields.io/static/v1.svg?label=Homepage&message=joaofilipesabinoesperancinha&color=informational)](http://joaofilipesabinoesperancinha.nl)
+
+-   [![Twitter Follow](https://img.shields.io/twitter/follow/jofisaes.svg?label=%40jofisaes&style=social)](https://twitter.com/intent/follow?screen_name=jofisaes)
+
+-   [![GitHub followers](https://img.shields.io/github/followers/jesperancinha.svg?label=jesperancinha&style=social)](https://github.com/jesperancinha)
+
 -   Free Code Camp [jofisaes](https://www.freecodecamp.org/jofisaes)
+
 -   Hackerrank [jofisaes](https://www.hackerrank.com/jofisaes)
+
 -   Acclaim Badges [joao-esperancinha](https://www.youracclaim.com/users/joao-esperancinha/badges)
--   Home Page [joaofilipesabinoesperancinha](http://joaofilipesabinoesperancinha.nl)
--   Personal Projects:
-    -   [Time Disruption Studios](http://tds.joaofilipesabinoesperancinha.nl/)
-    -   [Image Train Filters](http://itf.joaofilipesabinoesperancinha.nl/)
-    -   Google play apps: [Joao+Filipe+Sabino+Esperancinha](https://play.google.com/store/apps/developer?id=Joao+Filipe+Sabino+Esperancinha)
+
+-   Projects:
+
+    -   [![Generic badge](https://img.shields.io/static/v1.svg?label=Homepage&message=Time%20Disruption%20Studios&color=informational)](http://tds.joaofilipesabinoesperancinha.nl/)
+    -   [![Generic badge](https://img.shields.io/static/v1.svg?label=Homepage&message=Image%20Train%20Filters&color=informational)](http://itf.joaofilipesabinoesperancinha.nl/)
+    -   [![Generic badge](https://img.shields.io/static/v1.svg?label=Homepage&message=MancalaJE&color=informational)](http://mancalaje.joaofilipesabinoesperancinha.nl/)
+    -   [![Generic badge](https://img.shields.io/static/v1.svg?label=Google%20Apps&message=Joao+Filipe+Sabino+Esperancinha&color=informational)](https://play.google.com/store/apps/developer?id=Joao+Filipe+Sabino+Esperancinha)
+-   Releases:
+    -   itf-chartizate-android:   
+        [![Maven Central](https://img.shields.io/maven-central/v/org.jesperancinha.itf/itf-chartizate-android)](https://search.maven.org/search?q=a:itf-chartizate-android) 
+        [![Download](https://api.bintray.com/packages/jesperancinha/maven/itf-chartizate-android/images/download.svg)](https://bintray.com/jesperancinha/maven/itf-chartizate-android/_latestVersion)
+    -   itf-chartizate-java:   
+        [![Maven Central](https://img.shields.io/maven-central/v/org.jesperancinha.itf/itf-chartizate)](https://search.maven.org/search?q=a:itf-chartizate)
+    -   itf-chartizate-api:  
+        [![Maven Central](https://img.shields.io/maven-central/v/org.jesperancinha.itf/itf-chartizate-api)](https://search.maven.org/search?q=a:itf-chartizate-api)
