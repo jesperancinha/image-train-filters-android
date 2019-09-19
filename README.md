@@ -3,6 +3,7 @@
 [![Generic badge](https://img.shields.io/static/v1.svg?label=GitHub&message=ITF%20Android&color=informational)](https://github.com/jesperancinha/image-train-filters-android)
 [![GitHub release](https://img.shields.io/github/release-pre/jesperancinha/image-train-filters-android.svg)](https://github.com/jesperancinha/image-train-filters-android/releases)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/73c54b76235349a8883c2660923c1f06)](https://www.codacy.com/manual/jofisaes/image-train-filters-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jesperancinha/image-train-filters-android&amp;utm_campaign=Badge_Grade)
 
 This application started in 2015 with name [Chartizate App](https://play.google.com/store/apps/details?id=org.jesperancinha.itf.android). In the meantime it's content has changed so much and als it's goals that I've renamed it to Image Train Filters just as my website. It's not currently available as such but it will work just like the [site](http://itf.joaofilipesabinoesperancinha.nl/), but in an app format. Find more info about the [site](http://itf.joaofilipesabinoesperancinha.nl/) in the description below. Please read my privacy policy listed in [Privacy Policy](Privacy_Policy.md).
 
