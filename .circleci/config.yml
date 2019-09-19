@@ -30,7 +30,7 @@ jobs:
             - v1-dependencies-{{ checksum "build.gradle" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - run: sudo apt -y install vim apt-transport-https dirmngr wget software-properties-common
+      - run: sudo apt -y install vim apt-transport-https dirmngr wget software-properties-common --fix-missing
       - run: sudo add-apt-repository ppa:cwchien/gradle
       - run: sudo apt-get update
       - run: sudo apt -y install gradle
