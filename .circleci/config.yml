@@ -30,8 +30,8 @@ jobs:
             - v1-dependencies-{{ checksum "build.gradle" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
+      - run: sudo apt-get update --fix-missing
       - run: sudo apt-get -y install software-properties-common
-      - run: sudo apt-get update
       - run: sudo add-apt-repository ppa:cwchien/gradle
       - run: sudo apt -y install gradle
       - run: gradle wrapper
