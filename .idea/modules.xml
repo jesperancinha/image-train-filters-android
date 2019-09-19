@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/image-train-filters-android.iml" filepath="$PROJECT_DIR$/image-train-filters-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/image-train-filters-app/image-train-filters-app.iml" filepath="$PROJECT_DIR$/image-train-filters-app/image-train-filters-app.iml" />
     </modules>
   </component>
 </project>

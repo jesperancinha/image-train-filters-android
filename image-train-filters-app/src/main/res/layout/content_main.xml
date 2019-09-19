@@ -1,0 +1,417 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="org.jesperancinha.itf.android.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Image file"
+        android:id="@+id/lblSelectedFile"
+        android:gravity="center_vertical"
+        android:height="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="none"
+        android:id="@+id/lblESelectedFile"
+        android:paddingLeft="10dp"
+        android:paddingRight="20dp"
+        android:layout_toRightOf="@+id/lblSelectedFile"
+        android:gravity="center_vertical"
+        android:height="@dimen/menu_item_height"
+        android:minWidth="150dp"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/menu_item_height"
+        android:id="@+id/fileImageSourcePreview"
+        android:layout_toRightOf="@id/lblESelectedFile"
+        android:layout_marginLeft="5dip"
+        android:maxWidth="30dp"
+        android:minWidth="0dp"
+        android:foregroundGravity="center_vertical"
+        android:maxHeight="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/menu_item_btn_height"
+        android:text="File"
+        android:id="@+id/btnFindFile"
+        android:layout_gravity="right"
+        android:onClick="pFindFile"
+        android:singleLine="false"
+        android:layout_toRightOf="@id/fileImageSourcePreview"
+        android:layout_alignParentRight="true"
+        android:height="@dimen/menu_item_height"
+        android:minWidth="100dp"
+        android:maxHeight="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@id/lblSelectedFile"
+        android:text="Char coding"
+        android:gravity="center_vertical"
+        android:id="@+id/lblLanguageCoding"
+        android:height="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/menu_item_height"
+        android:id="@+id/spiLanguageCode"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/lblLanguageCoding"
+        android:layout_below="@id/lblSelectedFile"
+        android:minHeight="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@id/lblLanguageCoding"
+        android:gravity="center_vertical"
+        android:id="@+id/lblDistribution"
+        android:height="@dimen/menu_item_height"
+        android:text="Distribution"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/menu_item_height"
+        android:id="@+id/spiDistribution"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/lblDistribution"
+        android:layout_below="@id/lblLanguageCoding"
+        android:minHeight="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@id/lblDistribution"
+        android:gravity="center_vertical"
+        android:id="@+id/lblBackgroundColor"
+        android:height="@dimen/menu_item_height"
+        android:text="Background color:"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <org.jesperancinha.itf.android.common.ChartizateSurfaceView
+        android:layout_width="100dp"
+        android:layout_height="20dp"
+        android:id="@+id/svSelectedColor"
+        android:layout_below="@+id/lblDistribution"
+        android:layout_toRightOf="@id/lblBackgroundColor"
+        android:minHeight="@dimen/menu_item_height"
+        android:foregroundGravity="center_vertical"
+        android:minWidth="@dimen/menu_item_height"
+        android:focusable="false"
+        android:layout_marginTop="5dp"
+        android:background="#ffffff"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_below="@id/lblDistribution"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/menu_item_btn_height"
+        android:text="Pick Color"
+        android:id="@+id/btnBackgroundColor"
+        android:layout_gravity="right"
+        android:onClick="pGetBackGroundColor"
+        android:singleLine="false"
+        android:layout_toRightOf="@id/svSelectedColor"
+        android:layout_alignParentRight="true"
+        android:height="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
+        android:maxHeight="@dimen/menu_item_height"
+        android:maxWidth="@dimen/max_button_width"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/lblBackgroundColor"
+        android:gravity="center_vertical"
+        android:height="@dimen/menu_item_height"
+        android:text="Font size:"
+        android:id="@+id/lblFontSize"
+        android:layout_alignParentLeft="true"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <Button
+        android:layout_width="@dimen/menu_item_btn_height"
+        android:layout_height="@dimen/menu_item_btn_height"
+        android:height="@dimen/menu_item_height"
+        android:text="+"
+        android:textAlignment="center"
+        android:layout_below="@id/lblBackgroundColor"
+        android:layout_toRightOf="@id/lblFontSize"
+        android:width="@dimen/menu_item_height"
+        android:id="@+id/btnPlus"
+        android:onClick="pAddOne"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <Button
+        android:layout_width="@dimen/menu_item_btn_height"
+        android:layout_height="@dimen/menu_item_btn_height"
+        android:height="@dimen/menu_item_height"
+        android:text="-"
+        android:textAlignment="center"
+        android:layout_below="@id/lblBackgroundColor"
+        android:layout_toRightOf="@id/btnPlus"
+        android:id="@+id/btnMinus"
+        android:gravity="center_vertical"
+        android:onClick="pMinusOne"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/menu_item_btn_height"
+        android:layout_below="@id/btnBackgroundColor"
+        android:layout_toRightOf="@id/btnMinus"
+        android:height="@dimen/menu_item_height"
+        android:textAlignment="textEnd"
+        android:id="@+id/editFontSize"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:text="10"
+        android:paddingTop="0dp"
+        android:enabled="false"
+        android:textColor="#000000"
+        android:textSize="@dimen/menu_item_font"
+        android:inputType="number"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/lblFontSize"
+        android:gravity="center_vertical"
+        android:height="@dimen/menu_item_height"
+        android:text="Font type:"
+        android:id="@+id/lblFontType"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/menu_item_height"
+        android:id="@+id/spiFontType"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/lblFontType"
+        android:layout_below="@id/lblFontSize"
+        android:minHeight="@dimen/menu_item_height"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Output folder"
+        android:id="@+id/lblSelectOutputFolder"
+        android:gravity="center_vertical"
+        android:height="@dimen/menu_item_height"
+        android:layout_below="@id/lblFontType"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="none"
+        android:id="@+id/lblOutputFolder"
+        android:paddingLeft="10dp"
+        android:paddingRight="20dp"
+        android:layout_toRightOf="@id/lblSelectOutputFolder"
+        android:gravity="center_vertical"
+        android:height="@dimen/menu_item_height"
+        android:layout_below="@id/lblFontType"
+        android:textSize="@dimen/menu_item_font"
+        android:minWidth="150dp"
+        />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="@dimen/max_button_width"
+        android:layout_height="@dimen/menu_item_btn_height"
+        android:text="Folder"
+        android:id="@+id/btnFindOutputFolder"
+        android:layout_gravity="right"
+        android:onClick="pFindOutputFolder"
+        android:singleLine="false"
+        android:layout_toRightOf="@id/lblOutputFolder"
+        android:layout_alignParentRight="true"
+        android:height="@dimen/menu_item_height"
+        android:layout_below="@id/lblFontType"
+        android:textSize="@dimen/menu_item_font"
+        android:maxWidth="@dimen/max_button_width"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/lblSelectOutputFolder"
+        android:gravity="center_vertical"
+        android:height="@dimen/menu_item_height"
+            android:text="Output file:"
+        android:id="@+id/lblOutputFileName"
+        android:textSize="@dimen/menu_item_font"
+        android:layout_centerVertical="true"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/btnFindOutputFolder"
+        android:layout_toRightOf="@id/lblOutputFileName"
+        android:height="@dimen/menu_item_height"
+        android:id="@+id/editOutputFileName"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:text="Noname.png"
+        android:textAlignment="textEnd"
+        android:textSize="@dimen/menu_item_font"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/lblOutputFileName"
+        android:gravity="center_vertical"
+        android:height="@dimen/menu_item_height"
+        android:text="Density:"
+        android:id="@+id/lblDensity"
+        android:textSize="@dimen/menu_item_font"
+        android:layout_centerVertical="true"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/lblOutputFileName"
+        android:layout_toRightOf="@id/lblOutputFileName"
+        android:height="@dimen/menu_item_height"
+        android:id="@+id/editDensity"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:textAlignment="textEnd"
+        android:textSize="@dimen/menu_item_font"
+        android:inputType="number"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/lblDensity"
+        android:gravity="center_vertical"
+        android:height="@dimen/menu_item_height"
+        android:text="Range:"
+        android:id="@+id/lblRange"
+        android:textSize="@dimen/menu_item_font"
+        android:layout_centerVertical="true"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/lblDensity"
+        android:layout_toRightOf="@id/lblOutputFileName"
+        android:height="@dimen/menu_item_height"
+        android:id="@+id/editRange"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:textAlignment="textEnd"
+        android:textSize="@dimen/menu_item_font"
+        android:inputType="number"
+        />
+
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/menu_item_btn_height"
+        android:text="Generate and view"
+        android:id="@+id/btnStart"
+        android:layout_gravity="right"
+        android:onClick="pGenerateFile"
+        android:singleLine="false"
+        android:height="@dimen/menu_item_height"
+        android:layout_below="@id/editRange"
+        android:textSize="@dimen/menu_item_font"
+        android:layout_toLeftOf="@+id/btnStartAndEmail"
+        android:maxWidth="200dp"
+        />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/menu_item_btn_height"
+        android:text="Generate and email"
+        android:id="@+id/btnStartAndEmail"
+        android:layout_gravity="right"
+        android:onClick="pGenerateFile"
+        android:singleLine="false"
+        android:layout_alignParentRight="true"
+        android:height="@dimen/menu_item_height"
+        android:layout_below="@id/editRange"
+        android:textSize="@dimen/menu_item_font"
+        android:maxWidth="200dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="@dimen/menu_item_font"
+        android:id="@+id/textStatus"
+        android:layout_below="@+id/btnStart"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/btnStart" />
+
+</RelativeLayout>

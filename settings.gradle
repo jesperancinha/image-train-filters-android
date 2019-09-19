@@ -1,1 +1,1 @@
-include ':app'
+include ':image-train-filters-app'
