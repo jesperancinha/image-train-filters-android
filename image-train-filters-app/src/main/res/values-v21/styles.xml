@@ -6,5 +6,5 @@
             <item name="android:statusBarColor">@android:color/transparent</item>
         </style>
 
-    <style name="czFloatingActionButton"></style>
+    <style name="czFloatingActionButton"/>
 </resources>
