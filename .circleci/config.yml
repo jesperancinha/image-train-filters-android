@@ -10,12 +10,6 @@ jobs:
       - checkout
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "image-train-filters-app/build.gradle" }}
-      #      - run:
-      #         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
-      #         command: sudo chmod +x ./gradlew
-      - run:
-          name: Install Gradlew
-          command: gradle wrapper --gradle-version 5.6.2
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
