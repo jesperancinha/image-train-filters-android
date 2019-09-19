@@ -31,6 +31,9 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
+      - run: sudo add-apt-repository ppa:cwchien/gradle
+      - run: sudo apt-get update
+      - run: sudo apt upgrade gradle
       - run: gradle build
       - run: gradle dependencies
 
