@@ -2,12 +2,7 @@ package org.jesperancinha.itf.android;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.DragEvent;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,8 +11,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.steelzack.chartizate.ChartizateFontManager;
-import com.steelzack.chartizate.ChartizateFontManagerImpl;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import org.jesperancinha.chartizate.ChartizateFontManagerImpl;
+import org.jesperancinha.chartizate.distributions.ChartizateDistributionType;
 import org.jesperancinha.itf.android.common.ChartizateSurfaceView;
 import org.jesperancinha.itf.android.distribution.manager.DistributionManager;
 import org.jesperancinha.itf.android.file.manager.FileManagerItem;
@@ -27,27 +25,18 @@ import org.jesperancinha.itf.android.language.manager.LanguageManagerAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
-/**
- * Created by joao on 28-2-16.
- */
 public class MainFragment extends Fragment {
     public static final int FILE_FIND = 0;
-
     public static final int FOLDER_FIND = 1;
     public static final String EMPTY_SELECTION = "------------------------------------------------------------------";
-
     private FileManagerItem currentSelectedFile = null;
-
     private FileManagerItem currentSelectedFolder = null;
-
-    List<String> listOfAllLanguageCode = ChartizateFontManager.getAllUniCodeBlockStringsJava7();
-
-    final List<String> listOfAllDistributions = ChartizateFontManager.getAllDistributionTypes();
-
-    final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
+    private List<String> listOfAllLanguageCode = ChartizateFontManagerImpl.getAllFontTypes();
+    private final List<String> listOfAllDistributions = ChartizateDistributionType.getAllDistributionTypes();
+    private final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
 
     private ChartizateSurfaceView svSelectedColor;
 
@@ -69,35 +58,32 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mainView == null) {
             mainView = inflater.inflate(R.layout.content_main, container, false);
-            listOfAllLanguageCode = new ArrayList<>(listOfAllLanguageCode);
+            listOfAllLanguageCode = new ArrayList<>();
             listOfAllLanguageCode.add(EMPTY_SELECTION);
-            Collections.sort(listOfAllLanguageCode, new Comparator<String>() {
-                @Override
-                public int compare(String lhs, String rhs) {
-                    Integer x = getInteger(lhs, rhs,EMPTY_SELECTION);
-                    if (x != null) return x;
-                    return lhs.compareTo(rhs);
-                }
+            Collections.sort(listOfAllLanguageCode, (lhs, rhs) -> {
+                Integer x = getInteger(lhs, rhs, EMPTY_SELECTION);
+                if (x != null) return x;
+                return lhs.compareTo(rhs);
             });
             Collections.sort(listOfAllFonts);
 
-            if (getActivity().getIntent() != null && getActivity().getIntent().getExtras() != null) {
+            if (Objects.requireNonNull(getActivity()).getIntent() != null && getActivity().getIntent().getExtras() != null) {
                 final FileManagerItem fileManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("fileItem");
                 if (fileManagerItem != null) {
-                    TextView currentFile = (TextView) getMainView().findViewById(org.jesperancinha.itf.android.R.id.lblESelectedFile);
+                    TextView currentFile = getMainView().findViewById(R.id.lblESelectedFile);
                     currentFile.setText(fileManagerItem.getFilename());
                     setCurrentSelectedFile(fileManagerItem);
                 }
 
                 final FileManagerItem folderManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("folderItem");
                 if (folderManagerItem != null) {
-                    TextView currentFile = (TextView) getMainView().findViewById(org.jesperancinha.itf.android.R.id.lblOutputFolder);
+                    TextView currentFile = getMainView().findViewById(R.id.lblOutputFolder);
                     currentFile.setText(folderManagerItem.getFilename());
                     setCurrentSelectedFolder(folderManagerItem);
                 }
             }
 
-            final Spinner spiLanguageCode = (Spinner) getMainView().findViewById(org.jesperancinha.itf.android.R.id.spiLanguageCode);
+            final Spinner spiLanguageCode = getMainView().findViewById(R.id.spiLanguageCode);
             final LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter( //
                     getActivity(), //
                     android.R.layout.simple_spinner_item, listOfAllLanguageCode //
@@ -117,7 +103,7 @@ public class MainFragment extends Fragment {
 
             });
 
-            final Spinner spiDistribution = (Spinner) getMainView().findViewById(org.jesperancinha.itf.android.R.id.spiDistribution);
+            final Spinner spiDistribution = getMainView().findViewById(R.id.spiDistribution);
             final DistributionManager distributionDataAdapter = new DistributionManager( //
                     getActivity(), //
                     android.R.layout.simple_spinner_item, listOfAllDistributions //
@@ -126,7 +112,7 @@ public class MainFragment extends Fragment {
             spiDistribution.setAdapter(distributionDataAdapter);
 
 
-            final Spinner spiFontType = (Spinner) getMainView().findViewById(org.jesperancinha.itf.android.R.id.spiFontType);
+            final Spinner spiFontType = getMainView().findViewById(R.id.spiFontType);
             final FontManagerAdapter fontManagerAdapter = new FontManagerAdapter( //
                     getActivity(), //
                     android.R.layout.simple_spinner_item, listOfAllFonts //
@@ -134,47 +120,38 @@ public class MainFragment extends Fragment {
             distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spiFontType.setAdapter(fontManagerAdapter);
 
-            svSelectedColor = (ChartizateSurfaceView) getMainView().findViewById(org.jesperancinha.itf.android.R.id.svSelectedColor);
+            svSelectedColor = getMainView().findViewById(R.id.svSelectedColor);
             svSelectedColor.setColor(Color.BLACK);
             getSvSelectedColor().setBackgroundColor(Color.BLACK);
 
             spiDistribution.setEnabled(false);
 
-            editFontSize = (EditText) getMainView().findViewById(org.jesperancinha.itf.android.R.id.editFontSize);
+            editFontSize = getMainView().findViewById(R.id.editFontSize);
 
-            btnStart = (Button) getMainView().findViewById(R.id.btnStart);
-            btnStartEmail = (Button) getMainView().findViewById(R.id.btnStartAndEmail);
+            btnStart = getMainView().findViewById(R.id.btnStart);
+            btnStartEmail = getMainView().findViewById(R.id.btnStartAndEmail);
             getBtnStart().setEnabled(false);
             getBtnStartEmail().setEnabled(false);
 
-            final EditText editFileName = (EditText) getMainView().findViewById(R.id.editOutputFileName);
-            editFileName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    checkButtonStart();
-                    return true;
-                }
+            final EditText editFileName = getMainView().findViewById(R.id.editOutputFileName);
+            editFileName.setOnEditorActionListener((v, actionId, event) -> {
+                checkButtonStart();
+                return true;
             });
 
-            textStatus = (TextView) getMainView().findViewById(R.id.textStatus);
+            textStatus = getMainView().findViewById(R.id.textStatus);
 
 
-            final EditText density = ((EditText) getMainView().findViewById(R.id.editDensity));
-            density.setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    checkButtonStart();
-                    return false;
-                }
+            final EditText density = getMainView().findViewById(R.id.editDensity);
+            density.setOnKeyListener((v, keyCode, event) -> {
+                checkButtonStart();
+                return false;
             });
 
-            final EditText range = ((EditText) getMainView().findViewById(R.id.editRange));
-            range.setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    checkButtonStart();
-                    return false;
-                }
+            final EditText range = getMainView().findViewById(R.id.editRange);
+            range.setOnKeyListener((v, keyCode, event) -> {
+                checkButtonStart();
+                return false;
             });
         }
         return getMainView();
@@ -182,11 +159,10 @@ public class MainFragment extends Fragment {
 
     @Nullable
     public Integer getInteger(String lhs, String rhs, String code) {
-        if(lhs.equals(code))
-        {
+        if (lhs.equals(code)) {
             return -1;
         }
-        if(rhs.equals(code)){
+        if (rhs.equals(code)) {
             return 1;
         }
         return null;

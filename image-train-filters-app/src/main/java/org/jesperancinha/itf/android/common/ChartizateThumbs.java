@@ -9,9 +9,6 @@ import android.widget.ImageView;
 import java.io.InputStream;
 import java.net.URI;
 
-/**
- * Created by joaofilipesabinoesperancinha on 16-02-16.
- */
 public class ChartizateThumbs {
     public static void setImageThumbnail(ImageView imageView, InputStream inputStream) {
         setImageThumbnail(imageView, inputStream, 50, 50);

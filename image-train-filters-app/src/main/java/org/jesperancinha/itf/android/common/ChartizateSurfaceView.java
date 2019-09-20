@@ -5,9 +5,6 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
-/**
- * Created by joaofilipesabinoesperancinha on 16-02-16.
- */
 public class ChartizateSurfaceView extends SurfaceView{
     private int color;
 

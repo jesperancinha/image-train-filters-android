@@ -13,14 +13,11 @@ import org.jesperancinha.itf.android.file.manager.FileType;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ListView;
 
-/**
- * Created by joao on 6-2-16.
- */
 public class FileManagerActivity extends ListActivity
 {
     private File currentDirectory;

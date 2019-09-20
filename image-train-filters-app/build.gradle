@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 group = "org.jesperancinha.itf"
 version = "2.0.0-SNAPSHOT"
 
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29"
@@ -28,11 +29,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.github.QuadFlask:colorpicker:0.0.9'
-    implementation 'chartizate:chartizate-text-writer-android:1.1.4'
+    implementation('com.github.QuadFlask:colorpicker:0.0.13') {
+        exclude group: "com.android.support"
+    }
+    implementation 'org.jesperancinha.itf:itf-chartizate-android:5.0.0'
+    implementation 'org.jesperancinha.itf:itf-chartizate-api:5.0.0'
+    implementation 'androidx.fragment:fragment:1.1.0'
     testImplementation 'junit:junit:4.12'
+
 }

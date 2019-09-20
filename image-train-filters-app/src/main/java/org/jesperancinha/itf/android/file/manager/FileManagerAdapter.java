@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.res.ResourcesCompat;
+import androidx.core.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 
-/**
- * Created by joao on 6-2-16.
- */
 public class FileManagerAdapter extends ArrayAdapter<org.jesperancinha.itf.android.file.manager.FileManagerItem> {
-
-
     private final Context context;
     private final int id;
     private final List<FileManagerItem> fileList;
@@ -56,15 +51,12 @@ public class FileManagerAdapter extends ArrayAdapter<org.jesperancinha.itf.andro
         final ImageView viewDirectory = (ImageView) v.findViewById(org.jesperancinha.itf.android.R.id.typeFolderFile);
 
         if (directoryManager && !fileItem.getFilename().equals("..")) {
-            viewDirectory.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final Intent intent = new Intent(v.getContext(), MainActivity.class);
-                    intent.putExtra("folderItem", fileItem);
-                    final Activity activity = (Activity) FileManagerAdapter.this.context;
-                    activity.setResult(Activity.RESULT_OK, intent);
-                    activity.finish();
-                }
+            viewDirectory.setOnClickListener(v1 -> {
+                final Intent intent = new Intent(v1.getContext(), MainActivity.class);
+                intent.putExtra("folderItem", fileItem);
+                final Activity activity = (Activity) FileManagerAdapter.this.context;
+                activity.setResult(Activity.RESULT_OK, intent);
+                activity.finish();
             });
             viewDirectory.setBackgroundColor(Color.BLACK);
             viewDirectory.setPadding(3,3,3,3);
