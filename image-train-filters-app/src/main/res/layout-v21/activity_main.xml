@@ -1,30 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#000000"
-    tools:context="org.jesperancinha.itf.android.MainActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="#000000"
+                tools:context="org.jesperancinha.itf.android.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:textAlignment="textEnd"
-        android:layout_alignParentEnd="true"
-        app:titleTextColor="#FFFFFF"
-        >
+            android:id="@+id/toolbar"
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:textAlignment="textEnd"
+            android:layout_alignParentEnd="true"
+            app:titleTextColor="#FFFFFF"
+    >
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.viewpager.widget.ViewPager
-        android:background="#FFFFFF"
-        android:layout_below="@id/toolbar"
-        android:id="@+id/chartizate_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+            android:background="#FFFFFF"
+            android:layout_below="@id/toolbar"
+            android:id="@+id/chartizate_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
 </RelativeLayout>

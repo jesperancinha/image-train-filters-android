@@ -47,7 +47,7 @@ public class MainActivity extends FragmentActivity {
         chartizatePager.setAdapter(swipeAdapter);
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
-        toolbar.setLogo(R.mipmap.itf_launcher);
+        toolbar.setLogo(R.mipmap.ic_launcher);
     }
 
     public void pFindFile(View view) {
