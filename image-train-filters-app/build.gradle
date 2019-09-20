@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs', excludes: ['*.png'])
     implementation('com.github.QuadFlask:colorpicker:0.0.13') {
         exclude group: "com.android.support"
     }
@@ -43,3 +43,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
 }
+
