@@ -1,17 +1,5 @@
 package org.jesperancinha.itf.android;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import org.jesperancinha.chartizate.ChartizateFontManagerImpl;
-import org.jesperancinha.chartizate.distributions.ChartizateDistributionType;
-import org.jesperancinha.itf.android.common.ChartizateSurfaceView;
-import org.jesperancinha.itf.android.distribution.manager.DistributionManager;
-import org.jesperancinha.itf.android.file.manager.FileManagerItem;
-import org.jesperancinha.itf.android.font.manager.FontManagerAdapter;
-import org.jesperancinha.itf.android.language.manager.LanguageManagerAdapter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,9 +13,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import org.jesperancinha.chartizate.ChartizateFontManagerImpl;
+import org.jesperancinha.chartizate.distributions.ChartizateDistributionType;
+import org.jesperancinha.itf.android.common.ChartizateSurfaceView;
+import org.jesperancinha.itf.android.distribution.manager.DistributionManager;
+import org.jesperancinha.itf.android.file.manager.FileManagerItem;
+import org.jesperancinha.itf.android.font.manager.FontManagerAdapter;
+import org.jesperancinha.itf.android.language.manager.LanguageManagerAdapter;
 
-public class MainFragment extends Fragment
-{
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+public class MainFragment extends Fragment {
     public static final int FILE_FIND = 0;
     public static final int FOLDER_FIND = 1;
     public static final String EMPTY_SELECTION = "------------------------------------------------------------------";
@@ -49,16 +49,13 @@ public class MainFragment extends Fragment
 
     private View mainView;
 
-    public MainFragment()
-    {
+    public MainFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        if (mainView == null)
-        {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (mainView == null) {
             mainView = inflater.inflate(R.layout.content_main, container, false);
             listOfAllLanguageCode = new ArrayList<>(listOfAllLanguageCode);
             listOfAllLanguageCode.add(EMPTY_SELECTION);
@@ -69,19 +66,16 @@ public class MainFragment extends Fragment
             });
             Collections.sort(listOfAllFonts);
 
-            if (Objects.requireNonNull(getActivity()).getIntent() != null && getActivity().getIntent().getExtras() != null)
-            {
+            if (Objects.requireNonNull(getActivity()).getIntent() != null && getActivity().getIntent().getExtras() != null) {
                 final FileManagerItem fileManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("fileItem");
-                if (fileManagerItem != null)
-                {
+                if (fileManagerItem != null) {
                     TextView currentFile = getMainView().findViewById(R.id.lblESelectedFile);
                     currentFile.setText(fileManagerItem.getFilename());
                     setCurrentSelectedFile(fileManagerItem);
                 }
 
                 final FileManagerItem folderManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("folderItem");
-                if (folderManagerItem != null)
-                {
+                if (folderManagerItem != null) {
                     TextView currentFile = getMainView().findViewById(R.id.lblOutputFolder);
                     currentFile.setText(folderManagerItem.getFilename());
                     setCurrentSelectedFolder(folderManagerItem);
@@ -95,17 +89,14 @@ public class MainFragment extends Fragment
             );
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spiLanguageCode.setAdapter(dataAdapter);
-            spiLanguageCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-            {
+            spiLanguageCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-                {
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     checkButtonStart();
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent)
-                {
+                public void onNothingSelected(AdapterView<?> parent) {
 
                 }
 
@@ -166,129 +157,104 @@ public class MainFragment extends Fragment
     }
 
     @Nullable
-    public Integer getInteger(String lhs, String rhs, String code)
-    {
-        if (lhs.equals(code))
-        {
+    public Integer getInteger(String lhs, String rhs, String code) {
+        if (lhs.equals(code)) {
             return -1;
         }
-        if (rhs.equals(code))
-        {
+        if (rhs.equals(code)) {
             return 1;
         }
         return null;
     }
 
-    public void checkButtonStart()
-    {
+    public void checkButtonStart() {
         boolean validate = validate();
         getBtnStart().setEnabled(validate);
         getBtnStartEmail().setEnabled(validate);
     }
 
-    public boolean validate()
-    {
-        if (getCurrentSelectedFile() == null)
-        {
+    public boolean validate() {
+        if (getCurrentSelectedFile() == null) {
             return false;
         }
-        if (getCurrentSelectedFolder() == null)
-        {
+        if (getCurrentSelectedFolder() == null) {
             return false;
         }
-        if (getCurrentSelectedFolder().getFile() == null)
-        {
+        if (getCurrentSelectedFolder().getFile() == null) {
             return false;
         }
 
 
         final File rawCurrehtSelectedFile = getCurrentSelectedFile().getFile();
-        if (rawCurrehtSelectedFile == null)
-        {
+        if (rawCurrehtSelectedFile == null) {
             return false;
         }
         final String rawFontSize = ((EditText) getMainView().findViewById(R.id.editFontSize)).getText().toString();
-        if (rawFontSize.isEmpty())
-        {
+        if (rawFontSize.isEmpty()) {
             return false;
         }
         final String outputFileName = ((EditText) getMainView().findViewById(org.jesperancinha.itf.android.R.id.editOutputFileName)).getText().toString();
-        if (outputFileName.isEmpty())
-        {
+        if (outputFileName.isEmpty()) {
             return false;
         }
         final String fontType = ((Spinner) getMainView().findViewById(R.id.spiFontType)).getSelectedItem().toString();
-        if (fontType.isEmpty())
-        {
+        if (fontType.isEmpty()) {
             return false;
         }
         final String alphabet = ((Spinner) getMainView().findViewById(R.id.spiLanguageCode)).getSelectedItem().toString();
-        if (alphabet.isEmpty() || alphabet.equals(EMPTY_SELECTION))
-        {
+        if (alphabet.isEmpty() || alphabet.equals(EMPTY_SELECTION)) {
             return false;
         }
 
         final String density = ((EditText) getMainView().findViewById(R.id.editDensity)).getText().toString();
-        if (density.isEmpty())
-        {
+        if (density.isEmpty()) {
             return false;
         }
 
         final String range = ((EditText) getMainView().findViewById(R.id.editRange)).getText().toString();
-        if (range.isEmpty())
-        {
+        if (range.isEmpty()) {
             return false;
         }
         return true;
     }
 
-    public View getMainView()
-    {
+    public View getMainView() {
         return mainView;
     }
 
-    public FileManagerItem getCurrentSelectedFile()
-    {
+    public FileManagerItem getCurrentSelectedFile() {
         return currentSelectedFile;
     }
 
-    public void setCurrentSelectedFile(FileManagerItem currentSelectedFile)
-    {
+    public void setCurrentSelectedFile(FileManagerItem currentSelectedFile) {
         this.currentSelectedFile = currentSelectedFile;
     }
 
-    public void setCurrentSelectedFolder(FileManagerItem currentSelectedFolder)
-    {
+    public void setCurrentSelectedFolder(FileManagerItem currentSelectedFolder) {
         this.currentSelectedFolder = currentSelectedFolder;
     }
 
-    public Button getBtnStart()
-    {
+    public Button getBtnStart() {
         return btnStart;
     }
 
-    public Button getBtnStartEmail()
-    {
+    public Button getBtnStartEmail() {
         return btnStartEmail;
     }
 
-    public TextView getTextStatus()
-    {
+    public TextView getTextStatus() {
         return textStatus;
     }
 
-    public ChartizateSurfaceView getSvSelectedColor()
-    {
+    public ChartizateSurfaceView getSvSelectedColor() {
         return svSelectedColor;
     }
 
-    public FileManagerItem getCurrentSelectedFolder()
-    {
+    public FileManagerItem getCurrentSelectedFolder() {
         return currentSelectedFolder;
     }
 
-    public EditText getEditFontSize()
-    {
+    public EditText getEditFontSize() {
         return editFontSize;
     }
 }

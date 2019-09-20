@@ -7,10 +7,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -18,10 +14,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager.widget.ViewPager;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
-
 import org.jesperancinha.chartizate.ChartizateManager;
 import org.jesperancinha.chartizate.ChartizateManagerBuilderImpl;
 import org.jesperancinha.itf.android.common.ChartizateThumbs;
@@ -42,7 +39,7 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        chartizatePager = findViewById(R.id.chartizate_pager);
+        chartizatePager = findViewById(R.id.itf_pager);
         final SwipeAdapter swipeAdapter = new SwipeAdapter(getSupportFragmentManager());
         chartizatePager.setAdapter(swipeAdapter);
         final Toolbar toolbar = findViewById(R.id.toolbar);

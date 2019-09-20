@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.widget.ImageView;
 
 import java.io.InputStream;
-import java.net.URI;
 
 public class ChartizateThumbs {
     public static void setImageThumbnail(ImageView imageView, InputStream inputStream) {
@@ -21,8 +20,7 @@ public class ChartizateThumbs {
         imageView.setImageBitmap(ThumbnailUtils.extractThumbnail(bitmap, width, heigh));
     }
 
-    public static void setImage(ImageView imageView, Uri uri)
-    {
+    public static void setImage(ImageView imageView, Uri uri) {
         imageView.setImageURI(null);
         imageView.setImageURI(uri);
     }

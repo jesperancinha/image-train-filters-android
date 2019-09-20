@@ -3,7 +3,7 @@ package org.jesperancinha.itf.android.file.manager;
 import java.io.File;
 import java.io.Serializable;
 
-public class FileManagerItem implements Comparable<FileManagerItem>, Serializable  {
+public class FileManagerItem implements Comparable<FileManagerItem>, Serializable {
 
     private final String filename;
 

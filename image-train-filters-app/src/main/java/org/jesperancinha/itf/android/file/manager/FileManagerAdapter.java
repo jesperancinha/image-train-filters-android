@@ -5,14 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import androidx.core.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import androidx.core.content.res.ResourcesCompat;
 import org.jesperancinha.itf.android.MainActivity;
 import org.jesperancinha.itf.android.common.ChartizateThumbs;
 
@@ -46,9 +45,9 @@ public class FileManagerAdapter extends ArrayAdapter<org.jesperancinha.itf.andro
         }
 
         final FileManagerItem fileItem = fileList.get(position);
-        final TextView fileName = (TextView) v.findViewById(org.jesperancinha.itf.android.R.id.fileName);
-        final TextView fileDate = (TextView) v.findViewById(org.jesperancinha.itf.android.R.id.fileDate);
-        final ImageView viewDirectory = (ImageView) v.findViewById(org.jesperancinha.itf.android.R.id.typeFolderFile);
+        final TextView fileName = v.findViewById(org.jesperancinha.itf.android.R.id.fileName);
+        final TextView fileDate = v.findViewById(org.jesperancinha.itf.android.R.id.fileDate);
+        final ImageView viewDirectory = v.findViewById(org.jesperancinha.itf.android.R.id.typeFolderFile);
 
         if (directoryManager && !fileItem.getFilename().equals("..")) {
             viewDirectory.setOnClickListener(v1 -> {
@@ -59,17 +58,17 @@ public class FileManagerAdapter extends ArrayAdapter<org.jesperancinha.itf.andro
                 activity.finish();
             });
             viewDirectory.setBackgroundColor(Color.BLACK);
-            viewDirectory.setPadding(3,3,3,3);
+            viewDirectory.setPadding(3, 3, 3, 3);
         }
 
-        final ImageView imageView = (ImageView) v.findViewById(org.jesperancinha.itf.android.R.id.typeFolderFile);
+        final ImageView imageView = v.findViewById(org.jesperancinha.itf.android.R.id.typeFolderFile);
         switch (fileItem.getFileType()) {
             case Folder:
                 final Drawable image = ResourcesCompat.getDrawable(context.getResources(), org.jesperancinha.itf.android.R.drawable.folder, null);
                 imageView.setImageDrawable(image);
                 break;
             case File:
-                InputStream inputStream = null;
+                InputStream inputStream;
                 try {
                     inputStream = new FileInputStream(new File(fileItem.getFile().getAbsolutePath()));
                 } catch (FileNotFoundException e) {

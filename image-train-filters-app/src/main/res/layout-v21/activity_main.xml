@@ -22,7 +22,7 @@
     <androidx.viewpager.widget.ViewPager
             android:background="#FFFFFF"
             android:layout_below="@id/toolbar"
-            android:id="@+id/chartizate_pager"
+            android:id="@+id/itf_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
