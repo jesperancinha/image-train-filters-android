@@ -22,6 +22,8 @@ This application started in 2015 with name [Chartizate App](https://play.google.
 ![alt text](image-train-filters-app/src/main/res/mipmap-mdpi/ic_launcher.png "Logo Title Text 1")
 ![alt text](image-train-filters-app/src/main/res/mipmap-ldpi/ic_launcher.png "Logo Title Text 1")
 
+This application supports only devices from version Android SDK 24 (Nougat). This has solely to do with the fact that only from this version onwards there is support for Java 8 streams.
+
 ## Build Info
 
 The app currently uses a color picker from:
