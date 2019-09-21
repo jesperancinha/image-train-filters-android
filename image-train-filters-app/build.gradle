@@ -37,7 +37,7 @@ dependencies {
     implementation('com.github.QuadFlask:colorpicker:0.0.13') {
         exclude group: "com.android.support"
     }
-    implementation 'org.jesperancinha.itf:itf-chartizate-android:6.0.0'
+    implementation 'org.jesperancinha.itf:itf-chartizate-android:5.0.0'
     implementation 'org.jesperancinha.itf:itf-chartizate-api:5.0.0'
     implementation 'androidx.fragment:fragment:1.1.0'
     testImplementation 'junit:junit:4.12'
