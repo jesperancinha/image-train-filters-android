@@ -15,7 +15,6 @@
 
 This application started in 2015 with name [Chartizate App](https://play.google.com/store/apps/details?id=com.steelzack.chartizateapp). In the meantime it's content has changed so much and als it's goals that I've renamed it to Image Train Filters just as my website. It's not currently available as such but it will work just like the [site](http://itf.joaofilipesabinoesperancinha.nl/), but in an app format. Find more info about the [site](http://itf.joaofilipesabinoesperancinha.nl/) in the description below. Please read my privacy policy listed in [Privacy Policy](Privacy_Policy.md).
 
-
 ![alt text](image-train-filters-app/src/main/res/mipmap-xxxhdpi/ic_launcher.png "Logo Title Text 1")
 ![alt text](image-train-filters-app/src/main/res/mipmap-xxhdpi/ic_launcher.png "Logo Title Text 1")
 ![alt text](image-train-filters-app/src/main/res/mipmap-xhdpi/ic_launcher.png "Logo Title Text 1")
