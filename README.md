@@ -24,6 +24,11 @@ This application started in 2015 with name [Chartizate App](https://play.google.
 
 This application supports only devices from version Android SDK 24 (Nougat). This has solely to do with the fact that only from this version onwards there is support for Java 8 streams.
 
+## Requirements
+
+-   Java 8
+-   Android SDK 24, code name Nougat (7.0.0)
+
 ## Build Info
 
 The app currently uses a color picker from:
