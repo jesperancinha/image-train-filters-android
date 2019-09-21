@@ -83,9 +83,9 @@ public class MainFragment extends Fragment {
             }
 
             final Spinner spiLanguageCode = getMainView().findViewById(R.id.spiLanguageCode);
-            final LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter( //
-                    getActivity(), //
-                    android.R.layout.simple_spinner_item, listOfAllLanguageCode //
+            final LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter(
+                    getActivity(),
+                    android.R.layout.simple_spinner_item, listOfAllLanguageCode
             );
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spiLanguageCode.setAdapter(dataAdapter);
@@ -103,18 +103,18 @@ public class MainFragment extends Fragment {
             });
 
             final Spinner spiDistribution = getMainView().findViewById(R.id.spiDistribution);
-            final DistributionManager distributionDataAdapter = new DistributionManager( //
-                    getActivity(), //
-                    android.R.layout.simple_spinner_item, listOfAllDistributions //
+            final DistributionManager distributionDataAdapter = new DistributionManager(
+                    getActivity(),
+                    android.R.layout.simple_spinner_item, listOfAllDistributions
             );
             distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spiDistribution.setAdapter(distributionDataAdapter);
 
 
             final Spinner spiFontType = getMainView().findViewById(R.id.spiFontType);
-            final FontManagerAdapter fontManagerAdapter = new FontManagerAdapter( //
-                    getActivity(), //
-                    android.R.layout.simple_spinner_item, listOfAllFonts //
+            final FontManagerAdapter fontManagerAdapter = new FontManagerAdapter(
+                    getActivity(),
+                    android.R.layout.simple_spinner_item, listOfAllFonts
             );
             distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spiFontType.setAdapter(fontManagerAdapter);
@@ -212,10 +212,7 @@ public class MainFragment extends Fragment {
         }
 
         final String range = ((EditText) getMainView().findViewById(R.id.editRange)).getText().toString();
-        if (range.isEmpty()) {
-            return false;
-        }
-        return true;
+        return !range.isEmpty();
     }
 
     public View getMainView() {

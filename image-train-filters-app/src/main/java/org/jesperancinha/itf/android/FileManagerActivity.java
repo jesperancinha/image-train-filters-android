@@ -7,7 +7,6 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ListView;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import org.jesperancinha.itf.android.file.manager.FileManagerAdapter;
 import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 import org.jesperancinha.itf.android.file.manager.FileType;
