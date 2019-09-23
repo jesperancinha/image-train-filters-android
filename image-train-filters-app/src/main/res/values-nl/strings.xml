@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">image-train-filters-android</string>
+    <string name="done" translatable="false">Voltooid!</string>
+    <string name="chartizating" translatable="false">Even geduld A.U.B. Gechartizaten</string>
+    <string name="sendEmail" translatable="false">Email sturen</string>
+    <string name="action_settings" translatable="false">Instellingen</string>
+    <string name="image_mime_type" translatable="false">afbeelding</string>
+    <string name="background_color" translatable="false">Achter kleur</string>
+    <string name="distribution" translatable="false">Distributie</string>
+    <string name="char_coding" translatable="false">Char coderen</string>
+    <string name="file" translatable="false">Berstand</string>
+    <string name="none" translatable="false">geen</string>
+    <string name="pick_color" translatable="false">Kies een kleur</string>
+    <string name="comma" translatable="false">,</string>
+</resources>

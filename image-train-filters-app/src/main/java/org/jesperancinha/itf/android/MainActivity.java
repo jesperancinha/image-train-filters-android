@@ -27,7 +27,6 @@ import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 import static org.jesperancinha.chartizate.distributions.ChartizateDistributionType.Linear;
 
@@ -87,72 +86,110 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void pGenerateFile(View view) {
-        final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem());
-        final int destinationWindow = getDestination(view, mainFragment);
+        final MainFragment mainFragment = processMainFragment();
+        final Runnable task = createGenerateImageTask(view, mainFragment);
+        mainFragment.getTextStatus().post(task);
+    }
 
-        mainFragment.getBtnStart().setEnabled(false);
-        mainFragment.getBtnStartEmail().setEnabled(false);
-        mainFragment.getTextStatus().setText("Please wait while chartizating...");
-        final String outputFileName = ((EditText) mainFragment.getMainView().findViewById(R.id.editOutputFileName)).getText().toString();
-        final Runnable task = () -> {
+    private Runnable createGenerateImageTask(View view, MainFragment mainFragment) {
+        return () -> {
             try {
-                final File rawCurrehtSelectedFile = mainFragment.getCurrentSelectedFile().getFile();
-                final String rawFontSize = ((EditText) mainFragment.getMainView().findViewById(R.id.editFontSize)).getText().toString();
-                final String fontType = ((Spinner) mainFragment.getMainView().findViewById(R.id.spiFontType)).getSelectedItem().toString();
-                final String alphabet = ((Spinner) mainFragment.getMainView().findViewById(R.id.spiLanguageCode)).getSelectedItem().toString();
-                final int dennsity = Integer.parseInt(((EditText) mainFragment.getMainView().findViewById(R.id.editDensity)).getText().toString());
-                final int range = Integer.parseInt(((EditText) mainFragment.getMainView().findViewById(R.id.editRange)).getText().toString());
-
-                final InputStream imageFullStream = new FileInputStream(new File(rawCurrehtSelectedFile.getAbsolutePath()));
-
-                final int fontSize = Integer.parseInt(rawFontSize);
-                final int svSelectedColorColor = mainFragment.getSvSelectedColor().getColor();
-
-                try {
-                    final ChartizateManager<Integer, Typeface, Bitmap> manager =
-                            new ChartizateManagerBuilderImpl()
-                                    .backgroundColor(svSelectedColorColor)
-                                    .densityPercentage(dennsity)
-                                    .rangePercentage(range)
-                                    .distributionType(Linear)
-                                    .fontName(fontType)
-                                    .fontSize(fontSize)
-                                    .block(Character.UnicodeBlock.forName(alphabet))
-                                    .imageFullStream(imageFullStream)
-                                    .destinationImagePath(new File(mainFragment.getCurrentSelectedFolder().getFile(), outputFileName).getAbsolutePath())
-                                    .build();
-                    manager.generateConvertedImage();
-                } catch (IllegalArgumentException e) {
-                    new AlertDialog.Builder(mainFragment.getActivity())
-                            .setTitle("Error with your code selection")
-                            .setMessage("Unfortunatelly this Unicode is not supported. If you want a working example, try: LATIN_EXTENDED_A")
-                            .setOnCancelListener(dialog -> {
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
-                }
+                final ChartizateManager<Integer, Typeface, Bitmap> manager = setUpManager(mainFragment);
+                manager.generateConvertedImage();
+            } catch (IllegalArgumentException e) {
+                alertFailedUnicodeParsing(mainFragment);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             } finally {
-                mainFragment.getTextStatus().setText("Done!");
-                mainFragment.getBtnStart().post(() -> mainFragment.getBtnStart().setEnabled(true));
-                mainFragment.getBtnStartEmail().post(() -> mainFragment.getBtnStartEmail().setEnabled(true));
-                chartizatePager.setCurrentItem(destinationWindow);
-                final ViewFragment viewFragment = (ViewFragment) getSupportFragmentManager().getFragments().get(2);
-                final ImageView imageView = viewFragment.getImageView();
-                final ImageView imageViewEmail = findViewById(R.id.imageViewGeneratedAttachment);
-                final Uri uri = Uri.fromFile(new File(mainFragment.getCurrentSelectedFolder().getFile(), outputFileName));
-                imageView.post(() -> ChartizateThumbs.setImage(
-                        imageView,
-                        uri
-                ));
-                imageViewEmail.post(() -> ChartizateThumbs.setImage(
-                        imageViewEmail,
-                        uri
-                ));
+                postFileGeneration(mainFragment, getDestination(view, mainFragment), getOutputFileName(mainFragment));
             }
         };
-        mainFragment.getTextStatus().post(task);
+    }
+
+    private ChartizateManager<Integer, Typeface, Bitmap> setUpManager(MainFragment mainFragment) throws java.io.IOException {
+        return new ChartizateManagerBuilderImpl()
+                .backgroundColor(getBackground(mainFragment))
+                .densityPercentage(getDensity(mainFragment))
+                .rangePercentage(getRangePercentage(mainFragment))
+                .distributionType(Linear)
+                .fontName(getFontName(mainFragment))
+                .fontSize(getFontSize(mainFragment))
+                .block(getBlock(mainFragment))
+                .imageFullStream(getImageFullStream(mainFragment))
+                .destinationImagePath(getDestinationImagePath(mainFragment, getOutputFileName(mainFragment)))
+                .build();
+    }
+
+    private MainFragment processMainFragment() {
+        final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem());
+        mainFragment.getBtnStart().setEnabled(false);
+        mainFragment.getBtnStartEmail().setEnabled(false);
+        mainFragment.getTextStatus().setText(R.string.chartizating);
+        return mainFragment;
+    }
+
+    private String getOutputFileName(MainFragment mainFragment) {
+        return ((EditText) mainFragment.getMainView().findViewById(R.id.editOutputFileName)).getText().toString();
+    }
+
+    private String getDestinationImagePath(MainFragment mainFragment, String outputFileName) {
+        return new File(mainFragment.getCurrentSelectedFolder().getFile(), outputFileName).getAbsolutePath();
+    }
+
+    private FileInputStream getImageFullStream(MainFragment mainFragment) throws FileNotFoundException {
+        return new FileInputStream(
+                new File(mainFragment.getCurrentSelectedFile().getFile().getAbsolutePath()));
+    }
+
+    private Character.UnicodeBlock getBlock(MainFragment mainFragment) {
+        return Character.UnicodeBlock.forName(((Spinner) mainFragment.getMainView().findViewById(R.id.spiLanguageCode)).getSelectedItem().toString());
+    }
+
+    private int getFontSize(MainFragment mainFragment) {
+        return Integer.parseInt(((EditText) mainFragment.getMainView().findViewById(R.id.editFontSize)).getText().toString());
+    }
+
+    private String getFontName(MainFragment mainFragment) {
+        return ((Spinner) mainFragment.getMainView().findViewById(R.id.spiFontType)).getSelectedItem().toString();
+    }
+
+    private int getRangePercentage(MainFragment mainFragment) {
+        return Integer.parseInt(((EditText) mainFragment.getMainView().findViewById(R.id.editRange)).getText().toString());
+    }
+
+    private int getDensity(MainFragment mainFragment) {
+        return Integer.parseInt(((EditText) mainFragment.getMainView().findViewById(R.id.editDensity)).getText().toString());
+    }
+
+    private int getBackground(MainFragment mainFragment) {
+        return mainFragment.getSvSelectedColor().getColor();
+    }
+
+    private void postFileGeneration(MainFragment mainFragment, int destinationWindow, String outputFileName) {
+        mainFragment.getTextStatus().setText(R.string.done);
+        mainFragment.getBtnStart().post(() -> mainFragment.getBtnStart().setEnabled(true));
+        mainFragment.getBtnStartEmail().post(() -> mainFragment.getBtnStartEmail().setEnabled(true));
+        chartizatePager.setCurrentItem(destinationWindow);
+        final ViewFragment viewFragment = (ViewFragment) getSupportFragmentManager().getFragments().get(2);
+        final ImageView imageView = viewFragment.getImageView();
+        final ImageView imageViewEmail = findViewById(R.id.imageViewGeneratedAttachment);
+        final Uri uri = getOutputFileUrl(mainFragment, outputFileName);
+        imageView.post(() -> ChartizateThumbs.setImage(imageView, uri));
+        imageViewEmail.post(() -> ChartizateThumbs.setImage(imageViewEmail, uri));
+    }
+
+    private Uri getOutputFileUrl(MainFragment mainFragment, String outputFileName) {
+        return Uri.fromFile(new File(mainFragment.getCurrentSelectedFolder().getFile(), outputFileName));
+    }
+
+    private void alertFailedUnicodeParsing(MainFragment mainFragment) {
+        new AlertDialog.Builder(mainFragment.getActivity())
+                .setTitle("Error with your code selection")
+                .setMessage("Unfortunatelly this Unicode is not supported. If you want a working example, try: LATIN_EXTENDED_A")
+                .setOnCancelListener(dialog -> {
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private int getDestination(View view, MainFragment mainFragment) {
@@ -210,18 +247,17 @@ public class MainActivity extends FragmentActivity {
     public void pSendEmail(View view) {
         final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(0);
         final EmailFragment emailFragment = (EmailFragment) getSupportFragmentManager().getFragments().get(1);
-        final String outputFileName = ((EditText) mainFragment.getMainView().findViewById(R.id.editOutputFileName)).getText().toString();
+        final String outputFileName = getOutputFileName(mainFragment);
         final Uri uri = Uri.fromFile(new File(mainFragment.getCurrentSelectedFolder().getFile(), outputFileName));
 
 
-        Log.i("Send email", "");
+        Log.i(getString(R.string.sendEmail), "");
         String[] TO = emailFragment.getTextTo().getText().toString().split(getResources().getString(R.string.comma));
         String[] CC = emailFragment.getTextCC().getText().toString().split(getResources().getString(R.string.comma));
         String[] BCC = emailFragment.getTextBCC().getText().toString().split(getResources().getString(R.string.comma));
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
-        emailIntent.setData(Uri.parse("mailto:"));
-        emailIntent.setType("text/plain");
+        emailIntent.setDataAndType(Uri.parse("mailto:"), "text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
         emailIntent.putExtra(Intent.EXTRA_CC, CC);
         emailIntent.putExtra(Intent.EXTRA_BCC, BCC);

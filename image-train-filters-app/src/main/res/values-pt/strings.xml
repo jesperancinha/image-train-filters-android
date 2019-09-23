@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">image-train-filters-android</string>
+    <string name="done" translatable="false">Feito!</string>
+    <string name="chartizating" translatable="false">Por favor espere enquanto chartizatmoos</string>
+    <string name="sendEmail" translatable="false">Enviar email</string>
+    <string name="comma" translatable="false">,</string>
+    <string name="action_settings" translatable="false">Configurações</string>
+    <string name="image_mime_type" translatable="false">imagem</string>
+    <string name="background_color" translatable="false">Cor de fundo:</string>
+    <string name="distribution" translatable="false">Distribuição</string>
+    <string name="char_coding" translatable="false">Codificação de caracteres</string>
+    <string name="file" translatable="false">Ficheiro</string>
+    <string name="none" translatable="false">nenhum</string>
+    <string name="pick_color" translatable="false">Escolha a cor</string>
+</resources>
