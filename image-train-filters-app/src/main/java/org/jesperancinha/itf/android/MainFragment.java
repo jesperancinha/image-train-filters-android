@@ -10,9 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import org.jesperancinha.chartizate.ChartizateFontManagerImpl;
 import org.jesperancinha.chartizate.distributions.ChartizateDistributionType;
 import org.jesperancinha.itf.android.common.ChartizateSurfaceView;
@@ -26,6 +28,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import static org.jesperancinha.itf.android.R.id.editDensity;
+import static org.jesperancinha.itf.android.R.id.editFontSize;
+import static org.jesperancinha.itf.android.R.id.editOutputFileName;
+import static org.jesperancinha.itf.android.R.id.editRange;
+import static org.jesperancinha.itf.android.R.id.spiLanguageCode;
 
 public class MainFragment extends Fragment {
     public static final int FILE_FIND = 0;
@@ -55,105 +63,141 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (mainView == null) {
-            mainView = inflater.inflate(R.layout.content_main, container, false);
-            listOfAllLanguageCode = new ArrayList<>(listOfAllLanguageCode);
-            listOfAllLanguageCode.add(EMPTY_SELECTION);
-            Collections.sort(listOfAllLanguageCode, (lhs, rhs) -> {
-                Integer x = getInteger(lhs, rhs, EMPTY_SELECTION);
-                if (x != null) return x;
-                return lhs.compareTo(rhs);
-            });
-            Collections.sort(listOfAllFonts);
-
-            if (Objects.requireNonNull(getActivity()).getIntent() != null && getActivity().getIntent().getExtras() != null) {
-                final FileManagerItem fileManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("fileItem");
-                if (fileManagerItem != null) {
-                    TextView currentFile = getMainView().findViewById(R.id.lblESelectedFile);
-                    currentFile.setText(fileManagerItem.getFilename());
-                    setCurrentSelectedFile(fileManagerItem);
-                }
-
-                final FileManagerItem folderManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("folderItem");
-                if (folderManagerItem != null) {
-                    TextView currentFile = getMainView().findViewById(R.id.lblOutputFolder);
-                    currentFile.setText(folderManagerItem.getFilename());
-                    setCurrentSelectedFolder(folderManagerItem);
-                }
-            }
-
-            final Spinner spiLanguageCode = getMainView().findViewById(R.id.spiLanguageCode);
-            final LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter(
-                    getActivity(),
-                    android.R.layout.simple_spinner_item, listOfAllLanguageCode
-            );
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spiLanguageCode.setAdapter(dataAdapter);
-            spiLanguageCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    checkButtonStart();
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-
-            });
-
-            final Spinner spiDistribution = getMainView().findViewById(R.id.spiDistribution);
-            final DistributionManager distributionDataAdapter = new DistributionManager(
-                    getActivity(),
-                    android.R.layout.simple_spinner_item, listOfAllDistributions
-            );
-            distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spiDistribution.setAdapter(distributionDataAdapter);
-
-
-            final Spinner spiFontType = getMainView().findViewById(R.id.spiFontType);
-            final FontManagerAdapter fontManagerAdapter = new FontManagerAdapter(
-                    getActivity(),
-                    android.R.layout.simple_spinner_item, listOfAllFonts
-            );
-            distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spiFontType.setAdapter(fontManagerAdapter);
-
-            svSelectedColor = getMainView().findViewById(R.id.svSelectedColor);
-            svSelectedColor.setColor(Color.BLACK);
-            getSvSelectedColor().setBackgroundColor(Color.BLACK);
-
-            spiDistribution.setEnabled(false);
-
-            editFontSize = getMainView().findViewById(R.id.editFontSize);
-
-            btnStart = getMainView().findViewById(R.id.btnStart);
-            btnStartEmail = getMainView().findViewById(R.id.btnStartAndEmail);
-            getBtnStart().setEnabled(false);
-            getBtnStartEmail().setEnabled(false);
-
-            final EditText editFileName = getMainView().findViewById(R.id.editOutputFileName);
-            editFileName.setOnEditorActionListener((v, actionId, event) -> {
-                checkButtonStart();
-                return true;
-            });
-
-            textStatus = getMainView().findViewById(R.id.textStatus);
-
-
-            final EditText density = getMainView().findViewById(R.id.editDensity);
-            density.setOnKeyListener((v, keyCode, event) -> {
-                checkButtonStart();
-                return false;
-            });
-
-            final EditText range = getMainView().findViewById(R.id.editRange);
-            range.setOnKeyListener((v, keyCode, event) -> {
-                checkButtonStart();
-                return false;
-            });
+        if (this.mainView == null) {
+            assignControls(inflater, container);
+            this.listOfAllLanguageCode = new ArrayList<>(listOfAllLanguageCode);
+            this.listOfAllLanguageCode.add(EMPTY_SELECTION);
+            sortLanguageCodes();
+            sortFontNames();
+            populateControls();
+            setSelectedColor();
+            this.btnStart.setEnabled(false);
+            this.btnStartEmail.setEnabled(false);
+            setUpFilenameEditor();
+            setUpDensityEditor();
+            setUpRangeEditor();
         }
         return getMainView();
+    }
+
+    private void populateControls() {
+        populateLanguageSpinner();
+        populateDistributionSpinner();
+        populateFontTypeSpinner();
+    }
+
+    private void assignControls(LayoutInflater inflater, ViewGroup container) {
+        this.mainView = inflater.inflate(R.layout.content_main, container, false);
+        this.editFontSize = this.mainView.findViewById(R.id.editFontSize);
+        this.btnStart = this.mainView.findViewById(R.id.btnStart);
+        this.btnStartEmail = this.mainView.findViewById(R.id.btnStartAndEmail);
+        this.textStatus = this.mainView.findViewById(R.id.textStatus);
+    }
+
+    private void sortFontNames() {
+        Collections.sort(listOfAllFonts);
+        if (Objects.requireNonNull(getActivity()).getIntent() != null && getActivity().getIntent().getExtras() != null) {
+            setSelectedFile();
+            setSelectedFolder();
+        }
+    }
+
+    private void sortLanguageCodes() {
+        Collections.sort(listOfAllLanguageCode, (lhs, rhs) -> {
+            Integer x = getInteger(lhs, rhs, EMPTY_SELECTION);
+            if (x != null) return x;
+            return lhs.compareTo(rhs);
+        });
+    }
+
+    private void setUpRangeEditor() {
+        final EditText range = getMainView().findViewById(editRange);
+        range.setOnKeyListener((v, keyCode, event) -> {
+            checkButtonStart();
+            return false;
+        });
+    }
+
+    private void setUpDensityEditor() {
+        final EditText density = this.mainView.findViewById(editDensity);
+        density.setOnKeyListener((v, keyCode, event) -> {
+            checkButtonStart();
+            return false;
+        });
+    }
+
+    private void setUpFilenameEditor() {
+        final EditText editFileName = this.mainView.findViewById(editOutputFileName);
+        editFileName.setOnEditorActionListener((v, actionId, event) -> {
+            checkButtonStart();
+            return true;
+        });
+    }
+
+    private void setSelectedColor() {
+        svSelectedColor = this.mainView.findViewById(R.id.svSelectedColor);
+        svSelectedColor.setColor(Color.BLACK);
+        getSvSelectedColor().setBackgroundColor(Color.BLACK);
+    }
+
+    private void populateFontTypeSpinner() {
+        final Spinner spiFontType = this.mainView.findViewById(R.id.spiFontType);
+        final FontManagerAdapter fontManagerAdapter = new FontManagerAdapter(
+                getActivity(),
+                android.R.layout.simple_spinner_item, listOfAllFonts
+        );
+        spiFontType.setAdapter(fontManagerAdapter);
+    }
+
+    private void populateDistributionSpinner() {
+        final Spinner spiDistribution = this.mainView.findViewById(R.id.spiDistribution);
+        final DistributionManager distributionDataAdapter = new DistributionManager(
+                getActivity(),
+                android.R.layout.simple_spinner_item, listOfAllDistributions
+        );
+        spiDistribution.setAdapter(distributionDataAdapter);
+        spiDistribution.setEnabled(false);
+        distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    }
+
+    private void populateLanguageSpinner() {
+        final Spinner spiLanguageCode = this.mainView.findViewById(R.id.spiLanguageCode);
+        final LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter(
+                getActivity(),
+                android.R.layout.simple_spinner_item, listOfAllLanguageCode
+        );
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spiLanguageCode.setAdapter(dataAdapter);
+        spiLanguageCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                checkButtonStart();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
+    }
+
+    private void setSelectedFolder() {
+        final FileManagerItem folderManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("folderItem");
+        if (folderManagerItem != null) {
+            TextView currentFile = this.mainView.findViewById(R.id.lblOutputFolder);
+            currentFile.setText(folderManagerItem.getFilename());
+            setCurrentSelectedFolder(folderManagerItem);
+        }
+    }
+
+    private void setSelectedFile() {
+        final FileManagerItem fileManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("fileItem");
+        if (fileManagerItem != null) {
+            TextView currentFile = this.mainView.findViewById(R.id.lblESelectedFile);
+            currentFile.setText(fileManagerItem.getFilename());
+            setCurrentSelectedFile(fileManagerItem);
+        }
     }
 
     @Nullable
@@ -174,45 +218,55 @@ public class MainFragment extends Fragment {
     }
 
     public boolean validate() {
-        if (getCurrentSelectedFile() == null) {
-            return false;
-        }
+        return validateFile() && validateFolder() && validateRawCurrentSelectedFile() &&
+                validateRawFontSize() && validateOutputFile() && validateFondType() &&
+                validateAphabet() && validateDensity() && validateRange();
+    }
+
+    private boolean validateRange() {
+        final String range = ((EditText) this.mainView.findViewById(editRange)).getText().toString();
+        return !range.isEmpty();
+    }
+
+    private boolean validateDensity() {
+        final String density = ((EditText) this.mainView.findViewById(editDensity)).getText().toString();
+        return !density.isEmpty();
+    }
+
+    private boolean validateAphabet() {
+        final String alphabet = ((Spinner) this.mainView.findViewById(spiLanguageCode)).getSelectedItem().toString();
+        return !(alphabet.isEmpty() || alphabet.equals(EMPTY_SELECTION));
+    }
+
+    private boolean validateFondType() {
+        final String fontType = ((Spinner) this.mainView.findViewById(R.id.spiFontType)).getSelectedItem().toString();
+        return !fontType.isEmpty();
+    }
+
+    private boolean validateOutputFile() {
+        final String outputFileName = ((EditText) this.mainView.findViewById(editOutputFileName)).getText().toString();
+        return !outputFileName.isEmpty();
+    }
+
+    private boolean validateRawFontSize() {
+        final String rawFontSize = ((EditText) this.mainView.findViewById(R.id.editFontSize)).getText().toString();
+        return !rawFontSize.isEmpty();
+    }
+
+    private boolean validateRawCurrentSelectedFile() {
+        final File rawCurrentSelectedFile = getCurrentSelectedFile().getFile();
+        return rawCurrentSelectedFile != null;
+    }
+
+    private boolean validateFolder() {
         if (getCurrentSelectedFolder() == null) {
             return false;
         }
-        if (getCurrentSelectedFolder().getFile() == null) {
-            return false;
-        }
+        return getCurrentSelectedFolder().getFile() != null;
+    }
 
-
-        final File rawCurrehtSelectedFile = getCurrentSelectedFile().getFile();
-        if (rawCurrehtSelectedFile == null) {
-            return false;
-        }
-        final String rawFontSize = ((EditText) getMainView().findViewById(R.id.editFontSize)).getText().toString();
-        if (rawFontSize.isEmpty()) {
-            return false;
-        }
-        final String outputFileName = ((EditText) getMainView().findViewById(org.jesperancinha.itf.android.R.id.editOutputFileName)).getText().toString();
-        if (outputFileName.isEmpty()) {
-            return false;
-        }
-        final String fontType = ((Spinner) getMainView().findViewById(R.id.spiFontType)).getSelectedItem().toString();
-        if (fontType.isEmpty()) {
-            return false;
-        }
-        final String alphabet = ((Spinner) getMainView().findViewById(R.id.spiLanguageCode)).getSelectedItem().toString();
-        if (alphabet.isEmpty() || alphabet.equals(EMPTY_SELECTION)) {
-            return false;
-        }
-
-        final String density = ((EditText) getMainView().findViewById(R.id.editDensity)).getText().toString();
-        if (density.isEmpty()) {
-            return false;
-        }
-
-        final String range = ((EditText) getMainView().findViewById(R.id.editRange)).getText().toString();
-        return !range.isEmpty();
+    private boolean validateFile() {
+        return getCurrentSelectedFile() != null;
     }
 
     public View getMainView() {

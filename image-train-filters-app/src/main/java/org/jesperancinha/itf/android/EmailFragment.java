@@ -22,10 +22,10 @@ public class EmailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mainView == null) {
             mainView = inflater.inflate(R.layout.content_email, container, false);
-            textTo = (EditText) mainView.findViewById(R.id.editEmailTo);
-            textCC = (EditText) mainView.findViewById(R.id.editEmailCC);
-            textBCC = (EditText) mainView.findViewById(R.id.editEmailBCC);
-            textEmail = (EditText) mainView.findViewById(R.id.editEmailText);
+            textTo = mainView.findViewById(R.id.editEmailTo);
+            textCC = mainView.findViewById(R.id.editEmailCC);
+            textBCC = mainView.findViewById(R.id.editEmailBCC);
+            textEmail = mainView.findViewById(R.id.editEmailText);
         }
         return mainView;
     }
