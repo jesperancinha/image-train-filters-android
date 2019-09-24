@@ -1,7 +1,9 @@
 package org.jesperancinha.itf.android;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -37,6 +39,10 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (checkSelfPermission(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
         setContentView(R.layout.activity_main);
         chartizatePager = findViewById(R.id.itf_pager);
         final SwipeAdapter swipeAdapter = new SwipeAdapter(getSupportFragmentManager());
@@ -44,14 +50,6 @@ public class MainActivity extends FragmentActivity {
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
         toolbar.setLogo(R.mipmap.ic_launcher);
-    }
-
-    public void pFindFile(View view) {
-        final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem());
-        final Intent intent = new Intent(mainFragment.getActivity(), FileManagerActivity.class);
-        intent.putExtra("directoryManager", false);
-        startActivityForResult(intent, MainFragment.FILE_FIND);
-        mainFragment.checkButtonStart();
     }
 
     @Override
@@ -85,6 +83,14 @@ public class MainActivity extends FragmentActivity {
         mainFragment.checkButtonStart();
     }
 
+    public void pFindFile(View view) {
+        final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem());
+        final Intent intent = new Intent(mainFragment.getActivity(), FileManagerActivity.class);
+        intent.putExtra("directoryManager", false);
+        startActivityForResult(intent, MainFragment.FILE_FIND);
+        mainFragment.checkButtonStart();
+    }
+
     public void pGenerateFile(View view) {
         final MainFragment mainFragment = processMainFragment();
         final Runnable task = createGenerateImageTask(view, mainFragment);
@@ -95,7 +101,7 @@ public class MainActivity extends FragmentActivity {
         return () -> {
             try {
                 final ChartizateManager<Integer, Typeface, Bitmap> manager = setUpManager(mainFragment);
-                manager.generateConvertedImage();
+                manager.saveImage(manager.generateConvertedImage());
             } catch (IllegalArgumentException e) {
                 alertFailedUnicodeParsing(mainFragment);
             } catch (Exception e) {

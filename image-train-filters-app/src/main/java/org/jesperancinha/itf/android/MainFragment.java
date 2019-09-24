@@ -15,7 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import org.jesperancinha.chartizate.ChartizateEncodingManagerAbstract;
 import org.jesperancinha.chartizate.ChartizateFontManagerImpl;
+import org.jesperancinha.chartizate.ChartizateUnicodes;
 import org.jesperancinha.chartizate.distributions.ChartizateDistributionType;
 import org.jesperancinha.itf.android.common.ChartizateSurfaceView;
 import org.jesperancinha.itf.android.distribution.manager.DistributionManager;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.jesperancinha.itf.android.R.id.editDensity;
 import static org.jesperancinha.itf.android.R.id.editFontSize;
@@ -41,7 +44,7 @@ public class MainFragment extends Fragment {
     public static final String EMPTY_SELECTION = "------------------------------------------------------------------";
     private FileManagerItem currentSelectedFile = null;
     private FileManagerItem currentSelectedFolder = null;
-    private List<String> listOfAllLanguageCode = ChartizateFontManagerImpl.getAllFontTypes();
+    private List<String> listOfAllLanguageCode = ChartizateUnicodes.getAllUniCodeBlocksJava().stream().map(Objects::toString).collect(Collectors.toList());
     private final List<String> listOfAllDistributions = ChartizateDistributionType.getAllDistributionTypes();
     private final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
 

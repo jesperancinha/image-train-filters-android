@@ -6,7 +6,7 @@
     <string name="chartizating" translatable="false">Por favor espere mientras chartizamos</string>
     <string name="sendEmail" translatable="false">Enviar email</string>
     <string name="action_settings" translatable="false">Configuraciones</string>
-    <string name="image_mime_type" translatable="false">imágene</string>
+    <string name="image_mime_type" translatable="false">image</string>
     <string name="background_color" translatable="false">Color de fondo</string>
     <string name="distribution" translatable="false">Distribución</string>
     <string name="char_coding" translatable="false">Codificación de caracteres</string>

@@ -6,7 +6,7 @@
     <string name="sendEmail" translatable="false">Enviar email</string>
     <string name="comma" translatable="false">,</string>
     <string name="action_settings" translatable="false">Configurações</string>
-    <string name="image_mime_type" translatable="false">imagem</string>
+    <string name="image_mime_type" translatable="false">image</string>
     <string name="background_color" translatable="false">Cor de fundo:</string>
     <string name="distribution" translatable="false">Distribuição</string>
     <string name="char_coding" translatable="false">Codificação de caracteres</string>
