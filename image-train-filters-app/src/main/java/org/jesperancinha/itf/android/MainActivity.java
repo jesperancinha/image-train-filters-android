@@ -29,6 +29,7 @@ import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 
 import static org.jesperancinha.chartizate.distributions.ChartizateDistributionType.Linear;
 
@@ -56,31 +57,40 @@ public class MainActivity extends FragmentActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem());
-
-
-        if (data != null && data.getExtras() != null) {
-            final FileManagerItem fileManagerItem = (FileManagerItem) data.getExtras().get("fileItem");
-            if (fileManagerItem != null) {
-                final TextView currentFile = mainFragment.getMainView().findViewById(R.id.lblESelectedFile);
-                currentFile.setText(fileManagerItem.getFilename());
-                mainFragment.setCurrentSelectedFile(fileManagerItem);
-                final ImageView btnImageFile = mainFragment.getMainView().findViewById(R.id.fileImageSourcePreview);
-
-                try {
-                    ChartizateThumbs.setImageThumbnail(btnImageFile, new FileInputStream(fileManagerItem.getFile()));
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            final FileManagerItem folderManagerItem = (FileManagerItem) data.getExtras().get("folderItem");
-            if (folderManagerItem != null) {
-                final TextView currentFile = mainFragment.getMainView().findViewById(R.id.lblOutputFolder);
-                currentFile.setText(folderManagerItem.getFilename());
-                mainFragment.setCurrentSelectedFolder(folderManagerItem);
-            }
+        if (isDataPresent(data)) {
+            final FileManagerItem fileManagerItem = (FileManagerItem) Objects.requireNonNull(data.getExtras()).get("fileItem");
+            setSelectedInputFileAndThumbnail(mainFragment, fileManagerItem);
+            setSelectedOutputFolder(data, mainFragment);
         }
         mainFragment.checkButtonStart();
+    }
+
+    private void setSelectedOutputFolder(Intent data, MainFragment mainFragment) {
+        final FileManagerItem folderManagerItem = (FileManagerItem) Objects.requireNonNull(data.getExtras()).get("folderItem");
+        if (folderManagerItem != null) {
+            final TextView currentFile = mainFragment.getMainView().findViewById(R.id.lblOutputFolder);
+            currentFile.setText(folderManagerItem.getFilename());
+            mainFragment.setCurrentSelectedFolder(folderManagerItem);
+        }
+    }
+
+    private void setSelectedInputFileAndThumbnail(MainFragment mainFragment, FileManagerItem fileManagerItem) {
+        if (fileManagerItem != null) {
+            final TextView currentFile = mainFragment.getMainView().findViewById(R.id.lblESelectedFile);
+            currentFile.setText(fileManagerItem.getFilename());
+            mainFragment.setCurrentSelectedFile(fileManagerItem);
+            final ImageView btnImageFile = mainFragment.getMainView().findViewById(R.id.fileImageSourcePreview);
+
+            try {
+                ChartizateThumbs.setImageThumbnail(btnImageFile, new FileInputStream(fileManagerItem.getFile()));
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private boolean isDataPresent(Intent data) {
+        return data != null && data.getExtras() != null;
     }
 
     public void pFindFile(View view) {

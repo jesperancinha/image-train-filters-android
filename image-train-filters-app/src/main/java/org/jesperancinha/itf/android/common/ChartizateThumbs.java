@@ -10,14 +10,10 @@ import java.io.InputStream;
 
 public class ChartizateThumbs {
     public static void setImageThumbnail(ImageView imageView, InputStream inputStream) {
-        setImageThumbnail(imageView, inputStream, 50, 50);
-    }
-
-    public static void setImageThumbnail(ImageView imageView, InputStream inputStream, int width, int heigh) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
-        imageView.setImageBitmap(ThumbnailUtils.extractThumbnail(bitmap, width, heigh));
+        imageView.setImageBitmap(ThumbnailUtils.extractThumbnail(bitmap, 50, 50));
     }
 
     public static void setImage(ImageView imageView, Uri uri) {

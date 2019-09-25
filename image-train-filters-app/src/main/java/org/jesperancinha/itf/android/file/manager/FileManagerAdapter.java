@@ -11,17 +11,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import org.jesperancinha.itf.android.MainActivity;
-import org.jesperancinha.itf.android.common.ChartizateThumbs;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
+
+import static org.jesperancinha.itf.android.R.drawable.folder;
+import static org.jesperancinha.itf.android.common.ChartizateThumbs.setImageThumbnail;
 
 public class FileManagerAdapter extends ArrayAdapter<org.jesperancinha.itf.android.file.manager.FileManagerItem> {
+    public static final int COMMON_ICON_PADDING = 3;
     private final Context context;
     private final int id;
     private final List<FileManagerItem> fileList;
@@ -36,35 +41,28 @@ public class FileManagerAdapter extends ArrayAdapter<org.jesperancinha.itf.andro
         this.directoryManager = directoryManager;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, final View convertView, ViewGroup parent) {
-        View v = convertView;
-        if (v == null) {
-            LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(id, null);
-        }
-
+    public View getView(int position, final View convertView, @NonNull ViewGroup parent) {
+        final View v = getView(convertView);
         final FileManagerItem fileItem = fileList.get(position);
         final TextView fileName = v.findViewById(org.jesperancinha.itf.android.R.id.fileName);
         final TextView fileDate = v.findViewById(org.jesperancinha.itf.android.R.id.fileDate);
         final ImageView viewDirectory = v.findViewById(org.jesperancinha.itf.android.R.id.typeFolderFile);
-
-        if (directoryManager && !fileItem.getFilename().equals("..")) {
-            viewDirectory.setOnClickListener(v1 -> {
-                final Intent intent = new Intent(v1.getContext(), MainActivity.class);
-                intent.putExtra("folderItem", fileItem);
-                final Activity activity = (Activity) FileManagerAdapter.this.context;
-                activity.setResult(Activity.RESULT_OK, intent);
-                activity.finish();
-            });
-            viewDirectory.setBackgroundColor(Color.BLACK);
-            viewDirectory.setPadding(3, 3, 3, 3);
+        if (isNotBackFolder(fileItem)) {
+            assignFileListenersAndSettings(fileItem, viewDirectory);
         }
-
         final ImageView imageView = v.findViewById(org.jesperancinha.itf.android.R.id.typeFolderFile);
+        assignSystemItemIcons(fileItem, imageView);
+        fileName.setText(fileItem.getFilename());
+        fileDate.setText(fileItem.getDate());
+        return v;
+    }
+
+    private void assignSystemItemIcons(FileManagerItem fileItem, ImageView imageView) {
         switch (fileItem.getFileType()) {
             case Folder:
-                final Drawable image = ResourcesCompat.getDrawable(context.getResources(), org.jesperancinha.itf.android.R.drawable.folder, null);
+                final Drawable image = ResourcesCompat.getDrawable(context.getResources(), folder, null);
                 imageView.setImageDrawable(image);
                 break;
             case File:
@@ -75,14 +73,33 @@ public class FileManagerAdapter extends ArrayAdapter<org.jesperancinha.itf.andro
                     e.printStackTrace();
                     throw new RuntimeException(e);
                 }
-
-                ChartizateThumbs.setImageThumbnail(imageView, inputStream);
-
+                setImageThumbnail(imageView, inputStream);
                 break;
         }
+    }
 
-        fileName.setText(fileItem.getFilename());
-        fileDate.setText(fileItem.getDate());
+    private void assignFileListenersAndSettings(FileManagerItem fileItem, ImageView viewDirectory) {
+        viewDirectory.setOnClickListener(v1 -> {
+            final Intent intent = new Intent(v1.getContext(), MainActivity.class);
+            intent.putExtra("folderItem", fileItem);
+            final Activity activity = (Activity) FileManagerAdapter.this.context;
+            activity.setResult(Activity.RESULT_OK, intent);
+            activity.finish();
+        });
+        viewDirectory.setBackgroundColor(Color.BLACK);
+        viewDirectory.setPadding(COMMON_ICON_PADDING, COMMON_ICON_PADDING, COMMON_ICON_PADDING, COMMON_ICON_PADDING);
+    }
+
+    private boolean isNotBackFolder(FileManagerItem fileItem) {
+        return directoryManager && !fileItem.getFilename().equals("..");
+    }
+
+    private View getView(View convertView) {
+        View v = convertView;
+        if (v == null) {
+            LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            v = Objects.requireNonNull(vi).inflate(id, null);
+        }
         return v;
     }
 }
