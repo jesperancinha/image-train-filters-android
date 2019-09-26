@@ -79,6 +79,7 @@ public class MainFragment extends Fragment {
     }
 
     private void assignControls(LayoutInflater inflater, ViewGroup container) {
+        this.mainView = inflater.inflate(R.layout.content_main, container, false);
         controlConfiguration = ControlConfiguration.builder()
                 .btnStart(this.mainView.findViewById(btnStart))
                 .btnStartEmail(this.mainView.findViewById(btnStartAndEmail))
@@ -88,17 +89,13 @@ public class MainFragment extends Fragment {
                 .spiDistribution(this.mainView.findViewById(spiDistribution))
                 .spiLanguageCode(this.mainView.findViewById(spiLanguageCode))
                 .build();
-
         editConfiguration = EditConfiguration.builder()
                 .editFontSize(this.mainView.findViewById(editFontSize))
                 .density(this.mainView.findViewById(editDensity))
                 .range(mainView.findViewById(editRange))
                 .editOutputFileName(this.mainView.findViewById(editOutputFileName))
                 .build();
-
-
         this.imageConfiguration = new ImageConfiguration(controlConfiguration, editConfiguration);
-        this.mainView = inflater.inflate(R.layout.content_main, container, false);
         this.controlConfiguration.getBtnStart().setEnabled(false);
         this.controlConfiguration.getBtnStartEmail().setEnabled(false);
     }

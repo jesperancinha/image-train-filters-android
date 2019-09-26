@@ -16,9 +16,4 @@ public class MainActivity extends MainActivityManager {
         super.onActivityResult(requestCode, resultCode, data);
         manageOnActivityResult(data);
     }
-
-    @Override
-    public MainActivity getContext() {
-        return MainActivity.this;
-    }
 }
