@@ -34,32 +34,25 @@ public abstract class MainActivityManager extends FragmentActivity {
 
     protected ViewPager chartizatePager;
 
-    protected MainFragmentManager mainFragmentManager;
+    protected abstract MainFragment getMainFragment();
 
-    protected MainFragment getMainFragment() {
-        if (Objects.isNull(this.mainFragmentManager)) {
-            this.mainFragmentManager = MainFragmentManager
-                    .builder().mainFragment((MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem()))
-                    .build();
-        }
-        return mainFragmentManager.getMainFragment();
-    }
+    protected abstract MainFragmentManager getMainFragmentManager();
 
     protected void setSelectedOutputFolder(Intent data) {
         final FileManagerItem folderManagerItem = (FileManagerItem) Objects.requireNonNull(data.getExtras()).get("folderItem");
         if (folderManagerItem != null) {
-            final TextView currentFile = mainFragmentManager.getMainView().findViewById(lblOutputFolder);
+            final TextView currentFile = getMainFragmentManager().getMainView().findViewById(lblOutputFolder);
             currentFile.setText(folderManagerItem.getFilename());
-            mainFragmentManager.getImageConfiguration().setCurrentSelectedFolder(folderManagerItem);
+            getMainFragmentManager().getImageConfiguration().setCurrentSelectedFolder(folderManagerItem);
         }
     }
 
     protected void setSelectedInputFileAndThumbnail(FileManagerItem fileManagerItem) {
         if (fileManagerItem != null) {
-            final TextView currentFile = mainFragmentManager.getMainView().findViewById(lblESelectedFile);
+            final TextView currentFile = getMainFragmentManager().getMainView().findViewById(lblESelectedFile);
             currentFile.setText(fileManagerItem.getFilename());
-            mainFragmentManager.getImageConfiguration().setCurrentSelectedFile(fileManagerItem);
-            final ImageView btnImageFile = mainFragmentManager.getMainView().findViewById(fileImageSourcePreview);
+            getMainFragmentManager().getImageConfiguration().setCurrentSelectedFile(fileManagerItem);
+            final ImageView btnImageFile = getMainFragmentManager().getMainView().findViewById(fileImageSourcePreview);
 
             try {
                 ChartizateThumbs.setImageThumbnail(btnImageFile, new FileInputStream(fileManagerItem.getFile()));
@@ -91,20 +84,20 @@ public abstract class MainActivityManager extends FragmentActivity {
 
     private ChartizateManager<Integer, Typeface, Bitmap> setUpManager() throws java.io.IOException {
         return new ChartizateManagerBuilderImpl()
-                .backgroundColor(mainFragmentManager.getBackground())
-                .densityPercentage(mainFragmentManager.getDensity())
-                .rangePercentage(mainFragmentManager.getRangePercentage())
+                .backgroundColor(getMainFragmentManager().getBackground())
+                .densityPercentage(getMainFragmentManager().getDensity())
+                .rangePercentage(getMainFragmentManager().getRangePercentage())
                 .distributionType(Linear)
-                .fontName(mainFragmentManager.getFontName())
-                .fontSize(mainFragmentManager.getFontSize())
-                .block(mainFragmentManager.getBlock())
-                .imageFullStream(mainFragmentManager.getImageFullStream())
-                .destinationImagePath(mainFragmentManager.getDestinationImagePath())
+                .fontName(getMainFragmentManager().getFontName())
+                .fontSize(getMainFragmentManager().getFontSize())
+                .block(getMainFragmentManager().getBlock())
+                .imageFullStream(getMainFragmentManager().getImageFullStream())
+                .destinationImagePath(getMainFragmentManager().getDestinationImagePath())
                 .build();
     }
 
     private void postFileGeneration(MainFragment mainFragment, View view) {
-        final ControlConfiguration controlConfiguration = mainFragmentManager.getControlConfiguration();
+        final ControlConfiguration controlConfiguration = getMainFragmentManager().getControlConfiguration();
         controlConfiguration.getTextStatus().setText(R.string.done);
         controlConfiguration.getBtnStart().post(() -> controlConfiguration.getBtnStart().setEnabled(true));
         controlConfiguration.getBtnStartEmail().post(() -> controlConfiguration.getBtnStartEmail().setEnabled(true));
@@ -112,7 +105,7 @@ public abstract class MainActivityManager extends FragmentActivity {
         final ViewFragment viewFragment = (ViewFragment) getSupportFragmentManager().getFragments().get(2);
         final ImageView imageView = viewFragment.getImageView();
         final ImageView imageViewEmail = findViewById(R.id.imageViewGeneratedAttachment);
-        final Uri uri = Uri.fromFile(new File(mainFragment.getImageConfiguration().getCurrentSelectedFolder().getFile(), mainFragmentManager.getOutputFileName()));
+        final Uri uri = Uri.fromFile(new File(mainFragment.getImageConfiguration().getCurrentSelectedFolder().getFile(), getMainFragmentManager().getOutputFileName()));
         imageView.post(() -> ChartizateThumbs.setImage(imageView, uri));
         imageViewEmail.post(() -> ChartizateThumbs.setImage(imageViewEmail, uri));
     }
@@ -126,9 +119,9 @@ public abstract class MainActivityManager extends FragmentActivity {
     }
 
     private int getDestination(View view) {
-        if (view == mainFragmentManager.getControlConfiguration().getBtnStart()) {
+        if (view == getMainFragmentManager().getControlConfiguration().getBtnStart()) {
             return 2;
-        } else if (view == mainFragmentManager.getControlConfiguration().getBtnStartEmail()) {
+        } else if (view == getMainFragmentManager().getControlConfiguration().getBtnStartEmail()) {
             return 1;
         }
         return 0;

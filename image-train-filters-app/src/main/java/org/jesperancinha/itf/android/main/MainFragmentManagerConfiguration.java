@@ -4,6 +4,9 @@ import org.jesperancinha.itf.android.config.ControlConfiguration;
 import org.jesperancinha.itf.android.config.EditConfiguration;
 import org.jesperancinha.itf.android.config.ImageConfiguration;
 
+import lombok.Getter;
+
+@Getter
 public abstract class MainFragmentManagerConfiguration {
 
     protected MainFragment mainFragment;

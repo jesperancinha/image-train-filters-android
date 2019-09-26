@@ -29,6 +29,8 @@ import static org.jesperancinha.itf.android.R.string.chartizating;
 
 public abstract class ActionsMainActivity extends MainActivityManager {
 
+    protected MainFragmentManager mainFragmentManager;
+
     protected void setupActivity() {
         if (checkSelfPermission(
                 WRITE_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
@@ -117,5 +119,18 @@ public abstract class ActionsMainActivity extends MainActivityManager {
         final MailSender mailSender = MailSender.builder().mainFragment(mainFragment).emailFragment(emailFragment)
                 .outputFileName(outputFileName).build();
         mailSender.sendEmail();
+    }
+
+    protected MainFragment getMainFragment() {
+        if (Objects.isNull(this.mainFragmentManager)) {
+            this.mainFragmentManager = new MainFragmentManager(
+                    (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem()));
+        }
+        return mainFragmentManager.getMainFragment();
+    }
+
+    @Override
+    public MainFragmentManager getMainFragmentManager() {
+        return mainFragmentManager;
     }
 }
