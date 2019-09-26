@@ -13,9 +13,9 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
 
     private final Fragment[] fragments;
 
-    public SwipeAdapter(FragmentManager fm) {
+    public SwipeAdapter(final FragmentManager fm, final Fragment[] fragments) {
         super(fm);
-        this.fragments = new Fragment[]{new MainFragment(), new EmailFragment(), new ViewFragment()};
+        this.fragments = fragments;
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
@@ -13,6 +14,7 @@ import org.jesperancinha.itf.android.EmailFragment;
 import org.jesperancinha.itf.android.FileManagerActivity;
 import org.jesperancinha.itf.android.R;
 import org.jesperancinha.itf.android.SwipeAdapter;
+import org.jesperancinha.itf.android.ViewFragment;
 import org.jesperancinha.itf.android.config.ControlConfiguration;
 import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 import org.jesperancinha.itf.android.mail.MailSender;
@@ -38,7 +40,8 @@ public abstract class ActionsMainActivity extends MainActivityManager {
         }
         setContentView(R.layout.activity_main);
         chartizatePager = findViewById(R.id.itf_pager);
-        final SwipeAdapter swipeAdapter = new SwipeAdapter(getSupportFragmentManager());
+        final SwipeAdapter swipeAdapter = new SwipeAdapter(getSupportFragmentManager(),
+                new Fragment[]{new MainFragment(), new EmailFragment(), new ViewFragment()});
         chartizatePager.setAdapter(swipeAdapter);
         final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
