@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import org.jesperancinha.itf.android.common.ChartizateSurfaceView;
 import org.jesperancinha.itf.android.config.ControlConfiguration;
+import org.jesperancinha.itf.android.config.EditConfiguration;
 import org.jesperancinha.itf.android.config.ImageConfiguration;
 import org.jesperancinha.itf.android.distribution.manager.DistributionManager;
 import org.jesperancinha.itf.android.file.manager.FileManagerItem;
@@ -26,6 +27,7 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
 import static org.jesperancinha.itf.android.R.id.btnStart;
 import static org.jesperancinha.itf.android.R.id.btnStartAndEmail;
+import static org.jesperancinha.itf.android.R.id.editDensity;
 import static org.jesperancinha.itf.android.R.id.editFontSize;
 import static org.jesperancinha.itf.android.R.id.editOutputFileName;
 import static org.jesperancinha.itf.android.R.id.editRange;
@@ -42,6 +44,8 @@ public class MainFragment extends Fragment {
     private ImageConfiguration imageConfiguration;
 
     private ControlConfiguration controlConfiguration;
+
+    private EditConfiguration editConfiguration;
 
     public MainFragment() {
         //
@@ -76,39 +80,45 @@ public class MainFragment extends Fragment {
 
     private void assignControls(LayoutInflater inflater, ViewGroup container) {
         controlConfiguration = ControlConfiguration.builder()
-                .editFontSize(this.mainView.findViewById(editFontSize))
                 .btnStart(this.mainView.findViewById(btnStart))
                 .btnStartEmail(this.mainView.findViewById(btnStartAndEmail))
                 .textStatus(this.mainView.findViewById(textStatus))
                 .svSelectedColor(this.mainView.findViewById(svSelectedColor))
                 .spiFontType(this.mainView.findViewById(spiFontType))
-                .range(mainView.findViewById(editRange))
-                .editOutputFileName(this.mainView.findViewById(editOutputFileName))
                 .spiDistribution(this.mainView.findViewById(spiDistribution))
                 .spiLanguageCode(this.mainView.findViewById(spiLanguageCode))
                 .build();
-        this.imageConfiguration = new ImageConfiguration(controlConfiguration);
+
+        editConfiguration = EditConfiguration.builder()
+                .editFontSize(this.mainView.findViewById(editFontSize))
+                .density(this.mainView.findViewById(editDensity))
+                .range(mainView.findViewById(editRange))
+                .editOutputFileName(this.mainView.findViewById(editOutputFileName))
+                .build();
+
+
+        this.imageConfiguration = new ImageConfiguration(controlConfiguration, editConfiguration);
         this.mainView = inflater.inflate(R.layout.content_main, container, false);
         this.controlConfiguration.getBtnStart().setEnabled(false);
         this.controlConfiguration.getBtnStartEmail().setEnabled(false);
     }
 
     private void setUpRangeEditor() {
-        this.controlConfiguration.getRange().setOnKeyListener((v, keyCode, event) -> {
+        this.editConfiguration.getRange().setOnKeyListener((v, keyCode, event) -> {
             checkButtonStart();
             return false;
         });
     }
 
     private void setUpDensityEditor() {
-        this.controlConfiguration.getDensity().setOnKeyListener((v, keyCode, event) -> {
+        this.editConfiguration.getDensity().setOnKeyListener((v, keyCode, event) -> {
             checkButtonStart();
             return false;
         });
     }
 
     private void setUpFilenameEditor() {
-        this.controlConfiguration.getEditOutputFileName().setOnEditorActionListener((v, actionId, event) -> {
+        this.editConfiguration.getEditOutputFileName().setOnEditorActionListener((v, actionId, event) -> {
             checkButtonStart();
             return true;
         });
@@ -193,5 +203,9 @@ public class MainFragment extends Fragment {
 
     public ControlConfiguration getControlConfiguration() {
         return controlConfiguration;
+    }
+
+    public EditConfiguration getEditConfiguration() {
+        return editConfiguration;
     }
 }

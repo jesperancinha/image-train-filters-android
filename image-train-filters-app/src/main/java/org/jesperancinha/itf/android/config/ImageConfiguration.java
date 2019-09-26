@@ -21,20 +21,20 @@ import static org.jesperancinha.itf.android.ITFConstants.EMPTY_SELECTION;
 
 @Getter
 @Setter
-@Builder
-
 public class ImageConfiguration {
 
     private final ControlConfiguration controlConfiguration;
+    private final EditConfiguration editConfiguration;
     private final List<String> listOfAllLanguageCode = ChartizateUnicodes.getAllUniCodeBlocksJava().stream().map(Objects::toString).collect(Collectors.toList());
     private final List<String> listOfAllDistributions = ChartizateDistributionType.getAllDistributionTypes();
     private final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
     private FileManagerItem currentSelectedFile;
     private FileManagerItem currentSelectedFolder;
 
-    public ImageConfiguration(ControlConfiguration controlConfiguration) {
+    public ImageConfiguration(ControlConfiguration controlConfiguration, EditConfiguration editConfiguration) {
         this.listOfAllLanguageCode.add(EMPTY_SELECTION);
         this.controlConfiguration = controlConfiguration;
+        this.editConfiguration = editConfiguration;
         sortFontNames();
         sortLanguageCodes();
     }
@@ -69,12 +69,12 @@ public class ImageConfiguration {
     }
 
     private boolean validateRange() {
-        final String range = controlConfiguration.getRange().getText().toString();
+        final String range = editConfiguration.getRange().getText().toString();
         return !range.isEmpty();
     }
 
     private boolean validateDensity() {
-        final String density = controlConfiguration.getDensity().getText().toString();
+        final String density = editConfiguration.getDensity().getText().toString();
         return !density.isEmpty();
     }
 
@@ -89,12 +89,12 @@ public class ImageConfiguration {
     }
 
     private boolean validateOutputFile() {
-        final String outputFileName = controlConfiguration.getEditOutputFileName().getText().toString();
+        final String outputFileName = editConfiguration.getEditOutputFileName().getText().toString();
         return !outputFileName.isEmpty();
     }
 
     private boolean validateRawFontSize() {
-        final String rawFontSize = controlConfiguration.getEditFontSize().getText().toString();
+        final String rawFontSize = editConfiguration.getEditFontSize().getText().toString();
         return !rawFontSize.isEmpty();
     }
 

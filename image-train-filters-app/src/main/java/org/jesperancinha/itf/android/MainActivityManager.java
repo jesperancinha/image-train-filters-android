@@ -25,6 +25,7 @@ import org.jesperancinha.chartizate.ChartizateManager;
 import org.jesperancinha.chartizate.ChartizateManagerBuilderImpl;
 import org.jesperancinha.itf.android.common.ChartizateThumbs;
 import org.jesperancinha.itf.android.config.ControlConfiguration;
+import org.jesperancinha.itf.android.config.EditConfiguration;
 import org.jesperancinha.itf.android.config.ImageConfiguration;
 import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 
@@ -169,7 +170,7 @@ public abstract class MainActivityManager extends FragmentActivity {
     }
 
     private View getMainView(MainFragment mainFragment) {
-        return getImageConfiguration(mainFragment).getMainView();
+        return mainFragment.getView();
     }
 
     private int getFontSize(MainFragment mainFragment) {
@@ -261,16 +262,20 @@ public abstract class MainActivityManager extends FragmentActivity {
 
     public void pAddOne(View view) {
         final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem());
-        int currentFontSize = Integer.parseInt(getControlConfiguration(mainFragment).getEditFontSize().getText().toString());
-        getControlConfiguration(mainFragment).getEditFontSize().setText(String.valueOf(currentFontSize + 1));
+        int currentFontSize = Integer.parseInt(getEditConfiguration(mainFragment).getEditFontSize().getText().toString());
+        getEditConfiguration(mainFragment).getEditFontSize().setText(String.valueOf(currentFontSize + 1));
         mainFragment.checkButtonStart();
     }
 
     public void pMinusOne(View view) {
         final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem());
-        int currentFontSize = Integer.parseInt(getControlConfiguration(mainFragment).getEditFontSize().getText().toString());
-        getControlConfiguration(mainFragment).getEditFontSize().setText(String.valueOf(currentFontSize - 1));
+        int currentFontSize = Integer.parseInt(getEditConfiguration(mainFragment).getEditFontSize().getText().toString());
+        getEditConfiguration(mainFragment).getEditFontSize().setText(String.valueOf(currentFontSize - 1));
         mainFragment.checkButtonStart();
+    }
+
+    private EditConfiguration getEditConfiguration(MainFragment mainFragment) {
+        return mainFragment.getEditConfiguration();
     }
 
     public void pSendEmail(View view) {
