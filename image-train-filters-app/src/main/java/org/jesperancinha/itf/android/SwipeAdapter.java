@@ -11,52 +11,20 @@ import org.jesperancinha.itf.android.main.MainFragment;
  */
 public class SwipeAdapter extends FragmentStatePagerAdapter {
 
-    private MainFragment mainFragment = null;
-
-    private ViewFragment viewFragment = null;
-
-    private EmailFragment emailFragment = null;
+    private final Fragment[] fragments;
 
     public SwipeAdapter(FragmentManager fm) {
         super(fm);
+        this.fragments = new Fragment[]{new MainFragment(), new EmailFragment(), new ViewFragment()};
     }
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = null;
-        switch (position) {
-            case 0:
-                if (mainFragment == null) {
-                    fragment = new MainFragment();
-                    mainFragment = (MainFragment) fragment;
-                } else {
-                    fragment = mainFragment;
-                }
-                break;
-            case 1:
-                if (emailFragment == null) {
-                    fragment = new EmailFragment();
-                    emailFragment = (EmailFragment) fragment;
-                } else {
-                    fragment = emailFragment;
-                }
-                break;
-            case 2:
-                if (viewFragment == null) {
-                    fragment = new ViewFragment();
-                    viewFragment = (ViewFragment) fragment;
-                } else {
-                    fragment = viewFragment;
-                }
-                break;
-            default:
-                break;
-        }
-        return fragment;
+        return this.fragments[position];
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return this.fragments.length;
     }
 }
