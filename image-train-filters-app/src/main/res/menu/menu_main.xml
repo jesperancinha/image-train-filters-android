@@ -1,4 +1,2 @@
-<menu
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context="org.jesperancinha.itf.android.MainActivity">
-</menu>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    tools:context="org.jesperancinha.itf.android.MainActivity"></menu>

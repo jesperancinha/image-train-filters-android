@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import org.jesperancinha.chartizate.ChartizateEncodingManagerAbstract;
 import org.jesperancinha.chartizate.ChartizateFontManagerImpl;
 import org.jesperancinha.chartizate.ChartizateUnicodes;
 import org.jesperancinha.chartizate.distributions.ChartizateDistributionType;
@@ -32,8 +31,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
 import static org.jesperancinha.itf.android.R.id.editDensity;
-import static org.jesperancinha.itf.android.R.id.editFontSize;
 import static org.jesperancinha.itf.android.R.id.editOutputFileName;
 import static org.jesperancinha.itf.android.R.id.editRange;
 import static org.jesperancinha.itf.android.R.id.spiLanguageCode;
@@ -66,16 +65,12 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (this.mainView == null) {
+        if (isNull(mainView)) {
             assignControls(inflater, container);
-            this.listOfAllLanguageCode = new ArrayList<>(listOfAllLanguageCode);
-            this.listOfAllLanguageCode.add(EMPTY_SELECTION);
             sortLanguageCodes();
             sortFontNames();
             populateControls();
             setSelectedColor();
-            this.btnStart.setEnabled(false);
-            this.btnStartEmail.setEnabled(false);
             setUpFilenameEditor();
             setUpDensityEditor();
             setUpRangeEditor();
@@ -90,11 +85,15 @@ public class MainFragment extends Fragment {
     }
 
     private void assignControls(LayoutInflater inflater, ViewGroup container) {
+        this.listOfAllLanguageCode = new ArrayList<>(listOfAllLanguageCode);
+        this.listOfAllLanguageCode.add(EMPTY_SELECTION);
         this.mainView = inflater.inflate(R.layout.content_main, container, false);
         this.editFontSize = this.mainView.findViewById(R.id.editFontSize);
         this.btnStart = this.mainView.findViewById(R.id.btnStart);
         this.btnStartEmail = this.mainView.findViewById(R.id.btnStartAndEmail);
         this.textStatus = this.mainView.findViewById(R.id.textStatus);
+        this.btnStart.setEnabled(false);
+        this.btnStartEmail.setEnabled(false);
     }
 
     private void sortFontNames() {

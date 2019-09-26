@@ -1,18 +1,17 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:aapt="http://schemas.android.com/aapt"
-        android:width="108dp"
-        android:height="108dp"
-        android:viewportWidth="108"
-        android:viewportHeight="108">
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
     <path
-            android:fillType="evenOdd"
-            android:strokeWidth="1"
-            android:strokeColor="#00000000">
+        android:fillType="evenOdd"
+        android:strokeWidth="1"
+        android:strokeColor="#00000000">
 
     </path>
     <path
-            android:fillColor="@color/colorBlueMarine"
-            android:fillType="nonZero"
-            android:strokeWidth="1"
-            android:strokeColor="#00000000"/>
+        android:fillColor="@color/colorBlueMarine"
+        android:fillType="nonZero"
+        android:strokeWidth="1"
+        android:strokeColor="#00000000" />
 </vector>
