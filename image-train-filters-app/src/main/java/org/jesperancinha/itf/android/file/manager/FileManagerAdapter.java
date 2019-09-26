@@ -15,7 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 
-import org.jesperancinha.itf.android.MainActivity;
+import org.jesperancinha.itf.android.main.MainActivity;
+import org.jesperancinha.itf.android.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.jesperancinha.itf.android.R.drawable.folder;
+import static org.jesperancinha.itf.android.R.id.typeFolderFile;
 import static org.jesperancinha.itf.android.common.ChartizateThumbs.setImageThumbnail;
 
 public class FileManagerAdapter extends ArrayAdapter<org.jesperancinha.itf.android.file.manager.FileManagerItem> {
@@ -48,13 +50,13 @@ public class FileManagerAdapter extends ArrayAdapter<org.jesperancinha.itf.andro
     public View getView(int position, final View convertView, @NonNull ViewGroup parent) {
         final View v = getView(convertView);
         final FileManagerItem fileItem = fileList.get(position);
-        final TextView fileName = v.findViewById(org.jesperancinha.itf.android.R.id.fileName);
-        final TextView fileDate = v.findViewById(org.jesperancinha.itf.android.R.id.fileDate);
-        final ImageView viewDirectory = v.findViewById(org.jesperancinha.itf.android.R.id.typeFolderFile);
+        final TextView fileName = v.findViewById(R.id.fileName);
+        final TextView fileDate = v.findViewById(R.id.fileDate);
+        final ImageView viewDirectory = v.findViewById(typeFolderFile);
         if (isNotBackFolder(fileItem)) {
             assignFileListenersAndSettings(fileItem, viewDirectory);
         }
-        final ImageView imageView = v.findViewById(org.jesperancinha.itf.android.R.id.typeFolderFile);
+        final ImageView imageView = v.findViewById(typeFolderFile);
         assignSystemItemIcons(fileItem, imageView);
         fileName.setText(fileItem.getFilename());
         fileDate.setText(fileItem.getDate());

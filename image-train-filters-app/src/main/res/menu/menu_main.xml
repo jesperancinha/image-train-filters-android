@@ -1,2 +1,2 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
-    tools:context="org.jesperancinha.itf.android.MainActivity"></menu>
+    tools:context="org.jesperancinha.itf.android.main.MainActivity"></menu>

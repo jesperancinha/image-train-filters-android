@@ -1,4 +1,4 @@
-package org.jesperancinha.itf.android;
+package org.jesperancinha.itf.android.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ public class MainActivity extends MainActivityManager {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUpMainActivity();
+        this.mainFragmentManager = MainFragmentManager.builder()
+                .mainFragment((MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem()))
+                .build();
     }
 
     @Override

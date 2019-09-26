@@ -7,11 +7,11 @@ public class FileManagerItem implements Comparable<FileManagerItem>, Serializabl
 
     private final String filename;
 
-    final String date;
+    private final String date;
 
-    final FileType fileType;
+    private final FileType fileType;
 
-    final File file;
+    private final File file;
 
     public FileManagerItem(String filename, String date, FileType fileType, File file) {
         this.filename = filename;

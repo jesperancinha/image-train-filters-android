@@ -1,4 +1,4 @@
-package org.jesperancinha.itf.android;
+package org.jesperancinha.itf.android.main;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import org.jesperancinha.itf.android.R;
 import org.jesperancinha.itf.android.common.ChartizateSurfaceView;
 import org.jesperancinha.itf.android.config.ControlConfiguration;
 import org.jesperancinha.itf.android.config.EditConfiguration;
@@ -193,16 +194,15 @@ public class MainFragment extends Fragment {
         controlConfiguration.getBtnStartEmail().setEnabled(validate);
     }
 
-
-    public ImageConfiguration getImageConfiguration() {
-        return imageConfiguration;
-    }
-
     public ControlConfiguration getControlConfiguration() {
         return controlConfiguration;
     }
 
     public EditConfiguration getEditConfiguration() {
         return editConfiguration;
+    }
+
+    public ImageConfiguration getImageConfiguration() {
+        return imageConfiguration;
     }
 }

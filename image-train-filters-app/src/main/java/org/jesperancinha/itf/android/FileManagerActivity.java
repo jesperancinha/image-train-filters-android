@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import org.jesperancinha.itf.android.file.manager.FileManagerAdapter;
 import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 import org.jesperancinha.itf.android.file.manager.FileType;
+import org.jesperancinha.itf.android.main.MainActivity;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -102,7 +103,7 @@ public class FileManagerActivity extends ListActivity {
     }
 
     private void pBackToMain(FileManagerItem fileManagerItem) {
-        final Intent intent = new Intent(FileManagerActivity.this, org.jesperancinha.itf.android.MainActivity.class);
+        final Intent intent = new Intent(FileManagerActivity.this, MainActivity.class);
         intent.putExtra("fileItem", fileManagerItem);
         setResult(
                 android.app.Activity.RESULT_OK,
