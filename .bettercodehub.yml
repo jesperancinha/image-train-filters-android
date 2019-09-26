@@ -1,0 +1,10 @@
+component_depth: 1
+languages:
+- name: java
+  production:
+    exclude:
+      - image-train-filters-app/src/main/java/org/jesperancinha/itf/android/MainActivity.java
+  test:
+    include:
+      - image-train-filters-app/src/main/java/org/jesperancinha/itf/android/MainActivity.java
+

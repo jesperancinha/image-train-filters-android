@@ -40,6 +40,8 @@ dependencies {
     implementation 'org.jesperancinha.itf:itf-chartizate-android:6.0.0'
     implementation 'org.jesperancinha.itf:itf-chartizate-api:5.0.1'
     implementation 'androidx.fragment:fragment:1.1.0'
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
     testImplementation 'junit:junit:4.12'
 
 }

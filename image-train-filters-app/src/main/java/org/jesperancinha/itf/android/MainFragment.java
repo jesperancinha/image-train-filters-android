@@ -215,8 +215,8 @@ public class MainFragment extends Fragment {
 
     public void checkButtonStart() {
         boolean validate = validate();
-        getBtnStart().setEnabled(validate);
-        getBtnStartEmail().setEnabled(validate);
+        btnStart.setEnabled(validate);
+        btnStartEmail.setEnabled(validate);
     }
 
     public boolean validate() {
