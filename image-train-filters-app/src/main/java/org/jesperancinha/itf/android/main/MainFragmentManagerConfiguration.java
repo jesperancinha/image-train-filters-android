@@ -9,21 +9,17 @@ import lombok.Getter;
 @Getter
 public abstract class MainFragmentManagerConfiguration {
 
-    protected MainFragment mainFragment;
-
-    public MainFragmentManagerConfiguration(MainFragment mainFragment) {
-        this.mainFragment = mainFragment;
-    }
+    protected abstract MainFragment getMainFragment();
 
     protected EditConfiguration getEditConfiguration() {
-        return this.mainFragment.getEditConfiguration();
+        return getMainFragment().getEditConfiguration();
     }
 
     protected ControlConfiguration getControlConfiguration() {
-        return this.mainFragment.getControlConfiguration();
+        return getMainFragment().getControlConfiguration();
     }
 
     protected ImageConfiguration getImageConfiguration() {
-        return this.mainFragment.getImageConfiguration();
+        return getMainFragment().getImageConfiguration();
     }
 }
