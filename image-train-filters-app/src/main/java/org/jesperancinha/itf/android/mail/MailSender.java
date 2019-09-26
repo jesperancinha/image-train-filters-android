@@ -8,8 +8,8 @@ import androidx.activity.ComponentActivity;
 
 import org.jesperancinha.itf.android.BuildConfig;
 import org.jesperancinha.itf.android.EmailFragment;
-import org.jesperancinha.itf.android.main.MainFragment;
 import org.jesperancinha.itf.android.R;
+import org.jesperancinha.itf.android.main.MainFragment;
 
 import java.io.File;
 

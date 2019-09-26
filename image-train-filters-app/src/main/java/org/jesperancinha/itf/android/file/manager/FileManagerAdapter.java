@@ -15,8 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 
-import org.jesperancinha.itf.android.main.MainActivity;
 import org.jesperancinha.itf.android.R;
+import org.jesperancinha.itf.android.main.MainActivity;
 
 import java.io.File;
 import java.io.FileInputStream;

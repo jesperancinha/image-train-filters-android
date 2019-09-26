@@ -1,14 +1,19 @@
 package org.jesperancinha.itf.android.main;
 
+import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.view.View;
+
+import org.jesperancinha.chartizate.ChartizateManager;
+import org.jesperancinha.chartizate.ChartizateManagerBuilderImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 import lombok.Getter;
 
 import static java.lang.Integer.parseInt;
+import static org.jesperancinha.chartizate.distributions.ChartizateDistributionType.Linear;
 
 
 @Getter
@@ -20,45 +25,26 @@ public class MainFragmentManager extends MainFragmentManagerConfiguration {
         this.mainFragment = mainFragment;
     }
 
-    public FileInputStream getImageFullStream() throws FileNotFoundException {
-        return new FileInputStream(
-                new File(getImageConfiguration().getCurrentSelectedFile().getFile().getAbsolutePath()));
-    }
-
-    public Character.UnicodeBlock getBlock() {
-        return Character.UnicodeBlock.forName(getControlConfiguration().getSpiLanguageCode().getSelectedItem().toString());
-    }
-
     public View getMainView() {
         return mainFragment.getView();
-    }
-
-    public int getFontSize() {
-        return parseInt(getEditConfiguration().getEditFontSize().getText().toString());
-    }
-
-    public String getFontName() {
-        return getControlConfiguration().getSpiFontType().getSelectedItem().toString();
-    }
-
-    public int getRangePercentage() {
-        return parseInt(getEditConfiguration().getRange().getText().toString());
-    }
-
-    public int getDensity() {
-        return parseInt(getEditConfiguration().getDensity().getText().toString());
-    }
-
-    public int getBackground() {
-        return getControlConfiguration().getSvSelectedColor().getColor();
     }
 
     public String getOutputFileName() {
         return getEditConfiguration().getEditOutputFileName().getText().toString();
     }
 
-    public String getDestinationImagePath() {
-        return new File(getImageConfiguration().getCurrentSelectedFolder().getFile(), getOutputFileName()).getAbsolutePath();
-    }
 
+    protected ChartizateManager<Integer, Typeface, Bitmap> setUpManager() throws java.io.IOException {
+        return new ChartizateManagerBuilderImpl()
+                .backgroundColor(getControlConfiguration().getSvSelectedColor().getColor())
+                .densityPercentage(parseInt(getEditConfiguration().getDensity().getText().toString()))
+                .rangePercentage(parseInt(getEditConfiguration().getRange().getText().toString()))
+                .distributionType(Linear)
+                .fontName(getControlConfiguration().getSpiFontType().getSelectedItem().toString())
+                .fontSize(parseInt(getEditConfiguration().getEditFontSize().getText().toString()))
+                .block(Character.UnicodeBlock.forName(getControlConfiguration().getSpiLanguageCode().getSelectedItem().toString()))
+                .imageFullStream(new FileInputStream(new File(getImageConfiguration().getCurrentSelectedFile().getFile().getAbsolutePath())))
+                .destinationImagePath(new File(getImageConfiguration().getCurrentSelectedFolder().getFile(), getOutputFileName()).getAbsolutePath())
+                .build();
+    }
 }
