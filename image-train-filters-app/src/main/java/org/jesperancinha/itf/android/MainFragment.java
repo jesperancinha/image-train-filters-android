@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,6 +18,8 @@ import org.jesperancinha.chartizate.ChartizateFontManagerImpl;
 import org.jesperancinha.chartizate.ChartizateUnicodes;
 import org.jesperancinha.chartizate.distributions.ChartizateDistributionType;
 import org.jesperancinha.itf.android.common.ChartizateSurfaceView;
+import org.jesperancinha.itf.android.config.ControlConfiguration;
+import org.jesperancinha.itf.android.config.ImageConfiguration;
 import org.jesperancinha.itf.android.distribution.manager.DistributionManager;
 import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 import org.jesperancinha.itf.android.font.manager.FontManagerAdapter;
@@ -31,36 +32,25 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.requireNonNull;
+import static org.jesperancinha.itf.android.ITFConstants.EMPTY_SELECTION;
 import static org.jesperancinha.itf.android.R.id.editDensity;
 import static org.jesperancinha.itf.android.R.id.editOutputFileName;
 import static org.jesperancinha.itf.android.R.id.editRange;
 
 public class MainFragment extends Fragment {
-    public static final int FILE_FIND = 0;
-    public static final int FOLDER_FIND = 1;
-    public static final String EMPTY_SELECTION = "------------------------------------------------------------------";
-    private FileManagerItem currentSelectedFile = null;
-    private FileManagerItem currentSelectedFolder = null;
     private List<String> listOfAllLanguageCode = ChartizateUnicodes.getAllUniCodeBlocksJava().stream().map(Objects::toString).collect(Collectors.toList());
     private final List<String> listOfAllDistributions = ChartizateDistributionType.getAllDistributionTypes();
     private final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
-
-    private ChartizateSurfaceView svSelectedColor;
-
-    private EditText editFontSize;
-
-    private Button btnStart;
-
-    private Button btnStartEmail;
-
-    private TextView textStatus;
 
     private View mainView;
 
     private final ImageConfiguration imageConfiguration;
 
+    private ControlConfiguration controlConfiguration;
+
     public MainFragment() {
-        this.imageConfiguration = ImageConfiguration.builder().build();
+        this.imageConfiguration = new ImageConfiguration();
     }
 
     @Override
@@ -88,17 +78,19 @@ public class MainFragment extends Fragment {
         this.listOfAllLanguageCode = new ArrayList<>(listOfAllLanguageCode);
         this.listOfAllLanguageCode.add(EMPTY_SELECTION);
         this.mainView = inflater.inflate(R.layout.content_main, container, false);
-        this.editFontSize = this.mainView.findViewById(R.id.editFontSize);
-        this.btnStart = this.mainView.findViewById(R.id.btnStart);
-        this.btnStartEmail = this.mainView.findViewById(R.id.btnStartAndEmail);
-        this.textStatus = this.mainView.findViewById(R.id.textStatus);
-        this.btnStart.setEnabled(false);
-        this.btnStartEmail.setEnabled(false);
+        controlConfiguration = ControlConfiguration.builder()
+                .editFontSize(this.mainView.findViewById(R.id.editFontSize))
+                .btnStart(this.mainView.findViewById(R.id.btnStart))
+                .btnStartEmail(this.mainView.findViewById(R.id.btnStartAndEmail))
+                .textStatus(this.mainView.findViewById(R.id.textStatus))
+                .svSelectedColor(this.mainView.findViewById(R.id.svSelectedColor)).build();
+        this.controlConfiguration.getBtnStart().setEnabled(false);
+        this.controlConfiguration.getBtnStartEmail().setEnabled(false);
     }
 
     private void sortFontNames() {
         Collections.sort(listOfAllFonts);
-        if (Objects.requireNonNull(getActivity()).getIntent() != null && getActivity().getIntent().getExtras() != null) {
+        if (requireNonNull(getActivity()).getIntent() != null && getActivity().getIntent().getExtras() != null) {
             setSelectedFile();
             setSelectedFolder();
         }
@@ -137,9 +129,9 @@ public class MainFragment extends Fragment {
     }
 
     private void setSelectedColor() {
-        svSelectedColor = this.mainView.findViewById(R.id.svSelectedColor);
+        final ChartizateSurfaceView svSelectedColor = controlConfiguration.getSvSelectedColor();
         svSelectedColor.setColor(Color.BLACK);
-        getSvSelectedColor().setBackgroundColor(Color.BLACK);
+        svSelectedColor.setBackgroundColor(Color.BLACK);
     }
 
     private void populateFontTypeSpinner() {
@@ -185,7 +177,7 @@ public class MainFragment extends Fragment {
     }
 
     private void setSelectedFolder() {
-        final FileManagerItem folderManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("folderItem");
+        final FileManagerItem folderManagerItem = (FileManagerItem) Objects.requireNonNull(requireNonNull(getActivity()).getIntent().getExtras()).get("folderItem");
         if (folderManagerItem != null) {
             TextView currentFile = this.mainView.findViewById(R.id.lblOutputFolder);
             currentFile.setText(folderManagerItem.getFilename());
@@ -194,7 +186,7 @@ public class MainFragment extends Fragment {
     }
 
     private void setSelectedFile() {
-        final FileManagerItem fileManagerItem = (FileManagerItem) getActivity().getIntent().getExtras().get("fileItem");
+        final FileManagerItem fileManagerItem = (FileManagerItem) requireNonNull(requireNonNull(getActivity()).getIntent().getExtras()).get("fileItem");
         if (fileManagerItem != null) {
             TextView currentFile = this.mainView.findViewById(R.id.lblESelectedFile);
             currentFile.setText(fileManagerItem.getFilename());
@@ -214,40 +206,18 @@ public class MainFragment extends Fragment {
     }
 
     public void checkButtonStart() {
-        imageConfiguration.setCurrentSelectedFile(currentSelectedFile);
-        imageConfiguration.setCurrentSelectedFolder(currentSelectedFolder);
         imageConfiguration.setMainView(mainView);
         boolean validate = imageConfiguration.validate();
-        btnStart.setEnabled(validate);
-        btnStartEmail.setEnabled(validate);
+        controlConfiguration.getBtnStart().setEnabled(validate);
+        controlConfiguration.getBtnStartEmail().setEnabled(validate);
     }
 
-
-    public Button getBtnStart() {
-        return btnStart;
-    }
-
-    public Button getBtnStartEmail() {
-        return btnStartEmail;
-    }
-
-    public TextView getTextStatus() {
-        return textStatus;
-    }
-
-    public ChartizateSurfaceView getSvSelectedColor() {
-        return svSelectedColor;
-    }
-
-    public FileManagerItem getCurrentSelectedFolder() {
-        return currentSelectedFolder;
-    }
-
-    public EditText getEditFontSize() {
-        return editFontSize;
-    }
 
     public ImageConfiguration getImageConfiguration() {
         return imageConfiguration;
+    }
+
+    public ControlConfiguration getControlConfiguration() {
+        return controlConfiguration;
     }
 }

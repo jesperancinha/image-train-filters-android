@@ -24,6 +24,8 @@ import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import org.jesperancinha.chartizate.ChartizateManager;
 import org.jesperancinha.chartizate.ChartizateManagerBuilderImpl;
 import org.jesperancinha.itf.android.common.ChartizateThumbs;
+import org.jesperancinha.itf.android.config.ControlConfiguration;
+import org.jesperancinha.itf.android.config.ImageConfiguration;
 import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 
 import java.io.File;
@@ -35,6 +37,8 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static org.jesperancinha.chartizate.distributions.ChartizateDistributionType.Linear;
+import static org.jesperancinha.itf.android.ITFConstants.FILE_FIND;
+import static org.jesperancinha.itf.android.ITFConstants.FOLDER_FIND;
 
 public abstract class MainActivityManager extends FragmentActivity {
 
@@ -100,14 +104,14 @@ public abstract class MainActivityManager extends FragmentActivity {
         final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem());
         final Intent intent = new Intent(mainFragment.getActivity(), FileManagerActivity.class);
         intent.putExtra("directoryManager", false);
-        startActivityForResult(intent, MainFragment.FILE_FIND);
+        startActivityForResult(intent, FILE_FIND);
         mainFragment.checkButtonStart();
     }
 
     public void pGenerateFile(View view) {
         final MainFragment mainFragment = processMainFragment();
         final Runnable task = createGenerateImageTask(view, mainFragment);
-        mainFragment.getTextStatus().post(task);
+        getControlConfiguration(mainFragment).getTextStatus().post(task);
     }
 
     private Runnable createGenerateImageTask(View view, MainFragment mainFragment) {
@@ -141,9 +145,9 @@ public abstract class MainActivityManager extends FragmentActivity {
 
     private MainFragment processMainFragment() {
         final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem());
-        mainFragment.getBtnStart().setEnabled(false);
-        mainFragment.getBtnStartEmail().setEnabled(false);
-        mainFragment.getTextStatus().setText(R.string.chartizating);
+        getControlConfiguration(mainFragment).getBtnStart().setEnabled(false);
+        getControlConfiguration(mainFragment).getBtnStartEmail().setEnabled(false);
+        getControlConfiguration(mainFragment).getTextStatus().setText(R.string.chartizating);
         return mainFragment;
     }
 
@@ -152,7 +156,7 @@ public abstract class MainActivityManager extends FragmentActivity {
     }
 
     private String getDestinationImagePath(MainFragment mainFragment, String outputFileName) {
-        return new File(mainFragment.getCurrentSelectedFolder().getFile(), outputFileName).getAbsolutePath();
+        return new File(mainFragment.getImageConfiguration().getCurrentSelectedFolder().getFile(), outputFileName).getAbsolutePath();
     }
 
     private FileInputStream getImageFullStream(MainFragment mainFragment) throws FileNotFoundException {
@@ -185,13 +189,13 @@ public abstract class MainActivityManager extends FragmentActivity {
     }
 
     private int getBackground(MainFragment mainFragment) {
-        return mainFragment.getSvSelectedColor().getColor();
+        return getControlConfiguration(mainFragment).getSvSelectedColor().getColor();
     }
 
     private void postFileGeneration(MainFragment mainFragment, View view) {
-        mainFragment.getTextStatus().setText(R.string.done);
-        mainFragment.getBtnStart().post(() -> mainFragment.getBtnStart().setEnabled(true));
-        mainFragment.getBtnStartEmail().post(() -> mainFragment.getBtnStartEmail().setEnabled(true));
+        getControlConfiguration(mainFragment).getTextStatus().setText(R.string.done);
+        getControlConfiguration(mainFragment).getBtnStart().post(() -> getControlConfiguration(mainFragment).getBtnStart().setEnabled(true));
+        getControlConfiguration(mainFragment).getBtnStartEmail().post(() -> getControlConfiguration(mainFragment).getBtnStartEmail().setEnabled(true));
         chartizatePager.setCurrentItem(getDestination(view, mainFragment));
         final ViewFragment viewFragment = (ViewFragment) getSupportFragmentManager().getFragments().get(2);
         final ImageView imageView = viewFragment.getImageView();
@@ -201,8 +205,12 @@ public abstract class MainActivityManager extends FragmentActivity {
         imageViewEmail.post(() -> ChartizateThumbs.setImage(imageViewEmail, uri));
     }
 
+    private ControlConfiguration getControlConfiguration(MainFragment mainFragment) {
+        return mainFragment.getControlConfiguration();
+    }
+
     private Uri getOutputFileUrl(MainFragment mainFragment, String outputFileName) {
-        return Uri.fromFile(new File(mainFragment.getCurrentSelectedFolder().getFile(), outputFileName));
+        return Uri.fromFile(new File(mainFragment.getImageConfiguration().getCurrentSelectedFolder().getFile(), outputFileName));
     }
 
     private void alertFailedUnicodeParsing(MainFragment mainFragment) {
@@ -214,9 +222,9 @@ public abstract class MainActivityManager extends FragmentActivity {
     }
 
     private int getDestination(View view, MainFragment mainFragment) {
-        if (view == mainFragment.getBtnStart()) {
+        if (view == getControlConfiguration(mainFragment).getBtnStart()) {
             return 2;
-        } else if (view == mainFragment.getBtnStartEmail()) {
+        } else if (view == getControlConfiguration(mainFragment).getBtnStartEmail()) {
             return 1;
         }
         return 0;
@@ -234,8 +242,8 @@ public abstract class MainActivityManager extends FragmentActivity {
 //                        toast("onColorSelected: 0x" + Integer.toHexString(selectedColor))
                 )
                 .setPositiveButton("ok", (dialog, selectedColor, allColors) -> {
-                    mainFragment.getSvSelectedColor().setBackgroundColor(selectedColor);
-                    mainFragment.getSvSelectedColor().setColor(selectedColor);
+                    getControlConfiguration(mainFragment).getSvSelectedColor().setBackgroundColor(selectedColor);
+                    getControlConfiguration(mainFragment).getSvSelectedColor().setColor(selectedColor);
                 })
                 .setNegativeButton("cancel", (dialog, which) -> {
                 })
@@ -247,21 +255,21 @@ public abstract class MainActivityManager extends FragmentActivity {
         final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem());
         final Intent intent = new Intent(mainFragment.getActivity(), FileManagerActivity.class);
         intent.putExtra("directoryManager", true);
-        startActivityForResult(intent, MainFragment.FOLDER_FIND);
+        startActivityForResult(intent, FOLDER_FIND);
         mainFragment.checkButtonStart();
     }
 
     public void pAddOne(View view) {
         final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem());
-        int currentFontSize = Integer.parseInt(mainFragment.getEditFontSize().getText().toString());
-        mainFragment.getEditFontSize().setText(String.valueOf(currentFontSize + 1));
+        int currentFontSize = Integer.parseInt(getControlConfiguration(mainFragment).getEditFontSize().getText().toString());
+        getControlConfiguration(mainFragment).getEditFontSize().setText(String.valueOf(currentFontSize + 1));
         mainFragment.checkButtonStart();
     }
 
     public void pMinusOne(View view) {
         final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem());
-        int currentFontSize = Integer.parseInt(mainFragment.getEditFontSize().getText().toString());
-        mainFragment.getEditFontSize().setText(String.valueOf(currentFontSize - 1));
+        int currentFontSize = Integer.parseInt(getControlConfiguration(mainFragment).getEditFontSize().getText().toString());
+        getControlConfiguration(mainFragment).getEditFontSize().setText(String.valueOf(currentFontSize - 1));
         mainFragment.checkButtonStart();
     }
 
@@ -269,7 +277,7 @@ public abstract class MainActivityManager extends FragmentActivity {
         final MainFragment mainFragment = (MainFragment) getSupportFragmentManager().getFragments().get(0);
         final EmailFragment emailFragment = (EmailFragment) getSupportFragmentManager().getFragments().get(1);
         final String outputFileName = getOutputFileName(mainFragment);
-        final Uri uri = Uri.fromFile(new File(mainFragment.getCurrentSelectedFolder().getFile(), outputFileName));
+        final Uri uri = Uri.fromFile(new File(mainFragment.getImageConfiguration().getCurrentSelectedFolder().getFile(), outputFileName));
 
 
         Log.i(getString(R.string.sendEmail), "");

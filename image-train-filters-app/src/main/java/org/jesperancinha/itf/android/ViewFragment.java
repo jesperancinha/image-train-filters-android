@@ -6,12 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-/**
- * Created by joao on 28-2-16.
- */
 public class ViewFragment extends Fragment {
 
     private View mainView = null;
@@ -20,10 +18,10 @@ public class ViewFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mainView == null) {
             mainView = inflater.inflate(R.layout.content_view, container, false);
-            imageView = (ImageView) mainView.findViewById(R.id.imageViewGenerated);
+            imageView = mainView.findViewById(R.id.imageViewGenerated);
         }
         return mainView;
     }

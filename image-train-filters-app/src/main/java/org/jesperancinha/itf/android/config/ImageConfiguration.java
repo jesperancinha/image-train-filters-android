@@ -1,10 +1,10 @@
-package org.jesperancinha.itf.android;
+package org.jesperancinha.itf.android.config;
 
-import android.app.Activity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import org.jesperancinha.itf.android.R;
 import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 
 import java.io.File;
@@ -12,18 +12,18 @@ import java.io.File;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import static org.jesperancinha.itf.android.MainFragment.EMPTY_SELECTION;
+import static org.jesperancinha.itf.android.ITFConstants.EMPTY_SELECTION;
 import static org.jesperancinha.itf.android.R.id.editDensity;
 import static org.jesperancinha.itf.android.R.id.editOutputFileName;
 import static org.jesperancinha.itf.android.R.id.editRange;
 import static org.jesperancinha.itf.android.R.id.spiLanguageCode;
 
-@Builder
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
 public class ImageConfiguration {
 
     private View mainView;
