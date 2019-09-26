@@ -11,12 +11,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import org.jesperancinha.chartizate.ChartizateFontManagerImpl;
-import org.jesperancinha.chartizate.ChartizateUnicodes;
-import org.jesperancinha.chartizate.distributions.ChartizateDistributionType;
 import org.jesperancinha.itf.android.common.ChartizateSurfaceView;
 import org.jesperancinha.itf.android.config.ControlConfiguration;
 import org.jesperancinha.itf.android.config.ImageConfiguration;
@@ -25,23 +21,15 @@ import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 import org.jesperancinha.itf.android.font.manager.FontManagerAdapter;
 import org.jesperancinha.itf.android.language.manager.LanguageManagerAdapter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
-import static org.jesperancinha.itf.android.ITFConstants.EMPTY_SELECTION;
 import static org.jesperancinha.itf.android.R.id.editDensity;
 import static org.jesperancinha.itf.android.R.id.editOutputFileName;
 import static org.jesperancinha.itf.android.R.id.editRange;
 
 public class MainFragment extends Fragment {
-    private List<String> listOfAllLanguageCode = ChartizateUnicodes.getAllUniCodeBlocksJava().stream().map(Objects::toString).collect(Collectors.toList());
-    private final List<String> listOfAllDistributions = ChartizateDistributionType.getAllDistributionTypes();
-    private final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
 
     private View mainView;
 
@@ -57,8 +45,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (isNull(mainView)) {
             assignControls(inflater, container);
-            sortLanguageCodes();
-            sortFontNames();
+            setSelectedFolders();
             populateControls();
             setSelectedColor();
             setUpFilenameEditor();
@@ -68,6 +55,13 @@ public class MainFragment extends Fragment {
         return mainView;
     }
 
+    private void setSelectedFolders() {
+        if (requireNonNull(getActivity()).getIntent() != null && getActivity().getIntent().getExtras() != null) {
+            setSelectedFile();
+            setSelectedFolder();
+        }
+    }
+
     private void populateControls() {
         populateLanguageSpinner();
         populateDistributionSpinner();
@@ -75,33 +69,15 @@ public class MainFragment extends Fragment {
     }
 
     private void assignControls(LayoutInflater inflater, ViewGroup container) {
-        this.listOfAllLanguageCode = new ArrayList<>(listOfAllLanguageCode);
-        this.listOfAllLanguageCode.add(EMPTY_SELECTION);
-        this.mainView = inflater.inflate(R.layout.content_main, container, false);
         controlConfiguration = ControlConfiguration.builder()
                 .editFontSize(this.mainView.findViewById(R.id.editFontSize))
                 .btnStart(this.mainView.findViewById(R.id.btnStart))
                 .btnStartEmail(this.mainView.findViewById(R.id.btnStartAndEmail))
                 .textStatus(this.mainView.findViewById(R.id.textStatus))
                 .svSelectedColor(this.mainView.findViewById(R.id.svSelectedColor)).build();
+        this.mainView = inflater.inflate(R.layout.content_main, container, false);
         this.controlConfiguration.getBtnStart().setEnabled(false);
         this.controlConfiguration.getBtnStartEmail().setEnabled(false);
-    }
-
-    private void sortFontNames() {
-        Collections.sort(listOfAllFonts);
-        if (requireNonNull(getActivity()).getIntent() != null && getActivity().getIntent().getExtras() != null) {
-            setSelectedFile();
-            setSelectedFolder();
-        }
-    }
-
-    private void sortLanguageCodes() {
-        Collections.sort(listOfAllLanguageCode, (lhs, rhs) -> {
-            Integer x = getInteger(lhs, rhs, EMPTY_SELECTION);
-            if (x != null) return x;
-            return lhs.compareTo(rhs);
-        });
     }
 
     private void setUpRangeEditor() {
@@ -138,7 +114,7 @@ public class MainFragment extends Fragment {
         final Spinner spiFontType = this.mainView.findViewById(R.id.spiFontType);
         final FontManagerAdapter fontManagerAdapter = new FontManagerAdapter(
                 getActivity(),
-                android.R.layout.simple_spinner_item, listOfAllFonts
+                android.R.layout.simple_spinner_item, imageConfiguration.getListOfAllFonts()
         );
         spiFontType.setAdapter(fontManagerAdapter);
     }
@@ -147,7 +123,7 @@ public class MainFragment extends Fragment {
         final Spinner spiDistribution = this.mainView.findViewById(R.id.spiDistribution);
         final DistributionManager distributionDataAdapter = new DistributionManager(
                 getActivity(),
-                android.R.layout.simple_spinner_item, listOfAllDistributions
+                android.R.layout.simple_spinner_item, imageConfiguration.getListOfAllDistributions()
         );
         spiDistribution.setAdapter(distributionDataAdapter);
         spiDistribution.setEnabled(false);
@@ -158,7 +134,7 @@ public class MainFragment extends Fragment {
         final Spinner spiLanguageCode = this.mainView.findViewById(R.id.spiLanguageCode);
         final LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter(
                 getActivity(),
-                android.R.layout.simple_spinner_item, listOfAllLanguageCode
+                android.R.layout.simple_spinner_item, imageConfiguration.getListOfAllLanguageCode()
         );
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spiLanguageCode.setAdapter(dataAdapter);
@@ -194,16 +170,6 @@ public class MainFragment extends Fragment {
         }
     }
 
-    @Nullable
-    public Integer getInteger(String lhs, String rhs, String code) {
-        if (lhs.equals(code)) {
-            return -1;
-        }
-        if (rhs.equals(code)) {
-            return 1;
-        }
-        return null;
-    }
 
     public void checkButtonStart() {
         imageConfiguration.setMainView(mainView);
