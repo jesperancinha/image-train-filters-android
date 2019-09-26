@@ -63,14 +63,22 @@ public abstract class MainActivityManager extends FragmentActivity {
     }
 
     protected void manageOnActivityResult(Intent data) {
-        chartizatePager.getCurrentItem();
-        final MainFragment mainFragment = mainFragmentManager.getMainFragment();
+        final MainFragment mainFragment = getMainFragment();
         if (isDataPresent(data)) {
             final FileManagerItem fileManagerItem = (FileManagerItem) Objects.requireNonNull(data.getExtras()).get("fileItem");
             setSelectedInputFileAndThumbnail(mainFragment, fileManagerItem);
             setSelectedOutputFolder(data, mainFragment);
         }
         mainFragment.checkButtonStart();
+    }
+
+    private MainFragment getMainFragment() {
+        if (Objects.isNull(this.mainFragmentManager)) {
+            this.mainFragmentManager = MainFragmentManager
+                    .builder().mainFragment((MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem()))
+                    .build();
+        }
+        return mainFragmentManager.getMainFragment();
     }
 
     private void setSelectedOutputFolder(Intent data, MainFragment mainFragment) {
@@ -106,8 +114,7 @@ public abstract class MainActivityManager extends FragmentActivity {
     }
 
     public void pFindFile(View view) {
-        chartizatePager.getCurrentItem();
-        final MainFragment mainFragment = mainFragmentManager.getMainFragment();
+        final MainFragment mainFragment = getMainFragment();
         final Intent intent = new Intent(mainFragment.getActivity(), FileManagerActivity.class);
         intent.putExtra("directoryManager", false);
         startActivityForResult(intent, FILE_FIND);
@@ -150,9 +157,8 @@ public abstract class MainActivityManager extends FragmentActivity {
     }
 
     private MainFragment processMainFragment() {
-        chartizatePager.getCurrentItem();
-        final MainFragment mainFragment = mainFragmentManager.getMainFragment();
-        mainFragmentManager. getControlConfiguration().getBtnStart().setEnabled(false);
+        final MainFragment mainFragment = getMainFragment();
+        mainFragmentManager.getControlConfiguration().getBtnStart().setEnabled(false);
         mainFragmentManager.getControlConfiguration().getBtnStartEmail().setEnabled(false);
         mainFragmentManager.getControlConfiguration().getTextStatus().setText(R.string.chartizating);
         return mainFragment;
@@ -160,7 +166,7 @@ public abstract class MainActivityManager extends FragmentActivity {
 
     private void postFileGeneration(MainFragment mainFragment, View view) {
         mainFragmentManager.getControlConfiguration().getTextStatus().setText(R.string.done);
-        mainFragmentManager. getControlConfiguration().getBtnStart().post(() -> mainFragmentManager.getControlConfiguration().getBtnStart().setEnabled(true));
+        mainFragmentManager.getControlConfiguration().getBtnStart().post(() -> mainFragmentManager.getControlConfiguration().getBtnStart().setEnabled(true));
         mainFragmentManager.getControlConfiguration().getBtnStartEmail().post(() -> mainFragmentManager.getControlConfiguration().getBtnStartEmail().setEnabled(true));
         chartizatePager.setCurrentItem(getDestination(view));
         final ViewFragment viewFragment = (ViewFragment) getSupportFragmentManager().getFragments().get(2);
@@ -189,8 +195,7 @@ public abstract class MainActivityManager extends FragmentActivity {
     }
 
     public void pGetBackGroundColor(View view) {
-        chartizatePager.getCurrentItem();
-        final MainFragment mainFragment = mainFragmentManager.getMainFragment();
+        final MainFragment mainFragment = getMainFragment();
         ColorPickerDialogBuilder
                 .with(view.getContext())
                 .setTitle("Choose color")
@@ -199,7 +204,7 @@ public abstract class MainActivityManager extends FragmentActivity {
                 .density(5)
                 .setPositiveButton("ok", (dialog, selectedColor, allColors) -> {
                     mainFragmentManager.getControlConfiguration().getSvSelectedColor().setBackgroundColor(selectedColor);
-                    mainFragmentManager. getControlConfiguration().getSvSelectedColor().setColor(selectedColor);
+                    mainFragmentManager.getControlConfiguration().getSvSelectedColor().setColor(selectedColor);
                 })
                 .setNegativeButton("cancel", (dialog, which) -> {
                 })
@@ -208,8 +213,7 @@ public abstract class MainActivityManager extends FragmentActivity {
     }
 
     public void pFindOutputFolder(View view) {
-        chartizatePager.getCurrentItem();
-        final MainFragment mainFragment = mainFragmentManager.getMainFragment();
+        final MainFragment mainFragment = getMainFragment();
         final Intent intent = new Intent(mainFragment.getActivity(), FileManagerActivity.class);
         intent.putExtra("directoryManager", true);
         startActivityForResult(intent, FOLDER_FIND);
@@ -217,16 +221,14 @@ public abstract class MainActivityManager extends FragmentActivity {
     }
 
     public void pAddOne(View view) {
-        chartizatePager.getCurrentItem();
-        final MainFragment mainFragment = mainFragmentManager.getMainFragment();
+        final MainFragment mainFragment = getMainFragment();
         int currentFontSize = parseInt(mainFragmentManager.getEditConfiguration().getEditFontSize().getText().toString());
         mainFragmentManager.getEditConfiguration().getEditFontSize().setText(String.valueOf(currentFontSize + 1));
         mainFragment.checkButtonStart();
     }
 
     public void pMinusOne(View view) {
-        chartizatePager.getCurrentItem();
-        final MainFragment mainFragment = mainFragmentManager.getMainFragment();
+        final MainFragment mainFragment = getMainFragment();
         int currentFontSize = parseInt(mainFragmentManager.getEditConfiguration().getEditFontSize().getText().toString());
         mainFragmentManager.getEditConfiguration().getEditFontSize().setText(String.valueOf(currentFontSize - 1));
         mainFragment.checkButtonStart();

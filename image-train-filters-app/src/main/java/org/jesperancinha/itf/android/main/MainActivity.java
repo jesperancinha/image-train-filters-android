@@ -9,9 +9,6 @@ public class MainActivity extends MainActivityManager {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUpMainActivity();
-        this.mainFragmentManager = MainFragmentManager.builder()
-                .mainFragment((MainFragment) getSupportFragmentManager().getFragments().get(chartizatePager.getCurrentItem()))
-                .build();
     }
 
     @Override
@@ -19,4 +16,5 @@ public class MainActivity extends MainActivityManager {
         super.onActivityResult(requestCode, resultCode, data);
         manageOnActivityResult(data);
     }
+
 }
