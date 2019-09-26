@@ -3,7 +3,7 @@
 [![Generic badge](https://img.shields.io/static/v1.svg?label=GitHub&message=ITF%20Android&color=informational)](https://github.com/jesperancinha/image-train-filters-android)
 [![GitHub release](https://img.shields.io/github/release-pre/jesperancinha/image-train-filters-android.svg)](https://github.com/jesperancinha/image-train-filters-android/releases)
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/73c54b76235349a8883c2660923c1f06)](https://www.codacy.com/manual/jofisaes/image-train-filters-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jesperancinha/image-train-filters-android&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1ebb39c9b1194fb6b66d96495fe6a41b)](https://www.codacy.com/manual/jofisaes/image-train-filters-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jesperancinha/image-train-filters-android&amp;utm_campaign=Badge_Grade)
 [![CircleCI](https://circleci.com/gh/jesperancinha/image-train-filters-android.svg?style=svg)](https://circleci.com/gh/jesperancinha/image-train-filters-android)
 [![Build Status](https://travis-ci.org/jesperancinha/image-train-filters-android.svg?branch=master)](https://travis-ci.org/jesperancinha/image-train-filters-android)
 [![codebeat badge](https://codebeat.co/badges/9bdf7a55-267b-41ce-a1df-372063235609)](https://codebeat.co/projects/github-com-jesperancinha-image-train-filters-android-master)
