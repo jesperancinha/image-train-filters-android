@@ -1,15 +1,10 @@
 package org.jesperancinha.itf.android.config;
 
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Spinner;
-
 import androidx.annotation.Nullable;
 
 import org.jesperancinha.chartizate.ChartizateFontManagerImpl;
 import org.jesperancinha.chartizate.ChartizateUnicodes;
 import org.jesperancinha.chartizate.distributions.ChartizateDistributionType;
-import org.jesperancinha.itf.android.R;
 import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 
 import java.io.File;
@@ -18,28 +13,28 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import static org.jesperancinha.itf.android.ITFConstants.EMPTY_SELECTION;
-import static org.jesperancinha.itf.android.R.id.editDensity;
-import static org.jesperancinha.itf.android.R.id.editOutputFileName;
-import static org.jesperancinha.itf.android.R.id.editRange;
-import static org.jesperancinha.itf.android.R.id.spiLanguageCode;
 
 @Getter
 @Setter
+@Builder
+
 public class ImageConfiguration {
 
-    private View mainView;
-    private FileManagerItem currentSelectedFile;
-    private FileManagerItem currentSelectedFolder;
+    private final ControlConfiguration controlConfiguration;
     private final List<String> listOfAllLanguageCode = ChartizateUnicodes.getAllUniCodeBlocksJava().stream().map(Objects::toString).collect(Collectors.toList());
     private final List<String> listOfAllDistributions = ChartizateDistributionType.getAllDistributionTypes();
     private final List<String> listOfAllFonts = ChartizateFontManagerImpl.getAllFontTypes();
+    private FileManagerItem currentSelectedFile;
+    private FileManagerItem currentSelectedFolder;
 
-    public ImageConfiguration() {
+    public ImageConfiguration(ControlConfiguration controlConfiguration) {
         this.listOfAllLanguageCode.add(EMPTY_SELECTION);
+        this.controlConfiguration = controlConfiguration;
         sortFontNames();
         sortLanguageCodes();
     }
@@ -74,32 +69,32 @@ public class ImageConfiguration {
     }
 
     private boolean validateRange() {
-        final String range = ((EditText) this.mainView.findViewById(editRange)).getText().toString();
+        final String range = controlConfiguration.getRange().getText().toString();
         return !range.isEmpty();
     }
 
     private boolean validateDensity() {
-        final String density = ((EditText) this.mainView.findViewById(editDensity)).getText().toString();
+        final String density = controlConfiguration.getDensity().getText().toString();
         return !density.isEmpty();
     }
 
     private boolean validateAphabet() {
-        final String alphabet = ((Spinner) this.mainView.findViewById(spiLanguageCode)).getSelectedItem().toString();
+        final String alphabet = controlConfiguration.getSpiLanguageCode().getSelectedItem().toString();
         return !(alphabet.isEmpty() || alphabet.equals(EMPTY_SELECTION));
     }
 
     private boolean validateFondType() {
-        final String fontType = ((Spinner) this.mainView.findViewById(R.id.spiFontType)).getSelectedItem().toString();
+        final String fontType = controlConfiguration.getSpiFontType().getSelectedItem().toString();
         return !fontType.isEmpty();
     }
 
     private boolean validateOutputFile() {
-        final String outputFileName = ((EditText) this.mainView.findViewById(editOutputFileName)).getText().toString();
+        final String outputFileName = controlConfiguration.getEditOutputFileName().getText().toString();
         return !outputFileName.isEmpty();
     }
 
     private boolean validateRawFontSize() {
-        final String rawFontSize = ((EditText) this.mainView.findViewById(R.id.editFontSize)).getText().toString();
+        final String rawFontSize = controlConfiguration.getEditFontSize().getText().toString();
         return !rawFontSize.isEmpty();
     }
 

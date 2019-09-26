@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,20 +24,27 @@ import java.util.Objects;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.requireNonNull;
-import static org.jesperancinha.itf.android.R.id.editDensity;
+import static org.jesperancinha.itf.android.R.id.btnStart;
+import static org.jesperancinha.itf.android.R.id.btnStartAndEmail;
+import static org.jesperancinha.itf.android.R.id.editFontSize;
 import static org.jesperancinha.itf.android.R.id.editOutputFileName;
 import static org.jesperancinha.itf.android.R.id.editRange;
+import static org.jesperancinha.itf.android.R.id.spiDistribution;
+import static org.jesperancinha.itf.android.R.id.spiFontType;
+import static org.jesperancinha.itf.android.R.id.spiLanguageCode;
+import static org.jesperancinha.itf.android.R.id.svSelectedColor;
+import static org.jesperancinha.itf.android.R.id.textStatus;
 
 public class MainFragment extends Fragment {
 
     private View mainView;
 
-    private final ImageConfiguration imageConfiguration;
+    private ImageConfiguration imageConfiguration;
 
     private ControlConfiguration controlConfiguration;
 
     public MainFragment() {
-        this.imageConfiguration = new ImageConfiguration();
+        //
     }
 
     @Override
@@ -70,35 +76,39 @@ public class MainFragment extends Fragment {
 
     private void assignControls(LayoutInflater inflater, ViewGroup container) {
         controlConfiguration = ControlConfiguration.builder()
-                .editFontSize(this.mainView.findViewById(R.id.editFontSize))
-                .btnStart(this.mainView.findViewById(R.id.btnStart))
-                .btnStartEmail(this.mainView.findViewById(R.id.btnStartAndEmail))
-                .textStatus(this.mainView.findViewById(R.id.textStatus))
-                .svSelectedColor(this.mainView.findViewById(R.id.svSelectedColor)).build();
+                .editFontSize(this.mainView.findViewById(editFontSize))
+                .btnStart(this.mainView.findViewById(btnStart))
+                .btnStartEmail(this.mainView.findViewById(btnStartAndEmail))
+                .textStatus(this.mainView.findViewById(textStatus))
+                .svSelectedColor(this.mainView.findViewById(svSelectedColor))
+                .spiFontType(this.mainView.findViewById(spiFontType))
+                .range(mainView.findViewById(editRange))
+                .editOutputFileName(this.mainView.findViewById(editOutputFileName))
+                .spiDistribution(this.mainView.findViewById(spiDistribution))
+                .spiLanguageCode(this.mainView.findViewById(spiLanguageCode))
+                .build();
+        this.imageConfiguration = new ImageConfiguration(controlConfiguration);
         this.mainView = inflater.inflate(R.layout.content_main, container, false);
         this.controlConfiguration.getBtnStart().setEnabled(false);
         this.controlConfiguration.getBtnStartEmail().setEnabled(false);
     }
 
     private void setUpRangeEditor() {
-        final EditText range = mainView.findViewById(editRange);
-        range.setOnKeyListener((v, keyCode, event) -> {
+        this.controlConfiguration.getRange().setOnKeyListener((v, keyCode, event) -> {
             checkButtonStart();
             return false;
         });
     }
 
     private void setUpDensityEditor() {
-        final EditText density = this.mainView.findViewById(editDensity);
-        density.setOnKeyListener((v, keyCode, event) -> {
+        this.controlConfiguration.getDensity().setOnKeyListener((v, keyCode, event) -> {
             checkButtonStart();
             return false;
         });
     }
 
     private void setUpFilenameEditor() {
-        final EditText editFileName = this.mainView.findViewById(editOutputFileName);
-        editFileName.setOnEditorActionListener((v, actionId, event) -> {
+        this.controlConfiguration.getEditOutputFileName().setOnEditorActionListener((v, actionId, event) -> {
             checkButtonStart();
             return true;
         });
@@ -111,32 +121,31 @@ public class MainFragment extends Fragment {
     }
 
     private void populateFontTypeSpinner() {
-        final Spinner spiFontType = this.mainView.findViewById(R.id.spiFontType);
         final FontManagerAdapter fontManagerAdapter = new FontManagerAdapter(
                 getActivity(),
                 android.R.layout.simple_spinner_item, imageConfiguration.getListOfAllFonts()
         );
-        spiFontType.setAdapter(fontManagerAdapter);
+        controlConfiguration.getSpiFontType().setAdapter(fontManagerAdapter);
     }
 
     private void populateDistributionSpinner() {
-        final Spinner spiDistribution = this.mainView.findViewById(R.id.spiDistribution);
         final DistributionManager distributionDataAdapter = new DistributionManager(
                 getActivity(),
                 android.R.layout.simple_spinner_item, imageConfiguration.getListOfAllDistributions()
         );
+        final Spinner spiDistribution = controlConfiguration.getSpiDistribution();
         spiDistribution.setAdapter(distributionDataAdapter);
         spiDistribution.setEnabled(false);
         distributionDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 
     private void populateLanguageSpinner() {
-        final Spinner spiLanguageCode = this.mainView.findViewById(R.id.spiLanguageCode);
         final LanguageManagerAdapter dataAdapter = new LanguageManagerAdapter(
                 getActivity(),
                 android.R.layout.simple_spinner_item, imageConfiguration.getListOfAllLanguageCode()
         );
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        final Spinner spiLanguageCode = controlConfiguration.getSpiLanguageCode();
         spiLanguageCode.setAdapter(dataAdapter);
         spiLanguageCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -172,7 +181,6 @@ public class MainFragment extends Fragment {
 
 
     public void checkButtonStart() {
-        imageConfiguration.setMainView(mainView);
         boolean validate = imageConfiguration.validate();
         controlConfiguration.getBtnStart().setEnabled(validate);
         controlConfiguration.getBtnStartEmail().setEnabled(validate);
