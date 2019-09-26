@@ -33,29 +33,13 @@ public class MainActivity extends ActionsMainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (checkSelfPermission(
-                WRITE_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
-            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, 1);
-        }
-        setContentView(R.layout.activity_main);
-        chartizatePager = findViewById(R.id.itf_pager);
-        final SwipeAdapter swipeAdapter = new SwipeAdapter(getSupportFragmentManager());
-        chartizatePager.setAdapter(swipeAdapter);
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
-        toolbar.setLogo(R.mipmap.ic_launcher);
+        setupActivity();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        final MainFragment mainFragment = getMainFragment();
-        if (isDataPresent(data)) {
-            final FileManagerItem fileManagerItem = (FileManagerItem) Objects.requireNonNull(data.getExtras()).get("fileItem");
-            setSelectedInputFileAndThumbnail(fileManagerItem);
-            setSelectedOutputFolder(data);
-        }
-        mainFragment.checkButtonStart();
+        setupActivity(data);
     }
 
 }

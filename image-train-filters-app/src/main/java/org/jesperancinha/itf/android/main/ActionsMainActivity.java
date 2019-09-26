@@ -4,20 +4,54 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
 import org.jesperancinha.itf.android.EmailFragment;
 import org.jesperancinha.itf.android.FileManagerActivity;
+import org.jesperancinha.itf.android.R;
+import org.jesperancinha.itf.android.SwipeAdapter;
 import org.jesperancinha.itf.android.config.ControlConfiguration;
+import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 import org.jesperancinha.itf.android.mail.MailSender;
 
+import java.util.Objects;
+
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static java.lang.Integer.parseInt;
 import static org.jesperancinha.itf.android.ITFConstants.FILE_FIND;
 import static org.jesperancinha.itf.android.ITFConstants.FOLDER_FIND;
 import static org.jesperancinha.itf.android.R.string.chartizating;
 
 public abstract class ActionsMainActivity extends MainActivityManager {
+
+    protected void setupActivity() {
+        if (checkSelfPermission(
+                WRITE_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
+            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, 1);
+        }
+        setContentView(R.layout.activity_main);
+        chartizatePager = findViewById(R.id.itf_pager);
+        final SwipeAdapter swipeAdapter = new SwipeAdapter(getSupportFragmentManager());
+        chartizatePager.setAdapter(swipeAdapter);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+        toolbar.setLogo(R.mipmap.ic_launcher);
+    }
+
+    protected void setupActivity(Intent data) {
+        final MainFragment mainFragment = getMainFragment();
+        if (isDataPresent(data)) {
+            final FileManagerItem fileManagerItem = (FileManagerItem) Objects.requireNonNull(data.getExtras()).get("fileItem");
+            setSelectedInputFileAndThumbnail(fileManagerItem);
+            setSelectedOutputFolder(data);
+        }
+        mainFragment.checkButtonStart();
+    }
 
     public void pFindFile(View view) {
         final MainFragment mainFragment = getMainFragment();
