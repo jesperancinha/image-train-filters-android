@@ -67,18 +67,18 @@ public abstract class MainActivityManager extends FragmentActivity {
     private void setSelectedOutputFolder(Intent data, MainFragment mainFragment) {
         final FileManagerItem folderManagerItem = (FileManagerItem) Objects.requireNonNull(data.getExtras()).get("folderItem");
         if (folderManagerItem != null) {
-            final TextView currentFile = mainFragment.getMainView().findViewById(R.id.lblOutputFolder);
+            final TextView currentFile = getMainView(mainFragment).findViewById(R.id.lblOutputFolder);
             currentFile.setText(folderManagerItem.getFilename());
-            mainFragment.setCurrentSelectedFolder(folderManagerItem);
+            getImageConfiguration(mainFragment).setCurrentSelectedFolder(folderManagerItem);
         }
     }
 
     private void setSelectedInputFileAndThumbnail(MainFragment mainFragment, FileManagerItem fileManagerItem) {
         if (fileManagerItem != null) {
-            final TextView currentFile = mainFragment.getMainView().findViewById(R.id.lblESelectedFile);
+            final TextView currentFile = getMainView(mainFragment).findViewById(R.id.lblESelectedFile);
             currentFile.setText(fileManagerItem.getFilename());
-            mainFragment.setCurrentSelectedFile(fileManagerItem);
-            final ImageView btnImageFile = mainFragment.getMainView().findViewById(R.id.fileImageSourcePreview);
+            getImageConfiguration(mainFragment).setCurrentSelectedFile(fileManagerItem);
+            final ImageView btnImageFile = getMainView(mainFragment).findViewById(R.id.fileImageSourcePreview);
 
             try {
                 ChartizateThumbs.setImageThumbnail(btnImageFile, new FileInputStream(fileManagerItem.getFile()));
@@ -86,6 +86,10 @@ public abstract class MainActivityManager extends FragmentActivity {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    private ImageConfiguration getImageConfiguration(MainFragment mainFragment) {
+        return mainFragment.getImageConfiguration();
     }
 
     private boolean isDataPresent(Intent data) {
@@ -144,7 +148,7 @@ public abstract class MainActivityManager extends FragmentActivity {
     }
 
     private String getOutputFileName(MainFragment mainFragment) {
-        return ((EditText) mainFragment.getMainView().findViewById(R.id.editOutputFileName)).getText().toString();
+        return ((EditText) getMainView(mainFragment).findViewById(R.id.editOutputFileName)).getText().toString();
     }
 
     private String getDestinationImagePath(MainFragment mainFragment, String outputFileName) {
@@ -153,27 +157,31 @@ public abstract class MainActivityManager extends FragmentActivity {
 
     private FileInputStream getImageFullStream(MainFragment mainFragment) throws FileNotFoundException {
         return new FileInputStream(
-                new File(mainFragment.getCurrentSelectedFile().getFile().getAbsolutePath()));
+                new File(getImageConfiguration(mainFragment).getCurrentSelectedFile().getFile().getAbsolutePath()));
     }
 
     private Character.UnicodeBlock getBlock(MainFragment mainFragment) {
-        return Character.UnicodeBlock.forName(((Spinner) mainFragment.getMainView().findViewById(R.id.spiLanguageCode)).getSelectedItem().toString());
+        return Character.UnicodeBlock.forName(((Spinner) getMainView(mainFragment).findViewById(R.id.spiLanguageCode)).getSelectedItem().toString());
+    }
+
+    private View getMainView(MainFragment mainFragment) {
+        return getImageConfiguration(mainFragment).getMainView();
     }
 
     private int getFontSize(MainFragment mainFragment) {
-        return Integer.parseInt(((EditText) mainFragment.getMainView().findViewById(R.id.editFontSize)).getText().toString());
+        return Integer.parseInt(((EditText) getMainView(mainFragment).findViewById(R.id.editFontSize)).getText().toString());
     }
 
     private String getFontName(MainFragment mainFragment) {
-        return ((Spinner) mainFragment.getMainView().findViewById(R.id.spiFontType)).getSelectedItem().toString();
+        return ((Spinner) getMainView(mainFragment).findViewById(R.id.spiFontType)).getSelectedItem().toString();
     }
 
     private int getRangePercentage(MainFragment mainFragment) {
-        return Integer.parseInt(((EditText) mainFragment.getMainView().findViewById(R.id.editRange)).getText().toString());
+        return Integer.parseInt(((EditText) getMainView(mainFragment).findViewById(R.id.editRange)).getText().toString());
     }
 
     private int getDensity(MainFragment mainFragment) {
-        return Integer.parseInt(((EditText) mainFragment.getMainView().findViewById(R.id.editDensity)).getText().toString());
+        return Integer.parseInt(((EditText) getMainView(mainFragment).findViewById(R.id.editDensity)).getText().toString());
     }
 
     private int getBackground(MainFragment mainFragment) {
