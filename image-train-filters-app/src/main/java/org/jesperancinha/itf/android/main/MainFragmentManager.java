@@ -14,8 +14,10 @@ import static java.lang.Integer.parseInt;
 @Getter
 public class MainFragmentManager extends MainFragmentManagerConfiguration {
 
+    protected MainFragment mainFragment;
+
     public MainFragmentManager(MainFragment mainFragment) {
-        super(mainFragment);
+        this.mainFragment = mainFragment;
     }
 
     public FileInputStream getImageFullStream() throws FileNotFoundException {
