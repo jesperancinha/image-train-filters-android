@@ -25,6 +25,7 @@ import org.jesperancinha.itf.android.R;
 import org.jesperancinha.itf.android.SwipeAdapter;
 import org.jesperancinha.itf.android.ViewFragment;
 import org.jesperancinha.itf.android.common.ChartizateThumbs;
+import org.jesperancinha.itf.android.config.ControlConfiguration;
 import org.jesperancinha.itf.android.config.ImageConfiguration;
 import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 import org.jesperancinha.itf.android.mail.MailSender;
@@ -41,6 +42,10 @@ import static java.lang.Integer.parseInt;
 import static org.jesperancinha.chartizate.distributions.ChartizateDistributionType.Linear;
 import static org.jesperancinha.itf.android.ITFConstants.FILE_FIND;
 import static org.jesperancinha.itf.android.ITFConstants.FOLDER_FIND;
+import static org.jesperancinha.itf.android.R.id.fileImageSourcePreview;
+import static org.jesperancinha.itf.android.R.id.lblESelectedFile;
+import static org.jesperancinha.itf.android.R.id.lblOutputFolder;
+import static org.jesperancinha.itf.android.R.string.chartizating;
 
 public abstract class MainActivityManager extends FragmentActivity {
 
@@ -84,7 +89,7 @@ public abstract class MainActivityManager extends FragmentActivity {
     private void setSelectedOutputFolder(Intent data, MainFragment mainFragment) {
         final FileManagerItem folderManagerItem = (FileManagerItem) Objects.requireNonNull(data.getExtras()).get("folderItem");
         if (folderManagerItem != null) {
-            final TextView currentFile = mainFragmentManager.getMainView().findViewById(R.id.lblOutputFolder);
+            final TextView currentFile = mainFragmentManager.getMainView().findViewById(lblOutputFolder);
             currentFile.setText(folderManagerItem.getFilename());
             getImageConfiguration(mainFragment).setCurrentSelectedFolder(folderManagerItem);
         }
@@ -92,10 +97,10 @@ public abstract class MainActivityManager extends FragmentActivity {
 
     private void setSelectedInputFileAndThumbnail(MainFragment mainFragment, FileManagerItem fileManagerItem) {
         if (fileManagerItem != null) {
-            final TextView currentFile = mainFragmentManager.getMainView().findViewById(R.id.lblESelectedFile);
+            final TextView currentFile = mainFragmentManager.getMainView().findViewById(lblESelectedFile);
             currentFile.setText(fileManagerItem.getFilename());
             getImageConfiguration(mainFragment).setCurrentSelectedFile(fileManagerItem);
-            final ImageView btnImageFile = mainFragmentManager.getMainView().findViewById(R.id.fileImageSourcePreview);
+            final ImageView btnImageFile = mainFragmentManager.getMainView().findViewById(fileImageSourcePreview);
 
             try {
                 ChartizateThumbs.setImageThumbnail(btnImageFile, new FileInputStream(fileManagerItem.getFile()));
@@ -158,16 +163,18 @@ public abstract class MainActivityManager extends FragmentActivity {
 
     private MainFragment processMainFragment() {
         final MainFragment mainFragment = getMainFragment();
-        mainFragmentManager.getControlConfiguration().getBtnStart().setEnabled(false);
-        mainFragmentManager.getControlConfiguration().getBtnStartEmail().setEnabled(false);
-        mainFragmentManager.getControlConfiguration().getTextStatus().setText(R.string.chartizating);
+        final ControlConfiguration controlConfiguration = mainFragmentManager.getControlConfiguration();
+        controlConfiguration.getBtnStart().setEnabled(false);
+        controlConfiguration.getBtnStartEmail().setEnabled(false);
+        controlConfiguration.getTextStatus().setText(chartizating);
         return mainFragment;
     }
 
     private void postFileGeneration(MainFragment mainFragment, View view) {
-        mainFragmentManager.getControlConfiguration().getTextStatus().setText(R.string.done);
-        mainFragmentManager.getControlConfiguration().getBtnStart().post(() -> mainFragmentManager.getControlConfiguration().getBtnStart().setEnabled(true));
-        mainFragmentManager.getControlConfiguration().getBtnStartEmail().post(() -> mainFragmentManager.getControlConfiguration().getBtnStartEmail().setEnabled(true));
+        final ControlConfiguration controlConfiguration = mainFragmentManager.getControlConfiguration();
+        controlConfiguration.getTextStatus().setText(R.string.done);
+        controlConfiguration.getBtnStart().post(() -> controlConfiguration.getBtnStart().setEnabled(true));
+        controlConfiguration.getBtnStartEmail().post(() -> controlConfiguration.getBtnStartEmail().setEnabled(true));
         chartizatePager.setCurrentItem(getDestination(view));
         final ViewFragment viewFragment = (ViewFragment) getSupportFragmentManager().getFragments().get(2);
         final ImageView imageView = viewFragment.getImageView();
@@ -222,14 +229,14 @@ public abstract class MainActivityManager extends FragmentActivity {
 
     public void pAddOne(View view) {
         final MainFragment mainFragment = getMainFragment();
-        int currentFontSize = parseInt(mainFragmentManager.getEditConfiguration().getEditFontSize().getText().toString());
+        final int currentFontSize = parseInt(mainFragmentManager.getEditConfiguration().getEditFontSize().getText().toString());
         mainFragmentManager.getEditConfiguration().getEditFontSize().setText(String.valueOf(currentFontSize + 1));
         mainFragment.checkButtonStart();
     }
 
     public void pMinusOne(View view) {
         final MainFragment mainFragment = getMainFragment();
-        int currentFontSize = parseInt(mainFragmentManager.getEditConfiguration().getEditFontSize().getText().toString());
+        final int currentFontSize = parseInt(mainFragmentManager.getEditConfiguration().getEditFontSize().getText().toString());
         mainFragmentManager.getEditConfiguration().getEditFontSize().setText(String.valueOf(currentFontSize - 1));
         mainFragment.checkButtonStart();
     }
