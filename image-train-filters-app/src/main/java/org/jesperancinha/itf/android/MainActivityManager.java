@@ -116,7 +116,7 @@ public abstract class MainActivityManager extends FragmentActivity {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             } finally {
-                postFileGeneration(mainFragment, getDestination(view, mainFragment), getOutputFileName(mainFragment));
+                postFileGeneration(mainFragment, view);
             }
         };
     }
@@ -180,15 +180,15 @@ public abstract class MainActivityManager extends FragmentActivity {
         return mainFragment.getSvSelectedColor().getColor();
     }
 
-    private void postFileGeneration(MainFragment mainFragment, int destinationWindow, String outputFileName) {
+    private void postFileGeneration(MainFragment mainFragment, View view) {
         mainFragment.getTextStatus().setText(R.string.done);
         mainFragment.getBtnStart().post(() -> mainFragment.getBtnStart().setEnabled(true));
         mainFragment.getBtnStartEmail().post(() -> mainFragment.getBtnStartEmail().setEnabled(true));
-        chartizatePager.setCurrentItem(destinationWindow);
+        chartizatePager.setCurrentItem(getDestination(view, mainFragment));
         final ViewFragment viewFragment = (ViewFragment) getSupportFragmentManager().getFragments().get(2);
         final ImageView imageView = viewFragment.getImageView();
         final ImageView imageViewEmail = findViewById(R.id.imageViewGeneratedAttachment);
-        final Uri uri = getOutputFileUrl(mainFragment, outputFileName);
+        final Uri uri = getOutputFileUrl(mainFragment, getOutputFileName(mainFragment));
         imageView.post(() -> ChartizateThumbs.setImage(imageView, uri));
         imageViewEmail.post(() -> ChartizateThumbs.setImage(imageViewEmail, uri));
     }
