@@ -1,6 +1,7 @@
 component_depth: 1
 languages:
 - name: java
+- name: script
   production:
     exclude:
       - image-train-filters-app/src/main/java/org/jesperancinha/itf/android/MainActivity.java
