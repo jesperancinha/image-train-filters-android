@@ -1,8 +1,8 @@
 package org.jesperancinha.itf.android;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.

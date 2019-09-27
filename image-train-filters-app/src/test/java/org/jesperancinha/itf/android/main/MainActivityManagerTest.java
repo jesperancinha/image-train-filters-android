@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.net.Uri;
 
 import org.jesperancinha.itf.android.file.manager.FileManagerItem;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,17 +23,20 @@ public class MainActivityManagerTest {
 
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void setSelectedOutputFolder() {
         final Intent mockIntent = mock(Intent.class);
-        mainActivityManager.setSelectedOutputFolder(mockIntent);
 
+        assertThrows(NullPointerException.class, () ->
+                mainActivityManager.setSelectedOutputFolder(mockIntent));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void setSelectedInputFileAndThumbnail() {
         final FileManagerItem fileManagerItem = mock(FileManagerItem.class);
-        mainActivityManager.setSelectedInputFileAndThumbnail(fileManagerItem);
+
+        assertThrows(NullPointerException.class, () ->
+                mainActivityManager.setSelectedInputFileAndThumbnail(fileManagerItem));
     }
 
     @Test
