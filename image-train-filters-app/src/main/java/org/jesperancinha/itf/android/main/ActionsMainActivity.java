@@ -106,8 +106,16 @@ public abstract class ActionsMainActivity extends MainActivityManager {
         final ImageView imageView = viewFragment.getImageView();
         final ImageView imageViewEmail = findViewById(R.id.imageViewGeneratedAttachment);
         final Uri uri = Uri.fromFile(new File(mainFragmentManager.getImageConfiguration().getCurrentSelectedFolder().getFile(), mainFragmentManager.getOutputFileName()));
-        imageView.post(() -> ChartizateThumbs.setImage(imageView, uri));
-        imageViewEmail.post(() -> ChartizateThumbs.setImage(imageViewEmail, uri));
+        imageView.post(() -> createThumb(imageView).setImage(uri));
+        imageViewEmail.post(() -> createThumb(imageViewEmail).setImage(uri));
+    }
+
+    private ChartizateThumbs createThumb(ImageView imageView) {
+        return ChartizateThumbs.builder()
+                .width(getResources().getInteger(R.integer.thumb_width))
+                .height(getResources().getInteger(R.integer.thumb_height))
+                .imageView(imageView)
+                .build();
     }
 
     public void pGetBackGroundColor(View view) {

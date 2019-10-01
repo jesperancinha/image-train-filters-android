@@ -5,18 +5,29 @@ import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.widget.ImageView;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.io.InputStream;
 
+@Getter
+@Builder
+@AllArgsConstructor
 public class ChartizateThumbs {
-    public static void setImageThumbnail(ImageView imageView, InputStream inputStream) {
+
+    private final Integer width;
+    private final Integer height;
+    private final ImageView imageView;
+
+    public void setImageThumbnail(InputStream inputStream) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
-        Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
-        imageView.setImageBitmap(ThumbnailUtils.extractThumbnail(bitmap, 50, 50));
+        final Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
+        imageView.setImageBitmap(ThumbnailUtils.extractThumbnail(bitmap, width, height));
     }
 
-    public static void setImage(ImageView imageView, Uri uri) {
+    public void setImage(Uri uri) {
         imageView.setImageURI(null);
         imageView.setImageURI(uri);
     }

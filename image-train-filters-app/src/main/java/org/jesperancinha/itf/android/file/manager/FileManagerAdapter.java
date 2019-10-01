@@ -11,11 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
-
 import org.jesperancinha.itf.android.R;
+import org.jesperancinha.itf.android.common.ChartizateThumbs;
 import org.jesperancinha.itf.android.main.MainActivity;
 
 import java.io.File;
@@ -27,9 +26,8 @@ import java.util.Objects;
 
 import static org.jesperancinha.itf.android.R.drawable.folder;
 import static org.jesperancinha.itf.android.R.id.typeFolderFile;
-import static org.jesperancinha.itf.android.common.ChartizateThumbs.setImageThumbnail;
 
-public class FileManagerAdapter extends ArrayAdapter<org.jesperancinha.itf.android.file.manager.FileManagerItem> {
+public class FileManagerAdapter extends ArrayAdapter<FileManagerItem> {
     public static final int COMMON_ICON_PADDING = 3;
     private final Context context;
     private final int id;
@@ -77,16 +75,24 @@ public class FileManagerAdapter extends ArrayAdapter<org.jesperancinha.itf.andro
                     e.printStackTrace();
                     throw new RuntimeException(e);
                 }
-                setImageThumbnail(imageView, inputStream);
+                createChartizateThumbs(imageView).setImageThumbnail(inputStream);
                 break;
         }
+    }
+
+    private ChartizateThumbs createChartizateThumbs(ImageView imageView) {
+        return ChartizateThumbs.builder()
+                .width(this.context.getResources().getInteger(R.integer.thumb_width))
+                .height(this.context.getResources().getInteger(R.integer.thumb_height))
+                .imageView(imageView)
+                .build();
     }
 
     private void assignFileListenersAndSettings(FileManagerItem fileItem, ImageView viewDirectory) {
         viewDirectory.setOnClickListener(v1 -> {
             final Intent intent = new Intent(v1.getContext(), MainActivity.class);
             intent.putExtra("folderItem", fileItem);
-            final Activity activity = (Activity) FileManagerAdapter.this.context;
+            final Activity activity = (Activity) this.context;
             activity.setResult(Activity.RESULT_OK, intent);
             activity.finish();
         });
