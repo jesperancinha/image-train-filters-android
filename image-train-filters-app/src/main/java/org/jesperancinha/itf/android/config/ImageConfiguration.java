@@ -43,7 +43,7 @@ public class ImageConfiguration {
     }
 
     private void sortLanguageCodes() {
-        Collections.sort(listOfAllLanguageCode, (lhs, rhs) -> {
+        listOfAllLanguageCode.sort((lhs, rhs) -> {
             Integer x = getInteger(lhs, rhs);
             if (x != null) return x;
             return lhs.compareTo(rhs);

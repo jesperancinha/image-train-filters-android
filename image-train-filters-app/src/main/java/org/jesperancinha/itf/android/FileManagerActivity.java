@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static java.util.Collections.sort;
+import static org.jesperancinha.itf.android.R.layout.file_navigator;
 
 public class FileManagerActivity extends ListActivity {
     private FileManagerAdapter fileManagerAdapter;
@@ -91,7 +92,7 @@ public class FileManagerActivity extends ListActivity {
         files.addAll(directories);
         completeFolderList.addAll(files);
 
-        fileManagerAdapter = new FileManagerAdapter(FileManagerActivity.this, org.jesperancinha.itf.android.R.layout.file_navigator, completeFolderList, directoryManager);
+        fileManagerAdapter = new FileManagerAdapter(FileManagerActivity.this, file_navigator, completeFolderList, directoryManager);
         this.setListAdapter(fileManagerAdapter);
     }
 
