@@ -7,13 +7,10 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
-
-import androidx.appcompat.widget.Toolbar;
+import android.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
-
 import org.jesperancinha.chartizate.ChartizateManager;
 import org.jesperancinha.itf.android.EmailFragment;
 import org.jesperancinha.itf.android.R;
