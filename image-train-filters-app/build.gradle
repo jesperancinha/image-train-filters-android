@@ -58,7 +58,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: tasks.withType(Test)) {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation('com.github.QuadFlask:colorpicker:0.0.13') {
+    implementation('com.github.QuadFlask:colorpicker:0.0.15') {
         exclude group: "com.android.support"
     }
     implementation 'org.jesperancinha.itf:itf-chartizate-android:6.0.1'
