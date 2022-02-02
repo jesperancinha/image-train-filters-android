@@ -8,7 +8,9 @@
 [![codebeat badge](https://codebeat.co/badges/4b1b645f-a6c0-4faa-a4c4-9ffba697817d)](https://codebeat.co/projects/github-com-jesperancinha-image-train-filters-android-master)
 [![BCH compliance](https://bettercodehub.com/edge/badge/jesperancinha/image-train-filters-android?branch=master)](https://bettercodehub.com/)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/1ebb39c9b1194fb6b66d96495fe6a41b)](https://www.codacy.com/gh/jesperancinha/image-train-filters-android/dashboard?utm_source=github.com&utm_medium=referral&utm_content=jesperancinha/image-train-filters-android&utm_campaign=Badge_Coverage)
 [![Coverage Status](https://coveralls.io/repos/github/jesperancinha/image-train-filters-android/badge.svg?branch=master)](https://coveralls.io/github/jesperancinha/image-train-filters-android?branch=master)
+[![codecov](https://codecov.io/gh/jesperancinha/image-train-filters-android/branch/master/graph/badge.svg?token=vyR9savAWp)](https://codecov.io/gh/jesperancinha/image-train-filters-android)
 
 [![GitHub language count](https://img.shields.io/github/languages/count/jesperancinha/image-train-filters-android.svg)]()
 [![GitHub top language](https://img.shields.io/github/languages/top/jesperancinha/image-train-filters-android.svg)]()
