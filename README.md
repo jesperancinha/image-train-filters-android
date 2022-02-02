@@ -1,10 +1,12 @@
 # Image Train Filters For Android
 
 [![Generic badge](https://img.shields.io/static/v1.svg?label=GitHub&message=ITF%20Android🧿&color=informational)](https://github.com/jesperancinha/image-train-filters-android)
-[![GitHub release](https://img.shields.io/github/release-pre/jesperancinha/image-train-filters-android.svg)](https://github.com/jesperancinha/image-train-filters-android/releases)
+[![GitHub release](https://img.shields.io/github/release/jesperancinha/image-train-filters-android.svg)](https://github.com/jesperancinha/image-train-filters-android/releases)
+
+[![CircleCI](https://circleci.com/gh/jesperancinha/image-train-filters-android.svg?style=svg)](https://circleci.com/gh/jesperancinha/image-train-filters-android)
+[![image-train-filters-android](https://github.com/jesperancinha/image-train-filters-android/actions/workflows/image-train-filters-android.yml/badge.svg)](https://github.com/jesperancinha/image-train-filters-android/actions/workflows/image-train-filters-android.yml)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1ebb39c9b1194fb6b66d96495fe6a41b)](https://www.codacy.com/manual/jofisaes/image-train-filters-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jesperancinha/image-train-filters-android&amp;utm_campaign=Badge_Grade)
-[![CircleCI](https://circleci.com/gh/jesperancinha/image-train-filters-android.svg?style=svg)](https://circleci.com/gh/jesperancinha/image-train-filters-android)
 [![codebeat badge](https://codebeat.co/badges/4b1b645f-a6c0-4faa-a4c4-9ffba697817d)](https://codebeat.co/projects/github-com-jesperancinha-image-train-filters-android-master)
 [![BCH compliance](https://bettercodehub.com/edge/badge/jesperancinha/image-train-filters-android?branch=master)](https://bettercodehub.com/)
 
