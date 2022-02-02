@@ -34,9 +34,25 @@ The app currently uses a color picker from:
 
 > - https://github.com/QuadFlask/colorpicker
 
+## Buid
+
+```shell
+gradle wrapper --gradle-version 7.3.3
+```
+
+```text
+gradle wrapper
+
+./gradlew assembleRelease
+```
+
 ## Status
 
 ***Under development***
+
+## References
+
+- [<activity>](https://developer.android.com/guide/topics/manifest/activity-element#exported)
 
 ## About me 👨🏽‍💻🚀🏳️‍🌈
 

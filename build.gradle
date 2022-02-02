@@ -6,14 +6,21 @@ buildscript {
         }
         mavenCentral()
         mavenLocal()
-        jcenter()
         maven { url "https://jitpack.io" }
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
-
+        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath('com.google.guava:guava'){
+            version {
+                strictly '28.1-jre'
+            }
+        }
     }
+}
+
+plugins {
+    id("org.jesperancinha.plugins.omni") version "0.1.1"
 }
 
 allprojects {
@@ -23,7 +30,6 @@ allprojects {
         }
         mavenCentral()
         mavenLocal()
-        jcenter()
         maven { url "https://jitpack.io" }
         google()
     }
