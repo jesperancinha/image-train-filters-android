@@ -8,6 +8,8 @@
 [![codebeat badge](https://codebeat.co/badges/4b1b645f-a6c0-4faa-a4c4-9ffba697817d)](https://codebeat.co/projects/github-com-jesperancinha-image-train-filters-android-master)
 [![BCH compliance](https://bettercodehub.com/edge/badge/jesperancinha/image-train-filters-android?branch=master)](https://bettercodehub.com/)
 
+[![Coverage Status](https://coveralls.io/repos/github/jesperancinha/image-train-filters-android/badge.svg?branch=master)](https://coveralls.io/github/jesperancinha/image-train-filters-android?branch=master)
+
 [![GitHub language count](https://img.shields.io/github/languages/count/jesperancinha/image-train-filters-android.svg)]()
 [![GitHub top language](https://img.shields.io/github/languages/top/jesperancinha/image-train-filters-android.svg)]()
 [![GitHub top language](https://img.shields.io/github/languages/code-size/jesperancinha/image-train-filters-android.svg)]()
