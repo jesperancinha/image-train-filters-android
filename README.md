@@ -1,6 +1,6 @@
 # Image Train Filters For Android
 
-[![Generic badge](https://img.shields.io/static/v1.svg?label=GitHub&message=ITF%20Android&color=informational)](https://github.com/jesperancinha/image-train-filters-android)
+[![Generic badge](https://img.shields.io/static/v1.svg?label=GitHub&message=ITF%20Android🧿&color=informational)](https://github.com/jesperancinha/image-train-filters-android)
 [![GitHub release](https://img.shields.io/github/release-pre/jesperancinha/image-train-filters-android.svg)](https://github.com/jesperancinha/image-train-filters-android/releases)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1ebb39c9b1194fb6b66d96495fe6a41b)](https://www.codacy.com/manual/jofisaes/image-train-filters-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jesperancinha/image-train-filters-android&amp;utm_campaign=Badge_Grade)
@@ -56,7 +56,7 @@ gradle wrapper
 
 ## References
 
-- [<activity>](https://developer.android.com/guide/topics/manifest/activity-element#exported)
+-   [<activity>](https://developer.android.com/guide/topics/manifest/activity-element#exported)
 
 ## About me 👨🏽‍💻🚀🏳️‍🌈
 
