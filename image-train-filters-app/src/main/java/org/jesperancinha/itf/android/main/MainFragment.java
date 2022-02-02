@@ -1,5 +1,6 @@
 package org.jesperancinha.itf.android.main;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import org.jesperancinha.itf.android.R;
 import org.jesperancinha.itf.android.common.ChartizateSurfaceView;
 import org.jesperancinha.itf.android.config.ControlConfiguration;
@@ -22,10 +21,7 @@ import org.jesperancinha.itf.android.file.manager.FileManagerItem;
 import org.jesperancinha.itf.android.font.manager.FontManagerAdapter;
 import org.jesperancinha.itf.android.language.manager.LanguageManagerAdapter;
 
-import java.util.Objects;
-
 import static java.util.Objects.isNull;
-import static java.util.Objects.requireNonNull;
 import static org.jesperancinha.itf.android.R.id.btnStart;
 import static org.jesperancinha.itf.android.R.id.btnStartAndEmail;
 import static org.jesperancinha.itf.android.R.id.editDensity;
@@ -53,7 +49,9 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull
+                    LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (isNull(mainView)) {
             assignControls(inflater, container);
             setSelectedFolders();
@@ -67,7 +65,8 @@ public class MainFragment extends Fragment {
     }
 
     private void setSelectedFolders() {
-        if (requireNonNull(getActivity()).getIntent() != null && getActivity().getIntent().getExtras() != null) {
+        final Intent intent = requireActivity().getIntent();
+        if (intent != null && intent.getExtras() != null) {
             setSelectedFile();
             setSelectedFolder();
         }
@@ -170,20 +169,26 @@ public class MainFragment extends Fragment {
     }
 
     private void setSelectedFolder() {
-        final FileManagerItem folderManagerItem = (FileManagerItem) Objects.requireNonNull(requireNonNull(getActivity()).getIntent().getExtras()).get("folderItem");
-        if (folderManagerItem != null) {
-            TextView currentFile = this.mainView.findViewById(R.id.lblOutputFolder);
-            currentFile.setText(folderManagerItem.getFilename());
-            imageConfiguration.setCurrentSelectedFolder(folderManagerItem);
+        final Bundle bundle = requireActivity().getIntent().getExtras();
+        if (bundle != null) {
+            final FileManagerItem folderManagerItem = (FileManagerItem) bundle.get("folderItem");
+            if (folderManagerItem != null) {
+                TextView currentFile = this.mainView.findViewById(R.id.lblOutputFolder);
+                currentFile.setText(folderManagerItem.getFilename());
+                imageConfiguration.setCurrentSelectedFolder(folderManagerItem);
+            }
         }
     }
 
     private void setSelectedFile() {
-        final FileManagerItem fileManagerItem = (FileManagerItem) requireNonNull(requireNonNull(getActivity()).getIntent().getExtras()).get("fileItem");
-        if (fileManagerItem != null) {
-            TextView currentFile = this.mainView.findViewById(R.id.lblESelectedFile);
-            currentFile.setText(fileManagerItem.getFilename());
-            imageConfiguration.setCurrentSelectedFile(fileManagerItem);
+        final Bundle bundle = requireActivity().getIntent().getExtras();
+        if (bundle != null) {
+            final FileManagerItem fileManagerItem = (FileManagerItem) bundle.get("fileItem");
+            if (fileManagerItem != null) {
+                TextView currentFile = this.mainView.findViewById(R.id.lblESelectedFile);
+                currentFile.setText(fileManagerItem.getFilename());
+                imageConfiguration.setCurrentSelectedFile(fileManagerItem);
+            }
         }
     }
 

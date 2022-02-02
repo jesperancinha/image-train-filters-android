@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
         tools:ignore="GoogleAppIndexingWarning"
+        tools:node="replace"
         tools:replace="android:icon,android:theme,android:roundIcon">
 
         <activity

@@ -7,15 +7,15 @@ version = "2.0.0-SNAPSHOT"
 
 android {
     compileSdkVersion 31
-    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "org.jesperancinha.itf.android"
-        minSdkVersion 24
+        minSdkVersion 30
         targetSdkVersion 31
         versionCode 2
         versionName "2.0.0-SNAPSHOT"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         dev {
@@ -38,9 +38,19 @@ android {
     testOptions {
         execution 'ANDROIDX_TEST_ORCHESTRATOR'
     }
+    sourceSets {
+        main {
+            manifest.srcFile 'src/manifests/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java']
+            res.srcDirs = ['src/main/res']
+        }
+    }
 }
 
 tasks.withType(Test) {
+    project.gradle.startParameter.excludedTaskNames.add('packageDev')
+    project.gradle.startParameter.excludedTaskNames.add('packageDebug')
+    project.gradle.startParameter.excludedTaskNames.add('packageRelease')
     reports {
         html.enabled false
     }
@@ -78,4 +88,3 @@ dependencies {
     androidTestUtil 'androidx.test:orchestrator:1.4.1'
 
 }
-
