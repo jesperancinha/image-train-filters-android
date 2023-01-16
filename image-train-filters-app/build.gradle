@@ -79,7 +79,7 @@ dependencies {
     implementation group: 'com.google.android', name: 'android', version: '4.1.1.4'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
-    testImplementation 'org.mockito:mockito-core:4.11.0'
+    testImplementation 'org.mockito:mockito-core:5.0.0'
     testImplementation 'org.assertj:assertj-core:3.24.1'
     androidTestImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     androidTestImplementation 'androidx.test:runner:1.5.2'
