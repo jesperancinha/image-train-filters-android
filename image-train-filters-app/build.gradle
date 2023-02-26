@@ -51,9 +51,6 @@ tasks.withType(Test) {
     project.gradle.startParameter.excludedTaskNames.add('packageDev')
     project.gradle.startParameter.excludedTaskNames.add('packageDebug')
     project.gradle.startParameter.excludedTaskNames.add('packageRelease')
-    reports {
-        html.enabled false
-    }
     useJUnitPlatform()
     finalizedBy(jacocoTestReport)
 }
