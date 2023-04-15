@@ -15,6 +15,11 @@ install-jacococli:
 coverage:
 	./gradlew clean build test jacocoTestReport
 	./gradlew -i
+dependencies:
+	./gradlew androidDependencies
+lint:
+	./gradlew lint test
+local-pipeline: dependencies lint b
 upgrade:
 	gradle wrapper --gradle-version $(GRADLE_VERSION)
 upgrade-gradle:
