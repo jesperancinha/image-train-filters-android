@@ -25,10 +25,10 @@ jobs:
       run: touch local.properties
 
     - name: Download Android dependencies
-      run: ./gradlew androidDependencies
+      run: make dependencies
 
     - name: Gradle Lint Test
-      run: ./gradlew lint test
+      run: make lint
 
     - name: Build with Gradle
       run: ./gradlew build

@@ -6,9 +6,9 @@ version = "2.0.0-SNAPSHOT"
 
 
 android {
-    compileSdkVersion 33
-
+    namespace 'org.jesperancinha.itf.android'
     defaultConfig {
+        compileSdk 33
         applicationId "org.jesperancinha.itf.android"
         minSdkVersion 30
         targetSdkVersion 33
