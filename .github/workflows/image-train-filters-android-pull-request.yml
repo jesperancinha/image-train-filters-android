@@ -35,7 +35,7 @@ jobs:
       run: make dependencies
 
     - name: Gradle Lint Test
-      run: make upgrade && make lint
+      run: make lint
 
     - name: Build with Gradle
       run: ./gradlew build
