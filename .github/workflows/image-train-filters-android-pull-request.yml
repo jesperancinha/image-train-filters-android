@@ -18,9 +18,6 @@ jobs:
         distribution: 'adopt'
         cache: gradle
 
-    - name: Set up Android 30
-      uses: jesperancinhaorg/android-action@v0.0.2
-
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
@@ -30,8 +27,8 @@ jobs:
     - name: Download Android dependencies
       run: make dependencies
 
-    - name: Gradle Lint Test
-      run: make lint
-
     - name: Build with Gradle
       run: ./gradlew build
+
+    - name: Gradle Lint Test
+      run: make lint
