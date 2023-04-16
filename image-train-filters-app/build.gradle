@@ -47,7 +47,7 @@ android {
     }
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     project.gradle.startParameter.excludedTaskNames.add('packageDev')
     project.gradle.startParameter.excludedTaskNames.add('packageDebug')
     project.gradle.startParameter.excludedTaskNames.add('packageRelease')
@@ -55,7 +55,8 @@ tasks.withType(Test) {
     finalizedBy(jacocoTestReport)
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: tasks.withType(Test)) {
+tasks.register('jacocoTestReport', JacocoReport) {
+    dependsOn tasks.withType(Test)
     reports {
         xml.required = true
         csv.required = false
