@@ -1,6 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
 
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 group = "org.jesperancinha.itf"
 version = "2.0.0-SNAPSHOT"
 
