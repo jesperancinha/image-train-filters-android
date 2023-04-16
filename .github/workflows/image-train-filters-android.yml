@@ -16,7 +16,9 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
-        cache: gradle
+
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
 
     - name: Creates properties
       run: touch local.properties
