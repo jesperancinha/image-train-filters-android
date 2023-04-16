@@ -16,7 +16,7 @@ coverage:
 	./gradlew clean build test jacocoTestReport
 	./gradlew -i
 dependencies:
-	./gradlew build --refresh-dependencies
+	./gradlew --refresh-dependencies
 	./gradlew androidDependencies
 lint:
 	./gradlew lint test
