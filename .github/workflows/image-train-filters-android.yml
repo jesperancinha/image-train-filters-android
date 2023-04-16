@@ -19,7 +19,7 @@ jobs:
         cache: gradle
 
     - name: Set up Android 30
-      uses: jesperancinhaorg/android-action@v0.0.1
+      uses: jesperancinhaorg/android-action@v0.0.2
 
     - name: Creates properties
       run: touch local.properties
