@@ -8,7 +8,6 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1ebb39c9b1194fb6b66d96495fe6a41b)](https://www.codacy.com/manual/jofisaes/image-train-filters-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jesperancinha/image-train-filters-android&amp;utm_campaign=Badge_Grade)
 [![codebeat badge](https://codebeat.co/badges/4b1b645f-a6c0-4faa-a4c4-9ffba697817d)](https://codebeat.co/projects/github-com-jesperancinha-image-train-filters-android-master)
-[![BCH compliance](https://bettercodehub.com/edge/badge/jesperancinha/image-train-filters-android?branch=master)](https://bettercodehub.com/)
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/1ebb39c9b1194fb6b66d96495fe6a41b)](https://www.codacy.com/gh/jesperancinha/image-train-filters-android/dashboard?utm_source=github.com&utm_medium=referral&utm_content=jesperancinha/image-train-filters-android&utm_campaign=Badge_Coverage)
 [![Coverage Status](https://coveralls.io/repos/github/jesperancinha/image-train-filters-android/badge.svg?branch=master)](https://coveralls.io/github/jesperancinha/image-train-filters-android?branch=master)
