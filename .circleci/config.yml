@@ -12,14 +12,14 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "image-train-filters-app/build.gradle" }}
       - run:
           name: Download Dependencies
-          command: ./gradlew androidDependencies
+          command: make dependencies
       - save_cache:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "image-train-filters-app/build.gradle" }}
       - run:
           name: Run Tests
-          command: ./gradlew lint test
+          command: make lint
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/ 
           path: image-train-filters-app/build/reports
           destination: reports
