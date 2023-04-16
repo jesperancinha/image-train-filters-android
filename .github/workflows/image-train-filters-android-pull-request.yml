@@ -27,8 +27,8 @@ jobs:
     - name: Download Android dependencies
       run: make dependencies
 
+    - name: Gradle Lint Test
+      run: make upgrade && make lint
+
     - name: Build with Gradle
       run: ./gradlew build
-
-    - name: Gradle Lint Test
-      run: make lint
