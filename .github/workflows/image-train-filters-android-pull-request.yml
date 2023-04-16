@@ -18,6 +18,9 @@ jobs:
         distribution: 'adopt'
         cache: gradle
 
+    - name: Set up Android 30
+      uses: jesperancinhaorg/android-action@v0.0.1
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
