@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.jesperancinha.itf.android"
     android:installLocation="auto">
+
+<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +20,6 @@
         <activity
                 android:name="org.jesperancinha.itf.android.main.MainActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="@string/app_name"
                 android:theme="@style/AppTheme"
                 android:exported="true">
             <intent-filter>
@@ -28,13 +30,8 @@
         </activity>
         <activity
             android:name="org.jesperancinha.itf.android.FileManagerActivity"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme" />
         <activity
             android:name="org.jesperancinha.itf.android.mail.MailSender" />
     </application>
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 </manifest>
