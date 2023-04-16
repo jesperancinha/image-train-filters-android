@@ -38,4 +38,4 @@ jobs:
       run: make lint
 
     - name: Build with Gradle
-      run: ./gradlew build
+      run: make b
