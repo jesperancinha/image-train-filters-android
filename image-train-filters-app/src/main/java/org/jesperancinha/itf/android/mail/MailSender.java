@@ -6,7 +6,7 @@ import android.util.Log;
 
 import androidx.activity.ComponentActivity;
 
-import org.jesperancinha.itf.android.BuildConfig;
+import org.jesperancinha.chartizate.BuildConfig;
 import org.jesperancinha.itf.android.EmailFragment;
 import org.jesperancinha.itf.android.R;
 import org.jesperancinha.itf.android.main.MainFragment;
