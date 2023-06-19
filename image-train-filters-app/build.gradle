@@ -83,7 +83,7 @@ dependencies {
     }
     implementation 'org.jesperancinha.itf:itf-chartizate-android:6.0.1'
     implementation 'org.jesperancinha.itf:itf-chartizate-api:5.0.1'
-    implementation 'androidx.fragment:fragment:1.5.7'
+    implementation 'androidx.fragment:fragment:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
