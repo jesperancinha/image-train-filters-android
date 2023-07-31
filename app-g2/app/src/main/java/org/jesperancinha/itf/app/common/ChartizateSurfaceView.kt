@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.SurfaceView
 
-data class ChartizateSurfaceView(val context: Context, val attrs: AttributeSet) :
-    SurfaceView(context, attrs) {
+data class ChartizateSurfaceView(val contextIn: Context, val attrsIn: AttributeSet) :
+    SurfaceView(contextIn, attrsIn) {
     private val color = 0
 }

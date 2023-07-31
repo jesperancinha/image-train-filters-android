@@ -21,7 +21,7 @@ class ImageConfiguration(
         ).collect(Collectors.toList())
     private val listOfAllDistributions: List<String> =
         ChartizateDistributionType.getAllDistributionTypes()
-    private val listOfAllFonts: List<String> = ChartizateFontManagerImpl.getAllFontTypes()
+     val listOfAllFont = ChartizateFontManagerImpl.getAllFontTypes()
     private val currentSelectedFile: FileManagerItem? = null
     private val currentSelectedFolder: FileManagerItem? = null
 
@@ -32,7 +32,7 @@ class ImageConfiguration(
     }
 
     private fun sortFontNames() {
-        listOfAllFonts.sort()
+//        listOfAllFonts.sort()
     }
 
     private fun sortLanguageCodes() {
