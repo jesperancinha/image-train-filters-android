@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comma">,</string>
+    <string name="done">Done!</string>
+    <string name="chartizating">Please wait while chartizating</string>
+    <string name="sendEmail">Send email</string>
+</resources>
