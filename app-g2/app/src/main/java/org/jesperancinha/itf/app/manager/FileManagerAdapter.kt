@@ -2,18 +2,26 @@ package org.jesperancinha.itf.app.manager
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import org.jesperancinha.itf.android.R.drawable.folder
+import androidx.core.content.res.ResourcesCompat
+import org.jesperancinha.itf.app.MainActivity
+import org.jesperancinha.itf.app.manager.FileType.Folder
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.InputStream
 import java.util.Objects
+import org.jesperancinha.itf.app.R
+import org.jesperancinha.itf.app.R.drawable.folder
+import org.jesperancinha.itf.app.R.id.typeFolderFile
+import org.jesperancinha.itf.app.common.ChartizateThumbs
 
 class FileManagerAdapter(
     private val context: Context,
@@ -34,21 +42,21 @@ class FileManagerAdapter(
         }
         val imageView = v.findViewById<ImageView>(typeFolderFile)
         assignSystemItemIcons(fileItem, imageView)
-        fileName.setText(fileItem.getFilename())
-        fileDate.setText(fileItem.getDate())
+        fileName.text = fileItem.filename
+        fileDate.text = fileItem.date
         return v
     }
 
     private fun assignSystemItemIcons(fileItem: FileManagerItem, imageView: ImageView) {
-        when (fileItem.getFileType()) {
+        when (fileItem.fileType) {
             Folder -> {
-                val image: Drawable = ResourcesCompat.getDrawable(
+                val image = ResourcesCompat.getDrawable(
                     context.resources, folder, null
                 )
                 imageView.setImageDrawable(image)
             }
 
-            File -> {
+            FileType.File -> {
                 val inputStream: InputStream
                 try {
                     inputStream = FileInputStream(File(fileItem.file.getAbsolutePath()))
@@ -58,15 +66,16 @@ class FileManagerAdapter(
                 }
                 createChartizateThumbs(imageView).setImageThumbnail(inputStream)
             }
+
+            else -> {}
         }
     }
 
     private fun createChartizateThumbs(imageView: ImageView): ChartizateThumbs {
-        return ChartizateThumbs.builder()
-            .width(context.resources.getInteger(R.integer.thumb_width))
-            .height(context.resources.getInteger(R.integer.thumb_height))
-            .imageView(imageView)
-            .build()
+        return ChartizateThumbs(
+            context.resources.getInteger(R.integer.thumb_width),
+            context.resources.getInteger(R.integer.thumb_height),
+            imageView)
     }
 
     private fun assignFileListenersAndSettings(
@@ -90,7 +99,7 @@ class FileManagerAdapter(
     }
 
     private fun isNotBackFolder(fileItem: FileManagerItem): Boolean {
-        return directoryManager && !fileItem.getFilename().equals("..")
+        return directoryManager && !fileItem.filename.equals("..")
     }
 
     private fun getView(convertView: View?): View {
@@ -100,7 +109,7 @@ class FileManagerAdapter(
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             v = Objects.requireNonNull<LayoutInflater>(vi).inflate(id, null)
         }
-        return v
+        return requireNotNull(v)
     }
 
     companion object {
