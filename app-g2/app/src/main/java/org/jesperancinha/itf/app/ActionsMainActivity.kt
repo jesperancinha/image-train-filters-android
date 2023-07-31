@@ -1,6 +1,7 @@
 package org.jesperancinha.itf.app
 
 import android.Manifest.permission
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -9,9 +10,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toolbar
 import org.jesperancinha.itf.app.ITFConstants.FILE_FIND
 import java.io.File
 import java.util.Objects
+import androidx.fragment.app.Fragment
 
 abstract class ActionsMainActivity : MainActivityManager() {
     protected fun setupActivity() {
@@ -28,11 +31,12 @@ abstract class ActionsMainActivity : MainActivityManager() {
         }
         setContentView(R.layout.activity_main)
         chartizatePager = findViewById(R.id.itf_pager)
-        val swipeAdapter = SwipeAdapter(
-            getSupportFragmentManager(),
-            arrayOf<Fragment>(MainFragment(), EmailFragment(), ViewFragment())
+        chartizatePager.setAdapter(
+            SwipeAdapter(
+                getSupportFragmentManager(),
+                arrayOf<Fragment>(MainFragment(), EmailFragment(), ViewFragment())
+            )
         )
-        chartizatePager.setAdapter(swipeAdapter)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         toolbar.setTitle(R.string.app_name)
         toolbar.setLogo(R.mipmap.ic_launcher)
