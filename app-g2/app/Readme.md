@@ -1,4 +1,4 @@
-# image-train-filters-app
+# app
 
 ## About me
 

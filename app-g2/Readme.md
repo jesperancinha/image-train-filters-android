@@ -1,4 +1,4 @@
-# image-train-filters-app
+# app-g2
 
 ## About me
 
