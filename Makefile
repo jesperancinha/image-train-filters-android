@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-GRADLE_VERSION ?= 8.7
+GRADLE_VERSION ?= 8.8
 
 b: buildw
 clean:
@@ -51,3 +51,6 @@ local-pipeline:
 	make dependencies
 	make lint
 	make b
+deps-gradle-update:
+	curl -sL https://raw.githubusercontent.com/jesperancinha/project-signer/master/gradleUpdatesOne.sh | bash
+deps-quick-update: deps-gradle-update
