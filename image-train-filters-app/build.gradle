@@ -97,3 +97,16 @@ dependencies {
     androidTestUtil 'androidx.test:orchestrator:1.5.0'
 
 }
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'org.jetbrains.kotlin' && details.requested.name.startsWith('kotlin-stdlib')) {
+                details.useVersion 'latest.release'
+            }
+            if (details.requested.group == 'org.jetbrains.kotlinx' && details.requested.name.startsWith('kotlinx-coroutines')) {
+                details.useVersion 'latest.release'
+            }
+        }
+    }
+}
