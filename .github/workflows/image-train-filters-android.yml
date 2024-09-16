@@ -20,7 +20,7 @@ jobs:
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v3
       with:
-        gradle-version: 8.10
+        gradle-version: 8.10.1
 
     - name: Creates properties
       run: touch local.properties
