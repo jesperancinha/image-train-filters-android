@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-GRADLE_VERSION ?= 8.2.1
+GRADLE_VERSION ?= 8.10.2
 
 b: buildw
 clean:
@@ -45,3 +45,20 @@ install-linux:
 	sudo apt-get install jq
 	sudo apt-get install curl
 	curl https://services.gradle.org/versions/current
+local-pipeline:
+	chmod +x gradlew
+	touch local.properties
+	make dependencies
+	make lint
+	make b
+deps-plugins-update:
+	curl -sL https://raw.githubusercontent.com/jesperancinha/project-signer/master/pluginUpdatesOne.sh | bash -s -- $(PARAMS)
+deps-compose-update:
+	curl -sL https://raw.githubusercontent.com/jesperancinha/project-signer/master/jetPackComposeUpdatesOne.sh | bash
+deps-gradle-update:
+	curl -sL https://raw.githubusercontent.com/jesperancinha/project-signer/master/gradleUpdatesOne.sh | bash
+deps-java-update:
+	curl -sL https://raw.githubusercontent.com/jesperancinha/project-signer/master/javaUpdatesOne.sh | bash
+deps-quick-update: deps-compose-update deps-plugins-update deps-java-update deps-gradle-update
+accept-prs:
+	curl -sL https://raw.githubusercontent.com/jesperancinha/project-signer/master/acceptPR.sh | bash

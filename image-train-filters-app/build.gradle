@@ -20,10 +20,10 @@ version = "2.0.0-SNAPSHOT"
 android {
     namespace 'org.jesperancinha.itf.android'
     defaultConfig {
-        compileSdk 33
+        compileSdk 34
         applicationId "org.jesperancinha.itf.android"
-        minSdkVersion 30
-        targetSdkVersion 33
+        minSdkVersion 34
+        targetSdkVersion 34
         versionCode 2
         versionName "2.0.0-SNAPSHOT"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -40,8 +40,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     packagingOptions {
         exclude 'META-INF/LICENSE.md'
@@ -83,17 +83,30 @@ dependencies {
     }
     implementation 'org.jesperancinha.itf:itf-chartizate-android:6.0.1'
     implementation 'org.jesperancinha.itf:itf-chartizate-api:5.0.1'
-    implementation 'androidx.fragment:fragment:1.5.7'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'org.projectlombok:lombok:1.18.28'
-    annotationProcessor 'org.projectlombok:lombok:1.18.28'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
-    testImplementation 'org.mockito:mockito-core:5.4.0'
-    testImplementation 'org.assertj:assertj-core:3.24.2'
-    androidTestImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'org.mockito:mockito-android:5.4.0'
-    androidTestUtil 'androidx.test:orchestrator:1.4.2'
+    implementation 'androidx.fragment:fragment:1.8.4'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.11.3'
+    testImplementation 'org.mockito:mockito-core:5.14.2'
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+    androidTestImplementation 'org.junit.jupiter:junit-jupiter-engine:5.11.3'
+    androidTestImplementation 'androidx.test:runner:1.6.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'org.mockito:mockito-android:5.14.2'
+    androidTestUtil 'androidx.test:orchestrator:1.5.1'
 
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'org.jetbrains.kotlin' && details.requested.name.startsWith('kotlin-stdlib')) {
+                details.useVersion 'latest.release'
+            }
+            if (details.requested.group == 'org.jetbrains.kotlinx' && details.requested.name.startsWith('kotlinx-coroutines')) {
+                details.useVersion 'latest.release'
+            }
+        }
+    }
 }
