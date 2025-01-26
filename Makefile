@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-GRADLE_VERSION ?= 8.12
+GRADLE_VERSION ?= 8.12.1
 
 b: buildw
 clean:
