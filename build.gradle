@@ -10,7 +10,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.8.1'
+        classpath 'com.android.tools.build:gradle:8.8.2'
         classpath('com.google.guava:guava'){
             version {
                 strictly '28.1-jre'
