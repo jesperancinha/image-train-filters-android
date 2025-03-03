@@ -88,11 +88,17 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.36'
     annotationProcessor 'org.projectlombok:lombok:1.18.36'
     testImplementation(platform('org.junit:junit-bom:5.11.4'))
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.junit.platform:junit-platform-engine")
     testImplementation 'org.mockito:mockito-core:5.16.0'
     testImplementation 'org.assertj:assertj-core:3.27.3'
     androidTestImplementation(platform('org.junit:junit-bom:5.11.4'))
-    androidTestImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    androidTestImplementation("org.junit.jupiter:junit-jupiter-api")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter-engine")
+    androidTestImplementation("org.junit.platform:junit-platform-launcher")
+    androidTestImplementation("org.junit.platform:junit-platform-engine")
     androidTestImplementation 'androidx.test:runner:1.6.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'org.mockito:mockito-android:5.16.0'
