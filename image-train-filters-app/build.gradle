@@ -87,14 +87,14 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'org.projectlombok:lombok:1.18.38'
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
-    testImplementation(platform('org.junit:junit-bom:5.13.2'))
+    testImplementation(platform('org.junit:junit-bom:5.13.3'))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.junit.platform:junit-platform-launcher")
     testImplementation("org.junit.platform:junit-platform-engine")
     testImplementation 'org.mockito:mockito-core:5.18.0'
     testImplementation 'org.assertj:assertj-core:3.27.3'
-    androidTestImplementation(platform('org.junit:junit-bom:5.13.2'))
+    androidTestImplementation(platform('org.junit:junit-bom:5.13.3'))
     androidTestImplementation("org.junit.jupiter:junit-jupiter-api")
     androidTestImplementation("org.junit.jupiter:junit-jupiter-engine")
     androidTestImplementation("org.junit.platform:junit-platform-launcher")
